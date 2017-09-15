@@ -1,6 +1,7 @@
 /// @file nucleus-set-file-contents-linux.h
-/// @author Michael Heilmann
 /// @brief Set the contents of a file (Linux).
+/// @author Michael Heilmann
+/// @copyright Copyright (c) Michael Heilmann 2017
 
 #if defined(__linux__)
 

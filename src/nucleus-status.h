@@ -1,5 +1,8 @@
 /// @file nucleus-status.h
 /// @brief Status codes.
+/// @author Michael Heilmann
+/// @copyright Copyright (c) Michael Heilmann 2017
+
 #pragma once
 
 /// @brief Type of a value indicating the success or failure of an operation.
