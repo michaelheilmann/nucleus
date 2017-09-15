@@ -1,6 +1,6 @@
 /// @file nucleus-set-file-contents-windows.c
 /// @author Michael Heilmann
-/// @brief Set the contents of a file (Windows/WinAPI/file mappings).
+/// @brief Set the contents of a file (Windows).
 
 #if defined(_WIN32)
 

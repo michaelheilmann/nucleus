@@ -1,10 +1,9 @@
-/// @file nucleus-get-file-contents-windows.h
+/// @file nucleus-get-file-contents-linux.h
 /// @author Michael Heilmann
-/// @brief Get the contents of a file (Windows).
-
-#if defined(_WIN32)
-
+/// @brief Get the contents of a file (Linux).
 #pragma once
+
+#if defined(__linux__)
 
 #include "nucleus-get-file-contents.h"
 
@@ -13,11 +12,11 @@
 /// @return see the documentation of @a Nucleus_getFileContentsFunction for more information
 /// @post see the documentation of @a Nucleus_getFileContentsFunction for more information
 Nucleus_NonNull(1, 2, 3) Nucleus_Status
-Nucleus_getFileContentsWindows
-    (
-        Nucleus_InputParameter(const char *pathname),
-        Nucleus_OutputParameter(char **bytes),
-        Nucleus_OutputParameter(size_t *numberOfBytes)
-    );
+Nucleus_getFileContentsLinux
+	(
+		Nucleus_InputParameter(const char *pathname),
+		Nucleus_OutputParameter(char **bytes),
+		Nucleus_OutputParameter(size_t *numberOfBytes)
+	);
 
 #endif

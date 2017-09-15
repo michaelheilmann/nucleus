@@ -1,6 +1,6 @@
 /// @file nucleus-get-file-contents-windows.c
 /// @author Michael Heilmann
-/// @brief Get the contents of a file (Windows/WinAPI/file mappings).
+/// @brief Get the contents of a file (Windows).
 
 #if defined(_WIN32)
 
