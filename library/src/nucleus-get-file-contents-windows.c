@@ -6,7 +6,9 @@
 
 #include "nucleus-get-file-contents-windows.h"
 #include "nucleus-includes-windows.h"
+#include "nucleus-file-handle-windows.h"
 
+// For fprintf.
 #include <stdio.h>
 
 /// @internal
@@ -39,7 +41,7 @@ Nucleus_getFileSize
 typedef struct Nucleus_FileMapping Nucleus_FileMapping;
 struct Nucleus_FileMapping
 {
-	HANDLE hFile;
+	Nucleus_FileHandle *fileHandle;
 	HANDLE hFileMapping;
 	char *bytes;
 	size_t numberOfBytes;
@@ -59,37 +61,51 @@ Nucleus_FileMapping_initialize
         fprintf(stderr, "invalid arguments\n");
         return Nucleus_Status_InvalidArgument;
     }
-    // Open file.
-	fileMapping->hFile = CreateFileA(pathname, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-    if (INVALID_HANDLE_VALUE == fileMapping->hFile)
+	// Initialize members that might not be initialized later on with safe defaults.
+	fileMapping->hFileMapping = NULL;
+	fileMapping->fileHandle = NULL;
+	Nucleus_Status status;
+	
+	// Open the file handle.
+	status = Nucleus_FileHandle_create(&fileMapping->fileHandle,
+									   pathname,
+									   Nucleus_FileAccessMode_Read,
+									   Nucleus_ExistingFilePolicy_Retain,
+									   Nucleus_NonExistingFilePolicy_Fail);
+	if (status)
 	{
-        fprintf(stderr, "unable to open file '%s'\n", pathname);
-		// Return the result.
-        return Nucleus_Status_EnvironmentFailed;
-    }
+		return status;
+	}
     // Determine file size.
-	Nucleus_Status status = Nucleus_getFileSize(fileMapping->hFile, &fileMapping->numberOfBytes);
+	status = Nucleus_getFileSize(fileMapping->fileHandle->hFileHandle, &fileMapping->numberOfBytes);
 	if (status)
 	{
 		fprintf(stderr, "unable to open file '%s'\n", pathname);
+		// Close file handle.
+		Nucleus_FileHandle_destroy(fileMapping->fileHandle);
+		fileMapping->fileHandle = NULL;
 		// Return the result.
 		return status;
 	}
 	// If the file is empty, use a dummy buffer.
 	if (0 == fileMapping->numberOfBytes)
 	{
+		// Use a dummy buffer.
 		fileMapping->bytes = (char *)&DUMMY;
+		// Close file handle.
+		Nucleus_FileHandle_destroy(fileMapping->fileHandle);
+		fileMapping->fileHandle = NULL;
 		// Return the result.
         return Nucleus_Status_Success;
     }
     // Create file mapping.
-    fileMapping->hFileMapping = CreateFileMapping(fileMapping->hFile, 0, PAGE_READONLY, 0, 0, 0);
+    fileMapping->hFileMapping = CreateFileMapping(fileMapping->fileHandle->hFileHandle, 0, PAGE_READONLY, 0, 0, 0);
     if (NULL == fileMapping->hFileMapping)
 	{
         fprintf(stderr, "unable to open file '%s'\n", pathname);
-        // Close file.
-        CloseHandle(fileMapping->hFile);
-        fileMapping->hFile = NULL;
+		// Close file handle.
+		Nucleus_FileHandle_destroy(fileMapping->fileHandle);
+		fileMapping->fileHandle = NULL;
 		// Return the result.
         return Nucleus_Status_EnvironmentFailed;
     }
@@ -101,9 +117,9 @@ Nucleus_FileMapping_initialize
         // Close file mapping.
         CloseHandle(fileMapping->hFileMapping);
         fileMapping->hFileMapping = NULL;
-        // Close file.
-        CloseHandle(fileMapping->hFile);
-        fileMapping->hFile = NULL;
+		// Close file handle.
+		Nucleus_FileHandle_destroy(fileMapping->fileHandle);
+		fileMapping->fileHandle = NULL;
 		// Return the result.
         return Nucleus_Status_EnvironmentFailed;
     }
@@ -118,14 +134,24 @@ Nucleus_FileMapping_uninitialize
 	)
 {
     // Close view of file.
-    UnmapViewOfFile(fileMapping->bytes);
-    fileMapping->bytes = NULL;
+	if (&DUMMY != fileMapping->bytes)
+	{
+		UnmapViewOfFile(fileMapping->bytes);
+		fileMapping->bytes = NULL;
+	}
     // Close file mapping.
-    CloseHandle(fileMapping->hFileMapping);
-    fileMapping->hFileMapping = NULL;
+	if (NULL != fileMapping->hFileMapping)
+	{
+		CloseHandle(fileMapping->hFileMapping);
+		fileMapping->hFileMapping = NULL;
+	}
     // Close file.
-    CloseHandle(fileMapping->hFile);
-    fileMapping->hFile = NULL;
+	if (fileMapping->fileHandle)
+	{
+		// Close file handle.
+		Nucleus_FileHandle_destroy(fileMapping->fileHandle);
+		fileMapping->fileHandle = NULL;
+	}
 }
 
 Nucleus_NonNull(1, 2) Nucleus_Status

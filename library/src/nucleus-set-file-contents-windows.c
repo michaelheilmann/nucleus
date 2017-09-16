@@ -7,8 +7,9 @@
 
 #include "nucleus-set-file-contents-windows.h"
 #include "nucleus-includes-windows.h"
+#include "nucleus-file-handle-windows.h"
 
-
+// For fprintf.
 #include <stdio.h>
 
 Nucleus_NonNull(1, 2) Nucleus_Status
@@ -24,29 +25,44 @@ Nucleus_setFileContentsWindows
         fprintf(stderr, "invalid arguments\n");
         return Nucleus_Status_InvalidArgument;
     }
-    // Open file.
+	Nucleus_FileHandle *fileHandle;
+	Nucleus_Status status;
+	// Create file descriptor.
+	// Windows memory mapping require read access as well.
+	status = Nucleus_FileHandle_create(&fileHandle, pathname, Nucleus_FileAccessMode_ReadWrite,
+		                               Nucleus_ExistingFilePolicy_Truncate, Nucleus_NonExistingFilePolicy_Create);
+	if (status)
+	{
+		// Return the result.
+		return status;
+	}
+#if 0
+	// Open file.
     HANDLE hFile = CreateFileA(pathname, GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
     if (hFile == INVALID_HANDLE_VALUE)
 	{
         fprintf(stderr, "unable to open file '%s'\n", pathname);
         return Nucleus_Status_EnvironmentFailed;
     }
+#endif
     // If the size is zero, this function succeeded.
     if (numberOfBytes == 0)
 	{
-        // Close file.
-        CloseHandle(hFile);
-        hFile = NULL;
+        // Destroy file handle.
+		Nucleus_FileHandle_destroy(fileHandle);
+		fileHandle = NULL;
+		// Return the result.
         return Nucleus_Status_Success;
     }
     // Create file mapping.
-    HANDLE hFileMapping = CreateFileMapping(hFile, 0, PAGE_READWRITE, 0, numberOfBytes, NULL);
+    HANDLE hFileMapping = CreateFileMapping(fileHandle->hFileHandle, 0, PAGE_READWRITE, 0, numberOfBytes, NULL);
     if (NULL == hFileMapping)
 	{
         fprintf(stderr, "unable to create file mapping of file '%s'\n", pathname);
-        // Close file.
-        CloseHandle(hFile);
-        hFile = NULL;
+		// Destroy file handle.
+		Nucleus_FileHandle_destroy(fileHandle);
+		fileHandle = NULL;
+		// Return the result.
         return Nucleus_Status_EnvironmentFailed;
     }
     // Create view of file mapping.
@@ -57,9 +73,10 @@ Nucleus_setFileContentsWindows
         // Close file mapping.
         CloseHandle(hFileMapping);
         hFileMapping = NULL;
-        // Close file.
-        CloseHandle(hFile);
-        hFile = NULL;
+		// Destroy file handle.
+		Nucleus_FileHandle_destroy(fileHandle);
+		fileHandle = NULL;
+		// Return the result.
         return Nucleus_Status_EnvironmentFailed;
     }
 
@@ -72,9 +89,10 @@ Nucleus_setFileContentsWindows
     // Close file mapping.
     CloseHandle(hFileMapping);
     hFileMapping = NULL;
-    // Close file.
-    CloseHandle(hFile);
-    hFile = NULL;
+	// Destroy file handle.
+	Nucleus_FileHandle_destroy(fileHandle);
+	fileHandle = NULL;
+	// Return the result.
     return Nucleus_Status_Success;
 }
 
