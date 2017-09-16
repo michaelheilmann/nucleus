@@ -77,7 +77,7 @@ Nucleus_FileMapping_initialize
 		return status;
 	}
     // Determine file size.
-	status = Nucleus_getFileSize(fileMapping->fileHandle->hFileHandle, &fileMapping->numberOfBytes);
+	status = Nucleus_FileHandle_getFileSize(fileMapping->fileHandle, &fileMapping->numberOfBytes);
 	if (status)
 	{
 		fprintf(stderr, "unable to open file '%s'\n", pathname);

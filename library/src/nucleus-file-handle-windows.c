@@ -11,15 +11,18 @@
 #include <stdio.h>
 #include <malloc.h>
 
+// For SIZE_MAX.
+#include <stdint.h>
+
 Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_FileHandle_create
-(
-	Nucleus_FileHandle **fileHandle,
-	const char *pathname,
-	Nucleus_FileAccessMode fileAccessMode,
-	Nucleus_ExistingFilePolicy existingFilePolicy,
-	Nucleus_NonExistingFilePolicy nonExistingFilePolicy
-)
+	(
+		Nucleus_FileHandle **fileHandle,
+		const char *pathname,
+		Nucleus_FileAccessMode fileAccessMode,
+		Nucleus_ExistingFilePolicy existingFilePolicy,
+		Nucleus_NonExistingFilePolicy nonExistingFilePolicy
+	)
 {
 	// Validate arguments.
 	if (!fileHandle || !pathname)
@@ -121,6 +124,27 @@ Nucleus_FileHandle_destroy
 	}
 	// Deallocate file handle.
 	free(fileHandle);
+}
+
+Nucleus_NonNull(1, 2) Nucleus_Status
+Nucleus_FileHandle_getFileSize
+	(
+		Nucleus_FileHandle *fileHandle,
+		size_t *fileSize
+	)
+{
+	if (!fileHandle || !fileSize || INVALID_HANDLE_VALUE == fileHandle->hFileHandle)
+	{
+		return Nucleus_Status_InvalidArgument;
+	}
+	// Get the size of the file. The file size must be smaller than or equal to SIZE_MAX.
+	DWORD temporaryFileSize = GetFileSize(fileHandle->hFileHandle, NULL);
+	if (INVALID_FILE_SIZE == temporaryFileSize || temporaryFileSize > SIZE_MAX)
+	{
+		return Nucleus_Status_EnvironmentFailed;
+	}
+	*fileSize = temporaryFileSize;
+	return Nucleus_Status_Success;
 }
 
 #endif
