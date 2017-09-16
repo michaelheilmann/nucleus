@@ -5,12 +5,7 @@
 #if defined(_WIN32)
 
 #include "nucleus-get-file-contents-windows.h"
-
-#if defined(_WIN32)
-#include <Windows.h>
-#else
-#error("_WIN32 not defined")
-#endif
+#include "nucleus-includes-windows.h"
 
 #include <stdio.h>
 
@@ -83,7 +78,7 @@ Nucleus_FileMapping_initialize
 	// If the file is empty, use a dummy buffer.
 	if (0 == fileMapping->numberOfBytes)
 	{
-		fileMapping->bytes = &DUMMY;
+		fileMapping->bytes = (char *)&DUMMY;
 		// Return the result.
         return Nucleus_Status_Success;
     }
@@ -99,7 +94,7 @@ Nucleus_FileMapping_initialize
         return Nucleus_Status_EnvironmentFailed;
     }
     // Create view of file mapping.
-	fileMapping->bytes = (const char*)MapViewOfFile(fileMapping->hFileMapping, FILE_MAP_READ, 0, 0, 0);
+	fileMapping->bytes = (char *)MapViewOfFile(fileMapping->hFileMapping, FILE_MAP_READ, 0, 0, 0);
     if (NULL == fileMapping->bytes)
 	{
         fprintf(stderr, "unable to create view of file '%s'\n", pathname);

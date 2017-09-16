@@ -6,12 +6,8 @@
 #if defined(_WIN32)
 
 #include "nucleus-set-file-contents-windows.h"
+#include "nucleus-includes-windows.h"
 
-#if defined(_WIN32)
-#include <Windows.h>
-#else
-#error("_WIN32 not defined")
-#endif
 
 #include <stdio.h>
 
