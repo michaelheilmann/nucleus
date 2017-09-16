@@ -10,9 +10,9 @@
 #include "nucleus-file-handle.h"
 
 /// @internal
-/// @brief Implementation of @a (Nucleus_FileHandle) for Windows.
-typedef struct Nucleus_FileHandle_Linux Nucleus_FileHandle_Linux;
-struct Nucleus_FileHandle_Linux
+/// @brief Implementation of @a (Nucleus_FileHandle) for Linux.
+typedef struct Nucleus_FileHandle Nucleus_FileHandle;
+struct Nucleus_FileHandle
 {
 	/// @brief The file handle.
 	/// @default @a -1
