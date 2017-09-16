@@ -5,7 +5,7 @@
 
 #pragma once
 
-#if defined(__linux__)
+#if defined(unix)
 
 #include "nucleus-get-file-contents.h"
 

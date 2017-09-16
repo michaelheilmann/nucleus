@@ -3,7 +3,7 @@
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
 
-#if defined(__linux__)
+#if defined(unix)
 
 #pragma once
 
