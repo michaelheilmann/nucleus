@@ -1,3 +1,6 @@
+# Visual Studio.
+.vs
+
 # CMake folder
 CMakeFiles
 cmake_install.cmake

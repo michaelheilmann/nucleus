@@ -1,18 +1,20 @@
+# @author Michael Heilmann
+# @copyright Copyright (c) Michael Heilmann 2017
+
+# Minimum required CMake version.
 cmake_minimum_required (VERSION 2.6)
-project (lx-demo)
 
-message(STATUS "PROJECT_BINARY_DIR: " ${PROJECT_BINARY_DIR} )
-message(STATUS "CMAKE_CURRENT_SOURCE_DIR: " ${CMAKE_CURRENT_SOURCE_DIR})
+project (nucleus)
 
-# Get the sources in "src" relative to "src".
-file(GLOB Sources "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c")
-message(STATUS "Sources: " ${Sources})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# Get the sources in "src/os" relative to "src".
-file(GLOB SourcesOs "${CMAKE_CURRENT_SOURCE_DIR}/src/os/*.c")
-message(STATUS "SourcesOs: " ${SourcesOs})
+# The directory all modules are residing in.
+#set(Nucleus.ModulesDirectory "${CMAKE_CURRENT_SOURCE_DIR}")
 
-# Add the includes "src".
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/src")
+# Add module "library".
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/library")
 
-add_executable(lx-demo "${Sources}" "${SourcesOs}")
+# Add module "demo".
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/demo")
