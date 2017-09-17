@@ -9,15 +9,15 @@ project (Nucleus.Library)
 
 # Module directory.
 set(ModuleDirectory "${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "Nucleus.Library.ModuleDirectory:\n ${ModuleDirectory}")
+#message(STATUS "Nucleus.Library.ModuleDirectory:\n ${ModuleDirectory}")
 # Include directory.
 set(IncludeDirectory "${ModuleDirectory}/src")
-message(STATUS "Nucleus.Library.IncludeDirectory:\n ${IncludeDirectory}")
+#message(STATUS "Nucleus.Library.IncludeDirectory:\n ${IncludeDirectory}")
 # Source directory.
 set(SourceDirectory "${ModuleDirectory}/src")
-message(STATUS "Nucleus.Library.SourceDirectory:\n ${SourceDirectory}")
+#message(STATUS "Nucleus.Library.SourceDirectory:\n ${SourceDirectory}")
 # Sources.
 file(GLOB Sources "${SourceDirectory}/*.c")
-message(STATUS "Nucleus.Library.Sources:\n ${Sources}")
+#message(STATUS "Nucleus.Library.Sources:\n ${Sources}")
 # Library.
 add_library(nucleus-library STATIC "${Sources}")
