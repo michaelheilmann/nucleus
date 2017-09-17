@@ -31,10 +31,9 @@ typedef float single;
 /// @brief Get if a @a single value is subnormal.
 /// @param x the @a single value
 /// @param [out] r a pointer to an @a bool variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: @a (*r) was assigned @a true if the @a single value @a x is subnormal and was assigned @a false otherwise
-/// - on failure: @a r was not dereferenced
+/// @defaultReturn
+/// @success @a (*r) was assigned @a true if the @a single value @a x is subnormal and was assigned @a false otherwise
+/// @failure @a r was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Single_isSubnormal
 	(
@@ -46,10 +45,9 @@ Nucleus_Single_isSubnormal
 /// @brief Get if a @a single value is not a number (NaN).
 /// @param x the @a single value
 /// @param [out] r a pointer to an @a bool variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: @a (*r) was assigned @a true if the @a single value @a x is NaN and is assigned @a false otherwise
-/// - on failure: @a r was not dereferenced
+/// @defaultReturn
+/// @success @a (*r) was assigned @a true if the @a single value @a x is NaN and is assigned @a false otherwise
+/// @failure @a r was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Single_isNaN
 	(
@@ -60,11 +58,10 @@ Nucleus_Single_isNaN
 /// @ingroup FloatingPoint Hash
 /// @brief Compute the hash value of a @a single value.
 /// @param x the @a single value
-/// @param [out] r a pointer to a @a bool variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: @a (*hv) was assigned the hash value of the @a single value
-/// - on failure: @a hv was not dereferenced
+/// @param [out] hv a pointer to an @a (unsigned int) variable
+/// @defaultReturn
+/// @success @a (*hv) was assigned the hash value of the @a single value
+/// @failure @a hv was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Single_hash
 	(
@@ -79,10 +76,9 @@ Nucleus_Single_hash
 /// @brief Get if a @a double value is subnormal.
 /// @param x the @a double value
 /// @param [out] r a pointer to an @a bool variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: @a (*r) was assigned @a true if the @a double value @a x is subnormal and was assigned @a false otherwise
-/// - on failure: @a r was not dereferenced
+/// @defaultReturn
+/// @success @a (*r) was assigned @a true if the @a double value @a x is subnormal and was assigned @a false otherwise
+/// @failure @a r was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Double_isSubnormal
 	(
@@ -94,10 +90,9 @@ Nucleus_Double_isSubnormal
 /// @brief Get if a @a double value is not a number (NaN).
 /// @param x the @a double value
 /// @param [out] r a pointer to an @a bool variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: @a (*r) was assigned @a true if the @a double value @a x is NaN and is assigned @a false otherwise
-/// - on failure: @a r was not dereferenced
+/// @defaultReturn
+/// @success @a (*r) was assigned @a true if the @a double value @a x is NaN and is assigned @a false otherwise
+/// @failure @a r was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Double_isNaN
 	(
@@ -108,11 +103,10 @@ Nucleus_Double_isNaN
 /// @ingroup FloatingPoint Hash
 /// @brief Compute the hash value of a @a single value.
 /// @param x the @a single value
-/// @param [out] r a pointer to a @a bool variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: @a (*hv) was assigned the hash value of the @a single value
-/// - on failure: @a hv was not dereferenced
+/// @param [out] hv a pointer to an @a (unsigned int) variable
+/// @defaultReturn
+/// @success @a (*hv) was assigned the hash value of the @a single value
+/// @failure @a hv was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Double_hash
 	(

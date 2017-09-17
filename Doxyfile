@@ -238,13 +238,17 @@ TAB_SIZE               = 4
 # "Side Effects:". You can put \n's in the value part of an alias to insert
 # newlines.
 ALIASES =
-ALIASES += "memoryManagerParameter1=\param memoryManager a Spine_MemoryManager pointer.\nPassed as the first argument to the allocate and deallocate functions"
-ALIASES += "memoryManagerParameter2=\param allocate a pointer to a Spine_MemoryManager_Allocate function"
-ALIASES += "memoryManagerParameter3=\param deallocate a pointer to a Spine_MemoryManager_Deallocate function"
-ALIASES += "memoryManager=\memoryManagerParameter1 \memoryManagerParameter2 \memoryManagerParameter3"
-ALIASES += "nullPointerError{1}=\return #Spine_Status_InvalidArgument \a \1 was passed a null pointer"
-ALIASES += "memoryManagerError=\return #Spine_Status_InvalidArgument \a allocate or \a deallocate was passed a null pointer"
-ALIASES += "allocationFailedError=\return #Spine_Status_AllocationFailed an allocation failed"
+ALIASES += "success = \par On success\n"
+ALIASES += "failure = \par On failure\n"
+ALIASES += "noerror = \par No errors are raised by this function\n"
+ALIASES += "defaultReturn = @return #Nucleus_Status_Success on success, a non-zero status code on failure"
+#ALIASES += "memoryManagerParameter1=\param memoryManager a Spine_MemoryManager pointer.\nPassed as the first argument to the allocate and deallocate functions"
+#ALIASES += "memoryManagerParameter2=\param allocate a pointer to a Spine_MemoryManager_Allocate function"
+#ALIASES += "memoryManagerParameter3=\param deallocate a pointer to a Spine_MemoryManager_Deallocate function"
+#ALIASES += "memoryManager=\memoryManagerParameter1 \memoryManagerParameter2 \memoryManagerParameter3"
+#ALIASES += "nullPointerError{1}=\return #Spine_Status_InvalidArgument \a \1 was passed a null pointer"
+#ALIASES += "memoryManagerError=\return #Spine_Status_InvalidArgument \a allocate or \a deallocate was passed a null pointer"
+#ALIASES += "allocationFailedError=\return #Spine_Status_AllocationFailed an allocation failed"
 						 
 # This tag can be used to specify a number of word-keyword mappings (TCL only).
 # A mapping has the form "name=value". For example adding "class=itcl::class"
@@ -2106,9 +2110,10 @@ INCLUDE_FILE_PATTERNS  =
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
 PREDEFINED =
-PREDEFINED += "Spine_NonNull(...)="
-PREDEFINED += "Spine_InputParameter(x)=x"
-PREDEFINED += "Spine_OutputParameter(x)=x"
+PREDEFINED += "Nucleus_NoError(...)="
+PREDEFINED += "Nucleus_NonNull(...)="
+PREDEFINED += "Nucleus_InputParameter(x)=x"
+PREDEFINED += "Nucleus_OutputParameter(x)=x"
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The
@@ -2118,9 +2123,6 @@ PREDEFINED += "Spine_OutputParameter(x)=x"
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
 EXPAND_AS_DEFINED =
-#EXPAND_AS_DEFINED += Spine_NonNull(x)=""
-#EXPAND_AS_DEFINED += Spine_InputParameter(x)="x"
-#EXPAND_AS_DEFINED += Spine_OutputParameter(x)="x"
 
 # If the SKIP_FUNCTION_MACROS tag is set to YES then doxygen's preprocessor will
 # remove all references to function-like macros that are alone on a line, have

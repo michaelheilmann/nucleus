@@ -20,10 +20,8 @@ typedef struct Nucleus_FileHandle Nucleus_FileHandle;
 /// @brief Create a file handle.
 /// @param [out] fileHandle a pointer to a @a (Nucleus_FileHandle *) variable
 /// @param pathname a pointer to the pathname of the file
-/// @post 
-/// - on success: The @a (Nucleus_FileHandle) object was created. 
-///                @a (*fileHandle) was assigned a pointer to the @a (Nucleu_FileHandle) object.
-/// - on failure: Neither @a (*fileHandle) was not dereferenced.
+/// @success @a (*fileHandle) was assigned a pointer to the created @a (Nucleus_FileHandle) object.
+/// @failure @a (*fileHandle) was not dereferenced.
 Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_FileHandle_create
 	(
@@ -46,10 +44,9 @@ Nucleus_FileHandle_destroy
 /// @brief Get the size of thefi
 /// @param fileHandle a pointer to a @a (Nucleus_FileHandle) object
 /// @param fileSize a pointer to a @a (size_t) variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: The size of the file represented by the @a (Nucleu_FileHandle) object pointed to by @a (fileHandle) was assigned to @a (*fileSize).
-/// - on failure: @a (*fileSize) was not dereferenced.
+/// @defaultReturn
+/// @success The size of the file represented by the @a (Nucleu_FileHandle) object pointed to by @a (fileHandle) was assigned to @a (*fileSize).
+/// @failure @a (*fileSize) was not dereferenced.
 Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_FileHandle_getFileSize
 	(

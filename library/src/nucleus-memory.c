@@ -9,10 +9,10 @@
 
 
 
-/// @brief Get if two memory regions overlap.
-/// @param a pointers to the first Byte of the first memory region
-/// @param b pointer to the first Byte of the second memory region
-/// @param n the size of the memory region prefixes
+/// @brief Get if two memory blocks overlap.
+/// @param a pointers to the first Byte of the first memory block
+/// @param b pointer to the first Byte of the second memory block
+/// @param n the size of the memory block prefixes
 Nucleus_NoError() Nucleus_NonNull(1, 2) static bool
 overlapping
 	(

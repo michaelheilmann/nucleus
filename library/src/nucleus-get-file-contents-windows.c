@@ -15,7 +15,7 @@
 /// @brief Get the size of a file.
 /// @param fileDescriptor a file descriptor
 /// @param fileSize a pointer to a @a (size_t) variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
+/// @defaultReturn
 static Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_getFileSize
 	(

@@ -11,7 +11,7 @@
 /// An empty indicates that all pointer parameters expect non-null values.
 /// @details For example in following declaration this macro is used to annotate the parameters
 /// @a y and @a w as expecing non-null argument values.
-/// @code Spine_NonNull(2,4) void f(char *x, char *y, char *z, char *w); @endcode
+/// @code Nucleus_NonNull(2,4) void f(char *x, char *y, char *z, char *w); @endcode
 /// Note that the parameter indices are 1-based.
 #define Nucleus_NonNull(...)
 
@@ -51,6 +51,6 @@
 /// @endcode
 #define Nucleus_InputOutputParameter(parameter) parameter
 
-/// @brief Alias for @code{Nucleus_InputOutputParameter}.
+/// @brief Alias for Nucleus_InputOutputParameter.
 /// @param parameter the parameter declaration
 #define Nucleus_OutputInputParameter(parameter) parameter

@@ -14,7 +14,7 @@
 /// @param pathname a pointer to the pathname of the file
 /// @param bytes a pointer to a @a (char *) variable
 /// @param numberOfBytes a pointer to a @a (size_t) variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
+/// @defaultReturn
 Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_setFileContents
     (

@@ -24,13 +24,9 @@ typedef void Nucleus_MemoryManager_DeallocationParameters;
 /// @param state the memory manager state
 /// @param allocationParameters the memory manager allocation parameters
 /// @param numberOfBytes the number of Bytes to allocate. Zero-sized arrays of Bytes are supported i.e. @a numberOfBytes can be @a 0.
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - On Success:
-/// -- @a (*memoryBlock) is assigned the address of the first Byte of the memory block
-/// -- #Spine_Status_Success is returned
-/// - On Failure:
-/// -- A non-zero status code is returned.
+/// @defaultReturn
+/// @success @a (*memoryBlock) is assigned the address of the first Byte of the memory block
+/// @failure A non-zero status code is returned.
 typedef Nucleus_NonNull(3) Nucleus_Status
 Nucleus_MemoryManager_Allocate
 	(

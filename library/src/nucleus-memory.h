@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-/// @defgroup Memory
+/// @defgroup Memory memory block support
 /// @brief
 /// allocation and deallocation of memory blocks, valuation and manipulation of memory blocks and their contents
 /// @remark
@@ -28,10 +28,9 @@
 /// @brief Allocate a memory block of a specified size.
 /// @param [out] p a pointer to a @a (void *) variable
 /// @param n the size, in Bytes, of the memory block to allocate. Note that @a 0 is a valid size.
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: a pointer to the first Byte of the memory block was assigned to @a (*p)
-/// - on failure: @a p was not dereferenced
+/// @defaultReturn
+/// @success a pointer to the first Byte of the memory block was assigned to @a (*p)
+/// @failure @a p was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_allocateMemory
 	(
@@ -43,10 +42,9 @@ Nucleus_allocateMemory
 /// @brief Allocate a memory block of a specified size.
 /// @param [out] p a pointer to a @a (void *) variable
 /// @param n, m the product of @a n and @a m is the size, in Bytes, of the memory block to allocate. Note that @a 0 is a valid size.
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: a pointer to the first Byte of the memory block was assigned to @a (*p)
-/// - on failure: @a p was not dereferenced
+/// @defaultReturn
+/// @success a pointer to the first Byte of the memory block was assigned to @a (*p)
+/// @failure @a p was not dereferenced
 /// @remark The size is specified in terms of array semantics i.e. @a n should be thought of as the array size, in elements, and @a m as the element size, in Bytes.
 ///         The @a *_ArrayMemory function exist for convenience as a frequent task in C program is the allocation of arrays.
 ///         Another reason is safety: This function fails if the product of @a n and @a m is not representable by @a size_t t.
@@ -72,7 +70,7 @@ Nucleus_deallocateMemory
 /// @param p a pointer to the first Byte of the target memory block
 /// @param q a pointer to the first Byte of the source memory block
 /// @param n the number of Byte to copy
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
+/// @defaultReturn
 /// @remark The source and the target memory blocks may or may not overlap.
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_copyMemory
@@ -88,7 +86,7 @@ Nucleus_copyMemory
 /// @param q a pointer to the first Byte of the source memory block
 /// @param n the size, in elements, of the memory block array prefix to copy. Note that @a 0 is a valid size.
 /// @param m the size, in Bytes, of an element of the memory block array prefix to copy. Note that @a 0 is a valid size.
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
+/// @defaultReturn
 /// @remark The source and the target memory blocks may or may not overlap.
 /// @remark The size is specified in terms of array semantics i.e. by an array size, in elements, and an element size, in Bytes.
 ///         This function fails if the product of @a n and @a m is not representable by @a size_t t.
@@ -106,10 +104,9 @@ Nucleus_copyArrayMemory
 /// @param p, q pointers to the memory blocks
 /// @param n the size, in Bytes, of the memory blocks. Note that @a 0 is a valid size.
 /// @param [out] r a pointer to a @a (bool) variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: @a (*r) was assigned @a true if the memory regions are equal and was assigned @a false if the memory regions are not equal
-/// - on failure: @a r was not dereferenced
+/// @defaultReturn
+/// @success @a (*r) was assigned @a true if the memory regions are equal and was assigned @a false if the memory regions are not equal
+/// @failure @a r was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_compareMemory
 	(
@@ -124,10 +121,9 @@ Nucleus_compareMemory
 /// @param p, q pointers to the memory blocks
 /// @param n the size, in elements, of the memory blocks. Note that @a 0 is a valid size.
 /// @param m the size, in Bytes, of an element of the memory blocks. Note that @a 0 is a valid size.
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: @a (*r) was assigned @a true if the memory regions are equal and was assigned @a false if the memory regions are not equal
-/// - on failure: @a r was not dereferenced
+/// @defaultReturn
+/// @success @a (*r) was assigned @a true if the memory regions are equal and was assigned @a false if the memory regions are not equal
+/// @failure @a r was not dereferenced
 /// @remark The size is specified in terms of array semantics i.e. by an array size, in elements, and an element size, in Bytes.
 ///         This function fails if the product of @a n and @a m is not representable by @a size_t t.
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
@@ -145,10 +141,9 @@ Nucleus_compareArrayMemory
 /// @param p a pointer to an array of @a numberOfBytes Bytes
 /// @param n the number of Bytes in the array pointed to by @a Bytes
 /// @param [out] hv a pointer to an @a (unsigned int) variable
-/// @return #Spine_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: @a (*hv) was assigned the hash value of the memory block
-/// - on failure: @a hv was not dereferenced
+/// @defaultReturn
+/// @success @a (*hv) was assigned the hash value of the memory block
+/// @failure @a hv was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(1, 3) Nucleus_Status
 Nucleus_hashMemory
 	(
@@ -163,10 +158,9 @@ Nucleus_hashMemory
 /// @param n the size, in elements, of the memory blocks. Note that @a 0 is a valid size.
 /// @param m the size, in Bytes, of an element of the memory blocks. Note that @a 0 is a valid size.
 /// @param [out] hv a pointer to an @a (unsigned int) variable
-/// @return #Spine_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: @a (*hv) was assigned the hash value of the memory block
-/// - on failure: @a hv was not dereferenced
+/// @defaultReturn
+/// @success @a (*hv) was assigned the hash value of the memory block
+/// @failure @a hv was not dereferenced
 /// @remark The size is specified in terms of array semantics i.e. by an array size, in elements, and an element size, in Bytes.
 ///         This function fails if the product of @a n and @a m is not representable by @a size_t t.
 Nucleus_NoError() Nucleus_NonNull(1, 4) Nucleus_Status
