@@ -44,8 +44,32 @@ Nucleus_Single_hash
 		unsigned int *hv
 	)
 {
-	if (x == 0.0f) x = +0.0f;	// +0.0f == -0.0f. Hence, map both to +0.0f.
-	return Nucleus_hashMemory((const void *)&x, sizeof(single), hv);
+	if (!hv) return Nucleus_Status_InvalidArgument;
+	switch (fpclassify(x))
+	{
+		case FP_INFINITE:
+		{ 
+			*hv = x > 0.0f ? -1 : -2;
+			return Nucleus_Status_Success;
+		}
+		case FP_NAN:
+		{
+			*hv = -2;
+			return Nucleus_Status_Success;
+		};
+		case FP_NORMAL:
+        case FP_SUBNORMAL:
+		{
+			if (x == 0.0f) x = +0.0f; // +0.0f == -0.0f. Hence, map both to +0.0f.
+			return Nucleus_hashMemory((const void *)&x, sizeof(single), hv);
+		}
+		case FP_ZERO:
+		{ 
+			*hv = 0;
+			return Nucleus_Status_Success;
+		}
+		default: exit(EXIT_FAILURE); /// @todo Use Nucleus_unreachableCodeReached.
+    };
 }
 
 
@@ -75,8 +99,6 @@ Nucleus_Double_isNaN
 	return Nucleus_Status_Success;
 }
 
-
-
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Double_hash
 	(
@@ -84,6 +106,30 @@ Nucleus_Double_hash
 		unsigned int *hv
 	)
 {
-	if (x == 0.0) x = +0.0;	// +0.0 == -0.0. Hence, map both to +0.0.
-	return Nucleus_hashMemory((const void *)&x, sizeof(double), hv);
+	if (!hv) return Nucleus_Status_InvalidArgument;
+	switch (fpclassify(x))
+	{
+		case FP_INFINITE:
+		{ 
+			*hv = x > 0.0 ? -1 : -2;
+			return Nucleus_Status_Success;
+		}
+		case FP_NAN:
+		{
+			*hv = -2;
+			return Nucleus_Status_Success;
+		};
+		case FP_NORMAL:
+        case FP_SUBNORMAL:
+		{
+			if (x == 0.0) x = +0.0;	// +0.0 == -0.0. Hence, map both to +0.0.
+			return Nucleus_hashMemory((const void *)&x, sizeof(double), hv);
+		}
+		case FP_ZERO:
+		{ 
+			*hv = 0;
+			return Nucleus_Status_Success;
+		}
+		default: exit(EXIT_FAILURE); /// @todo Use Nucleus_unreachableCodeReached.
+    };
 }
