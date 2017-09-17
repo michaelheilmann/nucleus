@@ -15,10 +15,6 @@
 /// Note that the parameter indices are 1-based.
 #define Nucleus_NonNull(...)
 
-/// @brief Annotation for an input parameter variable.
-
-
-
 /// @brief A parameter annotation indicating a parameter is an input parameter.
 /// @details
 /// This macro can be used to indicate that a parameter is an output parameter.
