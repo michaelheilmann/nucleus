@@ -68,8 +68,8 @@ Nucleus_FileMapping_initialize
 		return Nucleus_Status_Success;
 	}
 	// Open the mapping.
-	char *mapping = mmap(NULL, fileMapping->numberOfBytes, PROT_READ, MAP_PRIVATE, fileMapping->fileHandle->fileDescriptor, 0);
-	if (MAP_FAILED == mapping)
+	fileMapping->bytes = mmap(NULL, fileMapping->numberOfBytes, PROT_READ, MAP_PRIVATE, fileMapping->fileHandle->fileDescriptor, 0);
+	if (MAP_FAILED == fileMapping->bytes)
 	{
 		fprintf(stderr, "unable to open file '%s'\n", pathname);
 		// Close file handle.
