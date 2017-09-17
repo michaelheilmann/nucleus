@@ -10,22 +10,21 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-/// @defgroup memory
+/// @defgroup Memory
 /// @brief
 /// allocation and deallocation of memory blocks, valuation and manipulation of memory blocks and their contents
-/// @detail
 /// @remark
 /// A memory block is a sequence of Byte variables that are consecutively layed-out in memory.
 /// As usual woth C, a pointer p to the first Byte increment by 1 will point to the second Byte, a pointer p to the second Byte increment by 1 will point to the third Byte an so on.
 /// The number of Byte variables of a memory block is the size of a memory region.
 ///
-/// @remar
+/// @remark
 /// The tasks of allocation and deallocation of memory blocks, valuation and manipulation of memory blocks and their contents are in C frequently performed over memory blocks
 /// of which their sizes are specified in terms of array semantics: The memory block is considered as an array 
 /// To support this frequent task the @a (*ArrayMemory) function exist for convenience. Another reason for their existence is safety: These function fail if the multiplication     of @a n
 /// and @a m would overflow.
 
-/// @ingroup memory
+/// @ingroup Memory
 /// @brief Allocate a memory block of a specified size.
 /// @param [out] p a pointer to a @a (void *) variable
 /// @param n the size, in Bytes, of the memory block to allocate. Note that @a 0 is a valid size.
@@ -40,7 +39,7 @@ Nucleus_allocateMemory
 		size_t n
 	);
 	
-/// @ingroup memory
+/// @ingroup Memory
 /// @brief Allocate a memory block of a specified size.
 /// @param [out] p a pointer to a @a (void *) variable
 /// @param n, m the product of @a n and @a m is the size, in Bytes, of the memory block to allocate. Note that @a 0 is a valid size.
@@ -59,7 +58,7 @@ Nucleus_allocateArrayMemory
 		size_t m
 	);
 	
-/// @ingroup memory
+/// @ingroup Memory
 /// @brief Deallocate a memory block.
 /// @param p a pointer to a memory block previously allocated by Nucleus_allocateMemory or Nucleus_allocateArrayMemory.
 Nucleus_NoError() void
@@ -68,7 +67,7 @@ Nucleus_deallocateMemory
 		void *p
 	);
 
-/// @ingroup memory
+/// @ingroup Memory
 /// @brief Copy the contents of a memory block to another memory block.
 /// @param p a pointer to the first Byte of the target memory block
 /// @param q a pointer to the first Byte of the source memory block
@@ -83,7 +82,7 @@ Nucleus_copyMemory
 		size_t n
 	);
 
-/// @ingroup memory
+/// @ingroup Memory
 /// @brief Copy the prefix of a memory block to a prefix of another memory block.
 /// @param p a pointer to the first Byte of the target memory block
 /// @param q a pointer to the first Byte of the source memory block
@@ -102,7 +101,7 @@ Nucleus_copyArrayMemory
 		size_t m
 	);
 
-/// @ingroup memory
+/// @ingroup Memory
 /// @brief Get if two memory blocks are equal.
 /// @param p, q pointers to the memory blocks
 /// @param n the size, in Bytes, of the memory blocks. Note that @a 0 is a valid size.
@@ -120,7 +119,7 @@ Nucleus_compareMemory
 		bool *r
 	);
 
-/// @ingroup memory
+/// @ingroup Memory
 /// @brief Get if two memory blocks are equal.
 /// @param p, q pointers to the memory blocks
 /// @param n the size, in elements, of the memory blocks. Note that @a 0 is a valid size.
@@ -139,4 +138,42 @@ Nucleus_compareArrayMemory
 		size_t n,
 		size_t m,
 		bool *r
+	);
+
+/// @ingroup Memory Hash
+/// @brief Compute the hash value of an array of Bytes.
+/// @param p a pointer to an array of @a numberOfBytes Bytes
+/// @param n the number of Bytes in the array pointed to by @a Bytes
+/// @param [out] hv a pointer to an @a (unsigned int) variable
+/// @return #Spine_Status_Success on success, a non-zero status code on failure
+/// @post
+/// - on success: @a (*hv) was assigned the hash value of the memory block
+/// - on failure: @a hv was not dereferenced
+Nucleus_NoError() Nucleus_NonNull(1, 3) Nucleus_Status
+Nucleus_hashMemory
+	(
+		const void *p,
+		size_t n,
+		unsigned int *hv
+	);
+	
+/// @ingroup Memory Hash
+/// @brief Compute the hash value of an array of Bytes.
+/// @param p a pointer to an array of @a numberOfBytes Bytes
+/// @param n the size, in elements, of the memory blocks. Note that @a 0 is a valid size.
+/// @param m the size, in Bytes, of an element of the memory blocks. Note that @a 0 is a valid size.
+/// @param [out] hv a pointer to an @a (unsigned int) variable
+/// @return #Spine_Status_Success on success, a non-zero status code on failure
+/// @post
+/// - on success: @a (*hv) was assigned the hash value of the memory block
+/// - on failure: @a hv was not dereferenced
+/// @remark The size is specified in terms of array semantics i.e. by an array size, in elements, and an element size, in Bytes.
+///         This function fails if the product of @a n and @a m is not representable by @a size_t t.
+Nucleus_NoError() Nucleus_NonNull(1, 4) Nucleus_Status
+Nucleus_hashArrayMemory
+	(
+		const void *p,
+		size_t n,
+		size_t m,
+		unsigned int *hv
 	);
