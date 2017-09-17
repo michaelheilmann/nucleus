@@ -7,6 +7,6 @@
 
 #if defined(unix)
 
-#include "nucleus-get-file-contents.h"
+#include "nucleus-get-file-contents-interface.h"
 
 #endif
