@@ -8,7 +8,7 @@
 #pragma once
 
 #include "nucleus-includes-windows.h"
-#include "nucleus-file-handle.h"
+#include "nucleus-file-handle-interface.h"
 
 /// @internal
 /// @brief Implementation of @a (Nucleus_FileHandle) for Windows.

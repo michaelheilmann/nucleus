@@ -102,7 +102,7 @@ Nucleus_FileMapping_uninitialize
 }
 
 Nucleus_NonNull(1, 2, 3) Nucleus_Status
-Nucleus_getFileContentsLinux
+Nucleus_getFileContents
 	(
 		Nucleus_InputParameter(const char *pathname),
 		Nucleus_OutputParameter(char **bytes),
@@ -144,7 +144,7 @@ Nucleus_getFileContentsLinux
 }
 
 Nucleus_NonNull(1,2,3) Nucleus_Status
-Nucleus_getFileContentsExtendedLinux
+Nucleus_getFileContentsExtended
 	(
 		Nucleus_InputParameter(const char *pathname),
 		Nucleus_InputOutputParameter(void *object),

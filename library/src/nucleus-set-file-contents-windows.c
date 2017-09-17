@@ -13,7 +13,7 @@
 #include <stdio.h>
 
 Nucleus_NonNull(1, 2) Nucleus_Status
-Nucleus_setFileContentsWindows
+Nucleus_setFileContents
     (
         Nucleus_InputParameter(const char *pathname),
         Nucleus_InputParameter(const char *bytes),

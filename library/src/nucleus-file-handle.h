@@ -5,54 +5,5 @@
 
 #pragma once
 
-#include "nucleus-annotations.h"
-#include "nucleus-status.h"
-#include "nucleus-non-existing-file-policy.h"
-#include "nucleus-existing-file-policy.h"
-#include "nucleus-file-access-mode.h"
-
-// For size_t.
-#include <stdlib.h>
-
-/// @brief The opaque type of a file handle.
-typedef struct Nucleus_FileHandle Nucleus_FileHandle;
-
-/// @brief Create a file handle.
-/// @param [out] fileHandle a pointer to a @a (Nucleus_FileHandle *) variable
-/// @param pathname a pointer to the pathname of the file
-/// @post 
-/// - on success: The @a (Nucleus_FileHandle) object was created. 
-///                @a (*fileHandle) was assigned a pointer to the @a (Nucleu_FileHandle) object.
-/// - on failure: Neither @a (*fileHandle) was not dereferenced.
-Nucleus_NonNull(1, 2) Nucleus_Status
-Nucleus_FileHandle_create
-	(
-		Nucleus_FileHandle **fileHandle,
-		const char *pathname,
-		Nucleus_FileAccessMode fileAccessMode,
-		Nucleus_ExistingFilePolicy existingFilePolicy,
-		Nucleus_NonExistingFilePolicy nonExistingFilePolicy
-	);
-
-/// @brief Destroy a @a (Nucleus_FileHandle_Prototype) object.
-/// @param fileHandle a pointer to the @a (Nucleus_FileHandle_Prototype) object
-/// @post The @a (Nucleus_FileHandle_Prototype) object pointed by @a (*fileHandle) was destroyed.
-Nucleus_NonNull(1) void
-Nucleus_FileHandle_destroy
-	(
-		Nucleus_FileHandle *fileHandle
-	);
-
-/// @brief Get the size of thefi
-/// @param fileHandle a pointer to a @a (Nucleus_FileHandle) object
-/// @param fileSize a pointer to a @a (size_t) variable
-/// @return #Nucleus_Status_Success on success, a non-zero status code on failure
-/// @post
-/// - on success: The size of the file represented by the @a (Nucleu_FileHandle) object pointed to by @a (fileHandle) was assigned to @a (*fileSize).
-/// - on failure: @a (*fileSize) was not dereferenced.
-Nucleus_NonNull(1, 2) Nucleus_Status
-Nucleus_FileHandle_getFileSize
-	(
-		Nucleus_FileHandle *fileHandle,
-		size_t *fileSize
-	);
+#include "nucleus-file-handle-linux.h"
+#include "nucleus-file-handle-windows.h"

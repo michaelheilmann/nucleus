@@ -155,7 +155,7 @@ Nucleus_FileMapping_uninitialize
 }
 
 Nucleus_NonNull(1, 2) Nucleus_Status
-Nucleus_getFileContentsWindows
+Nucleus_getFileContents
     (
         Nucleus_InputParameter(const char *pathname),
         Nucleus_OutputParameter(char **bytes),
@@ -196,8 +196,8 @@ Nucleus_getFileContentsWindows
     return Nucleus_Status_Success;
 }
 
-Nucleus_NonNull(1,2,3) Nucleus_Status
-Nucleus_getFileContentsExtendedWindows
+Nucleus_NonNull(1, 3) Nucleus_Status
+Nucleus_getFileContentsExtended
 	(
 		Nucleus_InputParameter(const char *pathname),
 		Nucleus_InputOutputParameter(void *object),
