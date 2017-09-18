@@ -81,3 +81,25 @@
 /// @brief Alias for Nucleus_InputOutputParameter.
 /// @param parameter the parameter declaration
 #define Nucleus_OutputInputParameter(parameter) parameter /**< @hideinitializer */
+
+/// @ingroup Annotations
+/// @brief Expression annotation. Provides branch prediction information.
+/// @details Given an expression @a e this macro evaluates to @a 1 or @a 0.depending on wether @a e evalutates to logically true or logically false.
+///          The branch prediction assumption is that @a e is more likely to evaluate to logically true.
+/// @param expression an expression
+#if defined(Nucleus_Compiler_GCC)
+	#define Nucleus_Likely(expression) (__builtin_expect((expression) ? 1 : 0, 1)) /**< @hideinitializer */
+#else
+	#define Nucleus_Likely(expression) /**< @hideinitializer */
+#endif
+
+/// @ingroup Annotations
+/// @brief Expression annotation. Provides branch predicition information.
+/// @details Given an expression @a e this macro evaluates to @a 1 or @a 0.depending on wether @a e evalutates to logically true or logically false.
+///          The branch prediction assumption is that @a e is more likely to evaluate to logically false.
+/// @param expresion an expression
+#if defined(Nucleus_Compiler_GCC)
+	#define Nucleus_Unlikely(expression) (__builtin_expect((expression) ? 1 : 0, 0)) /**< @hideinitializer */
+#else
+	#define Nucleus_Unlikely(expression) /**< @hideinitializer */
+#endif
