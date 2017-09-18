@@ -27,6 +27,18 @@
 #endif
 
 /// @ingroup Annotations
+/// @brief A function annotation indicating that a function return value should be a non-null pointer.
+/// @details For example in following declaration this macro is used to annotate the parameters
+/// @a y and @a w as expecing non-null argument values.
+/// @code Spine_NonNull(2,4) void f(char *x, char *y, char *z, char *w); @endcode
+/// Note that the parameter indices are 1-based.
+#if defined(Nucleus_Compiler_GCC) && !defined(DOXYGEN)
+	#define Nucleus_ReturnNonNull() __attribute__((returns_nonnull) /**< @hideinitializer */
+#else
+	#define Nucleus_ReturnNonNull()
+#endif
+
+/// @ingroup Annotations
 /// @brief A parameter annotation indicating a parameter is an input parameter.
 /// @details
 /// This macro can be used to indicate that a parameter is an output parameter.
