@@ -95,7 +95,7 @@ Nucleus_Double_isNaN
 	)
 {
 	if (!r) return Nucleus_Status_InvalidArgument;
-	(*r) == (FP_NAN == fpclassify(x));
+	(*r) = (FP_NAN == fpclassify(x));
 	return Nucleus_Status_Success;
 }
 
