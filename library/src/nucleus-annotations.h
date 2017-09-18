@@ -90,7 +90,7 @@
 #if defined(Nucleus_Compiler_GCC)
 	#define Nucleus_Likely(expression) (__builtin_expect((expression) ? 1 : 0, 1)) /**< @hideinitializer */
 #else
-	#define Nucleus_Likely(expression) /**< @hideinitializer */
+	#define Nucleus_Likely(expression) (expression) /**< @hideinitializer */
 #endif
 
 /// @ingroup Annotations
@@ -101,5 +101,5 @@
 #if defined(Nucleus_Compiler_GCC)
 	#define Nucleus_Unlikely(expression) (__builtin_expect((expression) ? 1 : 0, 0)) /**< @hideinitializer */
 #else
-	#define Nucleus_Unlikely(expression) /**< @hideinitializer */
+	#define Nucleus_Unlikely(expression) (expression) /**< @hideinitializer */
 #endif
