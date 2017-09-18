@@ -15,7 +15,7 @@
 	#define Nucleus_Compiler_GCC
 #endif
 
-#if defined(_MSCVER)
+#if defined(_MSC_VER)
 	/// @brief If defined, then the compiler compiling this program is "Visual C++".
 	#define Nucleus_Compiler_MSVC
 #endif
