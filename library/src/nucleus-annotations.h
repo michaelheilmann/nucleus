@@ -2,6 +2,8 @@
 /// @brief Function and parameter annotations.
 #pragma once
 
+#include "nucleus-config.h"
+
 /// @brief A function annotation indicating that the function never raises an error.
 #define Nucleus_NoError()
 
@@ -13,7 +15,11 @@
 /// @a y and @a w as expecing non-null argument values.
 /// @code Nucleus_NonNull(2,4) void f(char *x, char *y, char *z, char *w); @endcode
 /// Note that the parameter indices are 1-based.
-#define Nucleus_NonNull(...)
+#if defined(Nucleus_Compiler_GCC)
+	#define Nucleus_NonNull(...) __attribute__((nonnull (__VA_ARGS__)))
+#else
+	#define Nucleus_NonNull(...)
+#endif
 
 /// @brief A parameter annotation indicating a parameter is an input parameter.
 /// @details
