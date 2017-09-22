@@ -4,10 +4,10 @@
 /// @copyright Copyright (c) Michael Heilmann 2017
 #include "nucleus-memory.h"
 
+#include "nucleus-config.h"
+#include "nucleus-safe-arithmetic-operations.h"
 #include <malloc.h>
 #include <memory.h>
-
-
 
 /// @brief Get if two memory blocks overlap.
 /// @param a pointers to the first Byte of the first memory block
@@ -48,7 +48,7 @@ Nucleus_allocateArrayMemory
 	)
 {
 	size_t k;
-	if (!__builtin_mul_overflow(n, m, &k)) return Nucleus_Status_Overflow;
+	if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
 	return Nucleus_allocateMemory(p, k);
 }
 
@@ -85,7 +85,7 @@ Nucleus_copyArrayMemory
 	)
 {
 	size_t k;
-	if (!__builtin_mul_overflow(n, m, &k)) return Nucleus_Status_Overflow;
+	if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
 	return Nucleus_copyMemory(p, q, k);
 }
 
@@ -114,7 +114,7 @@ Nucleus_compareArrayMemory
 	)
 {
 	size_t k;
-	if (!__builtin_mul_overflow(n, m, &k)) return Nucleus_Status_Overflow;
+	if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
 	return Nucleus_compareMemory(p, q, k, r);
 }
 
@@ -153,6 +153,6 @@ Nucleus_hashArrayMemory
 	)
 {
 	size_t k;
-	if (!__builtin_mul_overflow(n, m, &k)) return Nucleus_Status_Overflow;
+	if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
 	return Nucleus_hashMemory(p, k, hv);
 }
