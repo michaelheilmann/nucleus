@@ -20,7 +20,7 @@ addons:
         packages:
             # GCC 6
             - gcc-6
-            #- g++-6
+            - g++-6
             # CLANG 3.8
             - clang-3.8
             #- libc++-dev
@@ -58,7 +58,7 @@ install:
 
 before_script:  
 - export CC=gcc-6
-#- export CXX=g++-6
+- export CXX=g++-6
 # Log the versions of the C and C++ compiler, log the version of CMake. 
 #- gcc -v
 #- g++ -v

@@ -5,10 +5,15 @@
 cmake_minimum_required (VERSION 2.6)
 
 # Project.
-project (Nucleus.Demo C)
+project (Nucleus.Test)
+
+# Add Google test subdirectory and enable testing.
+enable_testing()
+include_directories(${googletest_dir}/googletest/include ${googletest_dir}/src)
 
 # == GCC specific settings ====================================================================== #
 if (CMAKE_COMPILER_IS_GNUCC)
+  message("compiler is GCC")
   # Enable all warnings and extra warnings.
   add_definitions("-Wall -Wextra")
   # Disable some warnings. Deactivated: Nucleus library can have these warnings enabled.
@@ -18,6 +23,26 @@ if (CMAKE_COMPILER_IS_GNUCC)
   # Enable extra debug information.
   add_definitions("-ggdb3")
 ENDIF(CMAKE_COMPILER_IS_GNUCC)
+
+# == MSVC specific settings ====================================================================== #
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
+  message("compiler is MSVC")
+  set(variables
+      CMAKE_C_FLAGS_DEBUG
+      CMAKE_C_FLAGS_MINSIZEREL
+      CMAKE_C_FLAGS_RELEASE
+      CMAKE_C_FLAGS_RELWITHDEBINFO
+      CMAKE_CXX_FLAGS_DEBUG
+      CMAKE_CXX_FLAGS_MINSIZEREL
+      CMAKE_CXX_FLAGS_RELEASE
+      CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+  foreach(variable ${variables})
+	if(${variable} MATCHES "/MD")
+      string(REGEX REPLACE "/MD" "/MT" ${variable} "${${variable}}")
+    endif()
+  endforeach()
+  set(MSVC_RUNTIME "static")
+ENDIF()
 
 # == Executable ================================================================================= #
 
@@ -31,10 +56,10 @@ set(IncludeDirectory "${ModuleDirectory}/rc")
 set(SourceDirectory "${ModuleDirectory}/src")
 #message(STATUS "Nucleus.Demo.SourceDirectory:\n ${SourceDirectory}")
 # Sources.
-file(GLOB Sources "${SourceDirectory}/*.c")
+file(GLOB Sources "${SourceDirectory}/*.cpp")
 #message(STATUS "Nucleus.Demo.Sources:\n ${Sources}")
 # Executable.
-add_executable(nucleus-demo "${Sources}")
+add_executable(nucleus-test "${Sources}")
 
 # == x86 / x64 detection ======================================================================== #
 
@@ -50,6 +75,7 @@ else( CMAKE_SIZEOF_VOID_P EQUAL 8 )
     SET( EX_PLATFORM_NAME "x86" )
 endif( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 
-# "Nucleus.Demo" requires "Nucleus.Library"
+# "Nucleus.Test" requires "Nucleus.Library"
 include_directories("${ModuleDirectory}/../library/src")
-target_link_libraries(nucleus-demo nucleus-library)
+target_link_libraries(nucleus-test nucleus-library)
+target_link_libraries(nucleus-test gtest gtest_main)

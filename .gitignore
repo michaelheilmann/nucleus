@@ -3,8 +3,39 @@ doc
 bin
 lib
 
+# CMake/Doxygen.
+CMakeDoxyfile\.in
+CMakeDoxygenDefaults\.cmake
+
+# CMake/CTest.
+CTestTestfile\.cmake
+
+# CMake/CPack.
+install_manifest.txt
+CPackConfig\.cmake
+CPackSourceConfig\.cmake
+_CPack_Packages
+
 # Visual Studio.
 .vs
+*.sln
+*.vcxproj
+*.vcxproj\.filters
+*.vcxproj\.user
+
+# GNU Make.
+Makefile
+
+# CMake/Visual Studio.
+**/x64/Debug
+**/x64/MinSizeRel
+**/x64/Release
+**/x64/RelWithDebInfo
+**/Win32/Debug
+**/Win32/MinSizeRel
+**/Win32/Release
+**/Win32/RelWithDebInfo
+*\.dir
 
 # CMake folder
 CMakeFiles
