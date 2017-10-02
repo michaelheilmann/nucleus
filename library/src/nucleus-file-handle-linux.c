@@ -48,7 +48,7 @@ Nucleus_FileHandle_create
 	}
 	else if (fileAccessMode & Nucleus_FileAccessMode_Read)
 	{
-		flags | O_RDONLY;
+		flags |= O_RDONLY;
 	}
 	else if (fileAccessMode & Nucleus_FileAccessMode_Write)
 	{
