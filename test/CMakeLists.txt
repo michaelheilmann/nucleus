@@ -60,6 +60,9 @@ file(GLOB Sources "${SourceDirectory}/*.cpp")
 #message(STATUS "Nucleus.Demo.Sources:\n ${Sources}")
 # Executable.
 add_executable(nucleus-test "${Sources}")
+include_directories("${ModuleDirectory}/../library/src")
+target_link_libraries(nucleus-test nucleus-library)
+target_link_libraries(nucleus-test gtest gtest_main)
 
 # == x86 / x64 detection ======================================================================== #
 
@@ -76,6 +79,7 @@ else( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 endif( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 
 # "Nucleus.Test" requires "Nucleus.Library"
-include_directories("${ModuleDirectory}/../library/src")
-target_link_libraries(nucleus-test nucleus-library)
-target_link_libraries(nucleus-test gtest gtest_main)
+include(CTest)
+enable_testing()
+add_test(nucleus-test-1 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/nucleus-test)
+add_custom_target(test COMMAND ${CMAKE_CTEST_COMMAND} DEPENDS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/nucleus-test)

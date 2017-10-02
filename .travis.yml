@@ -70,5 +70,5 @@ before_script:
 script:
 # Enter the Travis build directory.
 - cd "${TRAVIS_BUILD_DIR}"
-# Run make all.
-- make all
+# Run "make all" and "make test".
+- make all && make test
