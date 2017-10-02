@@ -7,8 +7,13 @@ lib
 CMakeDoxyfile\.in
 CMakeDoxygenDefaults\.cmake
 
-# CMake/CTest.
+# CMake/CTest/Google test.
 CTestTestfile\.cmake
+gmock.pc
+gmock_main.pc
+gtest.pc
+gtest_main.pc
+DartConfiguration.tcl
 
 # CMake/CPack.
 install_manifest.txt
