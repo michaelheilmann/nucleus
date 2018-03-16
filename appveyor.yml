@@ -27,27 +27,9 @@ install:
   - set PATH=C:\projects\deps\cmake\bin;%PATH%
   - cmake --version
 
-    
-# Package artifacts and push packaged artifacts.
-#after_build:
-#    - ps: |
-        #./distribute -configuration ${env:configuration} -platform ${env:platform} -suffix ${env:suffix}
-        #Push-AppveyorArtifact "${env:APPVEYOR_BUILD_FOLDER}/${env:artifactFileName}" -FileName "${env:artifactFileName}" -DeploymentName "${env:artifactName}"
-
 # Restore nuget packages and install dependencies.        
 # Furthermore, the artifact name and the artifact file name are computed.
 before_build:
-    #- nuget restore
-    # Install CUnit.
-    #- TODO.
-    # Install Google test.
-    - ps: .\ci\appveyor\install-googletest-vsix.ps1
-    #- ps: |
-        #$env:suffix = ""
-        #$env:artifactName = "nucleus-$(${env:configuration}.ToLower())-$env:platform-$env:suffix"
-        #Write-Host "artifact name = $env:artifactName"
-        #$env:artifactFileName = "${env:artifactName}.zip"
-        #Write-Host "artifact file name = $env:artifactFileName"
     - cmd: if "%platform%"=="Win32" set CMAKE_GENERATOR_NAME=Visual Studio 14 2015
     - cmd: if "%platform%"=="x64"   set CMAKE_GENERATOR_NAME=Visual Studio 14 2015 Win64
     - cmake -G "%CMAKE_GENERATOR_NAME%" CMakeLists.txt
@@ -56,12 +38,7 @@ build:
     project: nucleus.sln            # path to Visual Studio solution or project
 
 test_script:
-    - ps: |
-        $platform = $env:platform
-        if ($platform -eq "Win32") { $platform = "x86" }
-        vstest.console /Logger:Appveyor /ListDiscoverers /UseVsixExtensions:true
-        vstest.console /Logger:Appveyor /ListExecutors /UseVsixExtensions:true
-        vstest.console /Logger:Appveyor /Platform:$platform /inIsolation /UseVsixExtensions:true "bin\$env:configuration\nucleus-test.exe"
+    - ctest -VV -C "%CONFIGURATION%" 
 
 # if one matrix entry fails, all entries fails
 # https://www.appveyor.com/docs/build-configuration#failing-strategy

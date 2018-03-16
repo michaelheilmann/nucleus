@@ -11,11 +11,24 @@ Change the directory to the directory of this file.
 
 Enter
 ```
-cmake CMakeLists.txt 
+cmake CMakeLists.txt -a Win32
 ```
-to generate the project files.
+to generate the project files for Win32.
 
-Open the files using Visual Studio 2017.
+Enter
+```
+cmake CMakeLists.txt -a x64
+```
+to generate the project files for x64.
+
+Open the files using Visual Studio 2017 and build all configurations.
+
+To execute the unit tests for a particular configuration, enter
+```
+ctest -C <configuration>
+```
+
+```configuration``` is one of `Debug`, `Release`, `MinSizeRel`, `RelWithDebInfo`.
 
 ## Building the demo (Linux and Cygwin)
 Open the console.
@@ -32,7 +45,12 @@ Enter
 ```
 make all
 ```
-to build the demo.
+to build.
+
+To execute the unit tests, enter
+```
+ctest
+```
 
 #### Continuous Integrations Status Maxtrix
 

@@ -2,24 +2,13 @@
 # @copyright Copyright (c) Michael Heilmann 2017
 
 # Minimum required CMake version.
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required(VERSION 3.8)
 
 # Project.
 project (Nucleus.Demo C)
 
-# == GCC specific settings ====================================================================== #
-if (CMAKE_COMPILER_IS_GNUCC)
-  # Enable all warnings and extra warnings.
-  add_definitions("-Wall -Wextra")
-  # Disable some warnings. Deactivated: Nucleus library can have these warnings enabled.
-  # add_definitions("-Wno-reorder -Wno-sign-compare -Wno-missing-braces -Wno-unused-parameter")
-  # Enable optimizations that do not interfere with debug experience.
-  add_definitions("-Og")
-  # Enable extra debug information.
-  add_definitions("-ggdb3")
-ENDIF(CMAKE_COMPILER_IS_GNUCC)
-
-# == Executable ================================================================================= #
+include(${CMAKE_CURRENT_SOURCE_DIR}/../buildsystem/detect_compiler_and_platform.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../buildsystem/set_default_project_properties.cmake)
 
 # Module directory.
 set(ModuleDirectory "${CMAKE_CURRENT_SOURCE_DIR}")
@@ -36,20 +25,5 @@ file(GLOB Sources "${SourceDirectory}/*.c")
 # Executable.
 add_executable(nucleus-demo "${Sources}")
 
-# == x86 / x64 detection ======================================================================== #
-
-# This way it can be detected wether the target is x86 or x64.
-# TODO: Isn't there a more semantic way to do this.
-if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-    MESSAGE( "64 bits compiler detected" )
-    SET( EX_PLATFORM 64 )
-    SET( EX_PLATFORM_NAME "x64" )
-else( CMAKE_SIZEOF_VOID_P EQUAL 8 ) 
-    MESSAGE( "32 bits compiler detected" )
-    SET( EX_PLATFORM 32 )
-    SET( EX_PLATFORM_NAME "x86" )
-endif( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-
 # "Nucleus.Demo" requires "Nucleus.Library"
-include_directories("${ModuleDirectory}/../library/src")
 target_link_libraries(nucleus-demo nucleus-library)
