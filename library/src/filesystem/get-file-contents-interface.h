@@ -1,4 +1,4 @@
-/// @file nucleus-get-file-contents-interface.h
+/// @file filesystem/get-file-contents-interface.h
 /// @brief Function prototype for getting the contents of a file.
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
@@ -9,6 +9,7 @@
 #include "nucleus-status.h"
 #include "nucleus-annotations.h"
 
+/// @ingroup filesystem
 /// @brief The type of a callback invoked by Nucleus_getFileContentsExtended function.
 /// @param object the object to invoke the callback on
 /// @param bytes a pointer to an array of @a numberOfBytes Bytes, the contents of the file
@@ -18,12 +19,13 @@
 typedef
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_getFileContentsExtendedCallbackFunction
-	(
-		Nucleus_InputOutputParameter(void *object),
-		Nucleus_InputParameter(const char *bytes),
-		Nucleus_InputParameter(size_t numberOfBytes)
-	);
+    (
+        Nucleus_InputOutputParameter(void *object),
+        Nucleus_InputParameter(const char *bytes),
+        Nucleus_InputParameter(size_t numberOfBytes)
+    );
 
+/// @ingroup filesystem
 /// @brief Get the contents of a file.
 /// @param pathname a pointer to the pathname of the file
 /// @param bytes a pointer to a @a (char *) variable
@@ -36,12 +38,13 @@ Nucleus_getFileContentsExtendedCallbackFunction
 /// @remark The memory returned is allocated using <code>malloc</code>. If it is no longer referenced then it must be deallocated using <code>free</code>.
 Nucleus_NonNull(1, 2, 3) Nucleus_Status
 Nucleus_getFileContents
-	(
-		Nucleus_InputParameter(const char *pathname),
-		Nucleus_OutputParameter(char **bytes),
-		Nucleus_OutputParameter(size_t *numberOfBytes)
-	);
-	
+    (
+        Nucleus_InputParameter(const char *pathname),
+        Nucleus_OutputParameter(char **bytes),
+        Nucleus_OutputParameter(size_t *numberOfBytes)
+    );
+
+/// @ingroup filesystem
 /// @brief Get the contents of a file.
 /// @param pathname a pointer to the pathname of the file
 /// @param object the object to invoke the callback pointed to by @a (callback) on
@@ -49,8 +52,8 @@ Nucleus_getFileContents
 /// @defaultReturn
 Nucleus_NonNull(1, 3) Nucleus_Status
 Nucleus_getFileContentsExtended
-	(
-		Nucleus_InputParameter(const char *pathname),
-		Nucleus_InputOutputParameter(void *object),
-		Nucleus_InputOutputParameter(Nucleus_getFileContentsExtendedCallbackFunction *callback)
-	);
+    (
+        Nucleus_InputParameter(const char *pathname),
+        Nucleus_InputOutputParameter(void *object),
+        Nucleus_InputOutputParameter(Nucleus_getFileContentsExtendedCallbackFunction *callback)
+    );

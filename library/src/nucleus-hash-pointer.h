@@ -16,10 +16,10 @@
 /// @failure @a hv was not dereferenced
 Nucleus_NoError() Nucleus_Status
 Nucleus_hash_pointer_to_unsignedInt
-	(
-		const void *v,
-		unsigned int *hv
-	);
+    (
+        const void *v,
+        unsigned int *hv
+    );
 
 /// @ingroup Hash
 /// @brief Compute the hash value of a pointer value.
@@ -30,7 +30,7 @@ Nucleus_hash_pointer_to_unsignedInt
 /// @failure @a hv was not dereferenced
 Nucleus_NoError() Nucleus_Status
 Nucleus_hash_pointer_to_signedLongLongInt
-	(
-		const void *v,
-		signed long long int *hv
-	);
+    (
+        const void *v,
+        signed long long int *hv
+    );

@@ -6,12 +6,12 @@
 
 Nucleus_NoError() Nucleus_Status
 Nucleus_hash_signedLongLongInt_to_signedLongLongInt
-	(
-		const signed long long int v,
-		signed long long int *hv
-	)
+    (
+        const signed long long int v,
+        signed long long int *hv
+    )
 {
-	if (!hv) return Nucleus_Status_InvalidArgument;
-	*hv = v;
-	return Nucleus_Status_Success;
+    if (!hv) return Nucleus_Status_InvalidArgument;
+    *hv = v;
+    return Nucleus_Status_Success;
 }

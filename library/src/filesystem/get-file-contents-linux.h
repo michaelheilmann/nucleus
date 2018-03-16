@@ -1,4 +1,4 @@
-/// @file nucleus-get-file-contents-linux.h
+/// @file filesystem/get-file-contents-linux.h
 /// @brief Get the contents of a file (Linux).
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
@@ -7,6 +7,6 @@
 
 #if defined(unix)
 
-#include "nucleus-get-file-contents-interface.h"
+#include "filesystem/get-file-contents-interface.h"
 
 #endif

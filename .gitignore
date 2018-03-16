@@ -1,19 +1,15 @@
 # Products.
-doc
-bin
-lib
+products
 
 # CMake/Doxygen.
 CMakeDoxyfile\.in
+CMakeDoxyfile\.tpl
 CMakeDoxygenDefaults\.cmake
 
-# CMake/CTest/Google test.
+# CTest.
 CTestTestfile\.cmake
-gmock.pc
-gmock_main.pc
-gtest.pc
-gtest_main.pc
-DartConfiguration.tcl
+Testing
+DartConfiguration\.tcl
 
 # CMake/CPack.
 install_manifest.txt
@@ -91,12 +87,3 @@ CMakeCache.txt
 *.su
 *.idb
 *.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf

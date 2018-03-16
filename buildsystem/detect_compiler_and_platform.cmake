@@ -150,9 +150,9 @@ endif()
 
 macro(nucleus_report_is_multi_target_generator)
     if (NUCLEUS_IS_MULTI_TARGET_GENERATOR)
-      message("  - Idlib Is Multi Target Generator: Yes")
+      message("  - Nucleus Is Multi Target Generator: Yes")
     else()
-      message("  - Idlib Is Multi Target Generator: NO")
+      message("  - Nucleus Is Multi Target Generator: NO")
     endif()
 endmacro()
 

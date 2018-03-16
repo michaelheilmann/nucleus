@@ -17,23 +17,23 @@ typedef int Nucleus_Status;
 /// @brief Status codes are assigned cateogies.
 typedef enum Nucleus_Status_Category
 {
-	/// @brief Status code category for general status codes.
-	Nucleus_Status_Category_General = 0,
-	
-	/// @brief Status code category for aggregate-related status codes.
-	Nucleus_Status_Category_Aggregate = 1000,
+    /// @brief Status code category for general status codes.
+    Nucleus_Status_Category_General = 0,
+    
+    /// @brief Status code category for aggregate-related status codes.
+    Nucleus_Status_Category_Aggregate = 1000,
 
-	/// @brief Status code category for memory-related status codes.
-	Nucleus_Status_Category_Memory = 2000,
+    /// @brief Status code category for memory-related status codes.
+    Nucleus_Status_Category_Memory = 2000,
 
-	/// @brief Status code category for concurrency-related status codes.
-	Nucleus_Status_Category_Concurrency = 3000,
+    /// @brief Status code category for concurrency-related status codes.
+    Nucleus_Status_Category_Concurrency = 3000,
 
-	/// @brief Status code category for conversion-related status codes.
-	Nucleus_Status_Category_Conversion = 4000,
+    /// @brief Status code category for conversion-related status codes.
+    Nucleus_Status_Category_Conversion = 4000,
 
-	/// @brief Status code category for input/output-related status codes.
-	Nucleus_Status_Category_InputOutput = 5000,
+    /// @brief Status code category for input/output-related status codes.
+    Nucleus_Status_Category_InputOutput = 5000,
 
 } Nucleus_Status_Category;
 

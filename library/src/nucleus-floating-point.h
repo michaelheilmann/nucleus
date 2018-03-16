@@ -36,10 +36,10 @@ typedef float single;
 /// @failure @a r was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Single_isSubnormal
-	(
-		single x,
-		bool *r
-	);
+    (
+        single x,
+        bool *r
+    );
 
 /// @ingroup FloatingPoint
 /// @brief Get if a @a single value is not a number (NaN).
@@ -50,10 +50,10 @@ Nucleus_Single_isSubnormal
 /// @failure @a r was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Single_isNaN
-	(
-		single x,
-		bool *r
-	);
+    (
+        single x,
+        bool *r
+    );
 
 /// @ingroup FloatingPoint Hash
 /// @brief Compute the hash value of a @a single value.
@@ -64,12 +64,12 @@ Nucleus_Single_isNaN
 /// @failure @a hv was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Single_hash
-	(
-		single x,
-		unsigned int *hv
-	);
+    (
+        single x,
+        unsigned int *hv
+    );
 
-	
+    
 
 
 /// @ingroup FloatingPoint
@@ -81,10 +81,10 @@ Nucleus_Single_hash
 /// @failure @a r was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Double_isSubnormal
-	(
-		double x,
-		bool *r
-	);
+    (
+        double x,
+        bool *r
+    );
 
 /// @ingroup FloatingPoint
 /// @brief Get if a @a double value is not a number (NaN).
@@ -95,10 +95,10 @@ Nucleus_Double_isSubnormal
 /// @failure @a r was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Double_isNaN
-	(
-		double x,
-		bool *r
-	);
+    (
+        double x,
+        bool *r
+    );
 
 /// @ingroup FloatingPoint Hash
 /// @brief Compute the hash value of a @a single value.
@@ -109,7 +109,7 @@ Nucleus_Double_isNaN
 /// @failure @a hv was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(2) Nucleus_Status
 Nucleus_Double_hash
-	(
-		double x,
-		unsigned int *hv
-	);
+    (
+        double x,
+        unsigned int *hv
+    );

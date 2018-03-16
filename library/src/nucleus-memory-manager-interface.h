@@ -29,12 +29,12 @@ typedef void Nucleus_MemoryManager_DeallocationParameters;
 /// @failure A non-zero status code is returned.
 typedef Nucleus_NonNull(3) Nucleus_Status
 Nucleus_MemoryManager_Allocate
-	(
-		Nucleus_InputOutputParameter(Nucleus_MemoryManager_State *state),
-		Nucleus_InputOutputParameter(Nucleus_MemoryManager_AllocationParameters *allocationParameters),
-		Nucleus_OutputParameter(void **memoryBlock),
-		Nucleus_InputParameter(size_t numberOfBytes)
-	);
+    (
+        Nucleus_InputOutputParameter(Nucleus_MemoryManager_State *state),
+        Nucleus_InputOutputParameter(Nucleus_MemoryManager_AllocationParameters *allocationParameters),
+        Nucleus_OutputParameter(void **memoryBlock),
+        Nucleus_InputParameter(size_t numberOfBytes)
+    );
 
 /// @brief Type of a Nucleus "deallocate" function.
 /// Deallocates an array of Bytes.
@@ -44,8 +44,8 @@ Nucleus_MemoryManager_Allocate
 /// @remark For the sake of convenience if @a bytes is @a NULL, a call to this function returns immediatly
 typedef Nucleus_NonNull(3) void 
 Nucleus_MemoryManager_Deallocate
-	(
-		Nucleus_InputOutputParameter(Nucleus_MemoryManager_State *state),
-		Nucleus_InputOutputParameter(Nucleus_MemoryManager_DeallocationParameters *deallocationParameters),
-		Nucleus_InputParameter(void *memoryBlock)
-	);
+    (
+        Nucleus_InputOutputParameter(Nucleus_MemoryManager_State *state),
+        Nucleus_InputOutputParameter(Nucleus_MemoryManager_DeallocationParameters *deallocationParameters),
+        Nucleus_InputParameter(void *memoryBlock)
+    );

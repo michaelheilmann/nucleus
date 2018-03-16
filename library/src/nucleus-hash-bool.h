@@ -18,7 +18,7 @@
 /// @failure @a hv was not dereferenced
 Nucleus_NoError() Nucleus_Status
 Nucleus_hash_bool_to_signedLongLongInt
-	(
-		const bool v,
-		signed long long int *hv
-	);
+    (
+        const bool v,
+        signed long long int *hv
+    );

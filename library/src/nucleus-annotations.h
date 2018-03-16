@@ -21,9 +21,9 @@
 /// @code Spine_NonNull(2,4) void f(char *x, char *y, char *z, char *w); @endcode
 /// Note that the parameter indices are 1-based.
 #if defined(Nucleus_Compiler_GCC)
-	#define Nucleus_NonNull(...) __attribute__((nonnull (__VA_ARGS__))) /**< @hideinitializer */
+    #define Nucleus_NonNull(...) __attribute__((nonnull (__VA_ARGS__))) /**< @hideinitializer */
 #else
-	#define Nucleus_NonNull(...)
+    #define Nucleus_NonNull(...)
 #endif
 
 /// @ingroup Annotations
@@ -33,9 +33,9 @@
 /// @code Spine_NonNull(2,4) void f(char *x, char *y, char *z, char *w); @endcode
 /// Note that the parameter indices are 1-based.
 #if defined(Nucleus_Compiler_GCC) && !defined(DOXYGEN)
-	#define Nucleus_ReturnNonNull() __attribute__((returns_nonnull) /**< @hideinitializer */
+    #define Nucleus_ReturnNonNull() __attribute__((returns_nonnull) /**< @hideinitializer */
 #else
-	#define Nucleus_ReturnNonNull()
+    #define Nucleus_ReturnNonNull()
 #endif
 
 /// @ingroup Annotations
@@ -88,9 +88,9 @@
 ///          The branch prediction assumption is that @a e is more likely to evaluate to logically true.
 /// @param expression an expression
 #if defined(Nucleus_Compiler_GCC)
-	#define Nucleus_Likely(expression) (__builtin_expect((expression) ? 1 : 0, 1)) /**< @hideinitializer */
+    #define Nucleus_Likely(expression) (__builtin_expect((expression) ? 1 : 0, 1)) /**< @hideinitializer */
 #else
-	#define Nucleus_Likely(expression) (expression) /**< @hideinitializer */
+    #define Nucleus_Likely(expression) (expression) /**< @hideinitializer */
 #endif
 
 /// @ingroup Annotations
@@ -99,7 +99,7 @@
 ///          The branch prediction assumption is that @a e is more likely to evaluate to logically false.
 /// @param expresion an expression
 #if defined(Nucleus_Compiler_GCC)
-	#define Nucleus_Unlikely(expression) (__builtin_expect((expression) ? 1 : 0, 0)) /**< @hideinitializer */
+    #define Nucleus_Unlikely(expression) (__builtin_expect((expression) ? 1 : 0, 0)) /**< @hideinitializer */
 #else
-	#define Nucleus_Unlikely(expression) (expression) /**< @hideinitializer */
+    #define Nucleus_Unlikely(expression) (expression) /**< @hideinitializer */
 #endif

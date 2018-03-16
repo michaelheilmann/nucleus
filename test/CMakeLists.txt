@@ -5,27 +5,26 @@
 cmake_minimum_required(VERSION 3.8)
 
 # Project.
-project (Nucleus.Test C)
+project (nucleus-test C)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/../buildsystem/detect_compiler_and_platform.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/../buildsystem/set_default_project_properties.cmake)
+if (NUCLEUS_PATH)
+  include(${NUCLEUS_PATH}/buildsystem/detect_compiler_and_platform.cmake)
+  include(${NUCLEUS_PATH}/buildsystem/set_default_project_properties.cmake)
+else()
+  include(${CMAKE_SOURCE_DIR}/buildsystem/detect_compiler_and_platform.cmake)
+  include(${CMAKE_SOURCE_DIR}/buildsystem/set_default_project_properties.cmake)
+endif()
 
-# Module directory.
-set(ModuleDirectory "${CMAKE_CURRENT_SOURCE_DIR}")
-#message(STATUS "Nucleus.Test.ModuleDirectory:\n ${ModuleDirectory}")
-# Include directory.
-set(IncludeDirectory "${ModuleDirectory}/src")
-#message(STATUS "Nucleus.Test.IncludeDirectory:\n ${IncludeDirectory}")
-# Source directory.
-set(SourceDirectory "${ModuleDirectory}/src")
-#message(STATUS "Nucleus.Test.SourceDirectory:\n ${SourceDirectory}")
-# Sources.
-file(GLOB Sources "${SourceDirectory}/*.c")
-#message(STATUS "Nucleus.Test.Sources:\n ${Sources}")
-# Executable.
-add_executable(nucleus-test-executable "${Sources}")
+set_project_default_properties()
+
+# Find and configure source files.
+file(GLOB SOURCE_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.c")
+# Find and configure header files.
+file(GLOB HEADER_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.h")
+set_source_files_properties(${HEADER_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+# Add and configure executable.
+add_executable(nucleus-test-executable ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(nucleus-test-executable nucleus-library)
 
-# "Nucleus.Test" requires "Nucleus.Library"
-message("CMAKE_RUNTIME_OUTPUT_DIRECTORY := ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+# Test.
 add_test(NAME nucleus-test-1 COMMAND $<TARGET_FILE:nucleus-test-executable>)

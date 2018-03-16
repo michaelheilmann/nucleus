@@ -1,4 +1,4 @@
-# AppVeyor configuration for AppVeyor project "Egoboo".
+# AppVeyor configuration for AppVeyor project "Nucleus".
 clone_depth: 1
 
 # Build worker image (VM template)

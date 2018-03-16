@@ -5,26 +5,27 @@
 cmake_minimum_required(VERSION 3.8)
 
 # Project.
-project (Nucleus.Library C)
+project (nucleus-library C)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/../buildsystem/detect_compiler_and_platform.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/../buildsystem/set_default_project_properties.cmake)
+if (NUCLEUS_PATH)
+  include(${NUCLEUS_PATH}/buildsystem/detect_compiler_and_platform.cmake)
+  include(${NUCLEUS_PATH}/buildsystem/set_default_project_properties.cmake)
+else()
+  include(${CMAKE_SOURCE_DIR}/buildsystem/detect_compiler_and_platform.cmake)
+  include(${CMAKE_SOURCE_DIR}/buildsystem/set_default_project_properties.cmake)
+endif()
 
-# Module directory.
-set(ModuleDirectory "${CMAKE_CURRENT_SOURCE_DIR}")
-#message(STATUS "Nucleus.Library.ModuleDirectory:\n ${ModuleDirectory}")
-# Include directory.
-set(IncludeDirectory "${ModuleDirectory}/src")
-#message(STATUS "Nucleus.Library.IncludeDirectory:\n ${IncludeDirectory}")
-# Source directory.
-set(SourceDirectory "${ModuleDirectory}/src")
-#message(STATUS "Nucleus.Library.SourceDirectory:\n ${SourceDirectory}")
-# Sources.
-file(GLOB Sources "${SourceDirectory}/*.c")
-#message(STATUS "Nucleus.Library.Sources:\n ${Sources}")
-# Define the library.
-add_library(nucleus-library STATIC "${Sources}")
-target_include_directories(nucleus-library INTERFACE ${SourceDirectory})
+set_project_default_properties()
+
+# Find and configure source files.
+file(GLOB_RECURSE SOURCE_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.c")
+# Find and configure header files.
+file(GLOB_RECURSE HEADER_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.h")
+set_source_files_properties(${HEADER_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+# Define and configure the library.
+add_library(nucleus-library STATIC ${SOURCE_FILES} ${HEADER_FILES})
+target_include_directories(nucleus-library PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+target_include_directories(nucleus-library INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 FIND_PACKAGE(Doxygen)
 IF(DOXYGEN_FOUND)

@@ -1,4 +1,4 @@
-/// @file nucleus-get-file-contents-windows.h
+/// @file filesystem/get-file-contents-windows.h
 /// @brief Get the contents of a file (Windows).
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
@@ -7,6 +7,6 @@
 
 #pragma once
 
-#include "nucleus-get-file-contents-interface.h"
+#include "filesystem/get-file-contents-interface.h"
 
 #endif

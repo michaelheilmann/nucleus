@@ -1,5 +1,5 @@
 # Nucleus
-nucleus is basic C project with CMake support.
+Nucleus is basic C project with CMake support.
 Nucleus works for Windows and Linux.
 
 ## Building the demo (Windows)

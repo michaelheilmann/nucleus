@@ -5,10 +5,17 @@
 cmake_minimum_required(VERSION 3.8)
 
 # Project.
-project (Nucleus.Demo C)
+project (nucleus-demo C)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/../buildsystem/detect_compiler_and_platform.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/../buildsystem/set_default_project_properties.cmake)
+if (NUCLEUS_PATH)
+  include(${NUCLEUS_PATH}/buildsystem/detect_compiler_and_platform.cmake)
+  include(${NUCLEUS_PATH}/buildsystem/set_default_project_properties.cmake)
+else()
+  include(${CMAKE_SOURCE_DIR}/buildsystem/detect_compiler_and_platform.cmake)
+  include(${CMAKE_SOURCE_DIR}/buildsystem/set_default_project_properties.cmake)
+endif()
+
+set_project_default_properties()
 
 # Module directory.
 set(ModuleDirectory "${CMAKE_CURRENT_SOURCE_DIR}")

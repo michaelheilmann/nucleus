@@ -1,4 +1,4 @@
-/// @file nucleus-set-file-contents-linux.h
+/// @file filesystem/set-file-contents-linux.h
 /// @brief Set the contents of a file (Linux).
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
@@ -7,6 +7,6 @@
 
 #pragma once
 
-#include "nucleus-set-file-contents-interface.h"
+#include "filesystem/set-file-contents-interface.h"
 
 #endif

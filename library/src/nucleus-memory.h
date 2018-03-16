@@ -33,11 +33,11 @@
 /// @failure @a p was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_allocateMemory
-	(
-		void **p,
-		size_t n
-	);
-	
+    (
+        void **p,
+        size_t n
+    );
+    
 /// @ingroup Memory
 /// @brief Allocate a memory block of a specified size.
 /// @param [out] p a pointer to a @a (void *) variable
@@ -50,20 +50,20 @@ Nucleus_allocateMemory
 ///         Another reason is safety: This function fails if the product of @a n and @a m is not representable by @a size_t t.
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_allocateArrayMemory
-	(
-		void **p,
-		size_t n,
-		size_t m
-	);
-	
+    (
+        void **p,
+        size_t n,
+        size_t m
+    );
+    
 /// @ingroup Memory
 /// @brief Deallocate a memory block.
 /// @param p a pointer to a memory block previously allocated by Nucleus_allocateMemory or Nucleus_allocateArrayMemory.
 Nucleus_NoError() void
 Nucleus_deallocateMemory
-	(
-		void *p
-	);
+    (
+        void *p
+    );
 
 /// @ingroup Memory
 /// @brief Copy the contents of a memory block to another memory block.
@@ -74,11 +74,11 @@ Nucleus_deallocateMemory
 /// @remark The source and the target memory blocks may or may not overlap.
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_copyMemory
-	(
-		void *p,
-		const void *q,
-		size_t n
-	);
+    (
+        void *p,
+        const void *q,
+        size_t n
+    );
 
 /// @ingroup Memory
 /// @brief Copy the prefix of a memory block to a prefix of another memory block.
@@ -92,12 +92,12 @@ Nucleus_copyMemory
 ///         This function fails if the product of @a n and @a m is not representable by @a size_t t.
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_copyArrayMemory
-	(
-		void *p,
-		const void *q,
-		size_t n,
-		size_t m
-	);
+    (
+        void *p,
+        const void *q,
+        size_t n,
+        size_t m
+    );
 
 /// @ingroup Memory
 /// @brief Get if two memory blocks are equal.
@@ -109,12 +109,12 @@ Nucleus_copyArrayMemory
 /// @failure @a r was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_compareMemory
-	(
-		const void *p,
-		const void *q,
-		size_t n,
-		bool *r
-	);
+    (
+        const void *p,
+        const void *q,
+        size_t n,
+        bool *r
+    );
 
 /// @ingroup Memory
 /// @brief Get if two memory blocks are equal.
@@ -128,13 +128,13 @@ Nucleus_compareMemory
 ///         This function fails if the product of @a n and @a m is not representable by @a size_t t.
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_compareArrayMemory
-	(
-		const void *p,
-		const void *q,
-		size_t n,
-		size_t m,
-		bool *r
-	);
+    (
+        const void *p,
+        const void *q,
+        size_t n,
+        size_t m,
+        bool *r
+    );
 
 /// @ingroup Memory Hash
 /// @brief Compute the hash value of an array of Bytes.
@@ -146,12 +146,12 @@ Nucleus_compareArrayMemory
 /// @failure @a hv was not dereferenced
 Nucleus_NoError() Nucleus_NonNull(1, 3) Nucleus_Status
 Nucleus_hashMemory
-	(
-		const void *p,
-		size_t n,
-		unsigned int *hv
-	);
-	
+    (
+        const void *p,
+        size_t n,
+        unsigned int *hv
+    );
+    
 /// @ingroup Memory Hash
 /// @brief Compute the hash value of an array of Bytes.
 /// @param p a pointer to an array of @a numberOfBytes Bytes
@@ -165,9 +165,9 @@ Nucleus_hashMemory
 ///         This function fails if the product of @a n and @a m is not representable by @a size_t t.
 Nucleus_NoError() Nucleus_NonNull(1, 4) Nucleus_Status
 Nucleus_hashArrayMemory
-	(
-		const void *p,
-		size_t n,
-		size_t m,
-		unsigned int *hv
-	);
+    (
+        const void *p,
+        size_t n,
+        size_t m,
+        unsigned int *hv
+    );

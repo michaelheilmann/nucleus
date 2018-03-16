@@ -1,4 +1,4 @@
-/// @file nucleus-set-file-contents-inteface.h
+/// @file filesystem/set-file-contents-inteface.h
 /// @brief Function prototype for setting the contents of a file.
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
@@ -9,6 +9,7 @@
 #include "nucleus-status.h"
 #include "nucleus-annotations.h"
 
+/// @ingroup filesystem
 /// @brief Set the contents of a file.
 /// @details The file is overwritten if it exists. The file is created if it does not exist.
 /// @param pathname a pointer to the pathname of the file
