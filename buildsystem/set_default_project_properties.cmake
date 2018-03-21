@@ -20,24 +20,46 @@ macro(set_project_default_properties)
 
   # Set the C++ standard to C++ 17.
   if (NOT (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR ${NUCLEUS_CXX_COMPILER_ID} EQUAL ${NUCLEUS_CXX_COMPILER_ID_MSVC}))
-    message("case of neither MSVC C nor MSVC C++: set(CMAKE_CXX_STANDARD 17)")
+    #message("case of neither MSVC C nor MSVC C++: set(CMAKE_CXX_STANDARD 17)")
     set(CMAKE_CXX_STANDARD 17)
   endif()
 
   # GNU GCC (C/C++) settings
   if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
-    message("case of GCC (C/C++)")
+    #message("case of GCC (C/C++)")
     # Set standard to C++ 17, enable -Wall and -Wextra
     add_definitions("-Wall -Wextra -D_GNU_SOURCE")
-    # Enable optimizations that do not interfere with debug experience.
-    add_definitions("-Og")
-    # Enable extra debug information.
-    add_definitions("-ggdb3")
+    add_definitions("-Werror=implicit-function-declaration")
+    add_definitions("-Werror=incompatible-pointer-types")
+  endif()
+
+  # GNU GCC (C/C++) settings
+  if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
+    #message("case of GCC (C/C++)")
+    if (With-Optimizations AND With-Debug-Information)
+        message("  - enabling optimizations and debug information")
+        # Enable optimizations that do not interfere with debug experience.
+        add_definitions("-Og")
+        # Enable extra debug information.
+        add_definitions("-ggdb3")
+    elseif (NOT With-Optimizations AND With-Debug-Information)
+        message("  - enabling debug information")
+        # Disable optimizations.
+        add_definitions("-O0")
+        # Enable extra debug information.
+        add_definitions("-ggdb3")
+    elseif(With-Optimizations AND NOT With-Debug-Information)
+        message("  - enabling optimizations")
+        # Enable optimizations.
+        add_definitions("-O3")
+    else()
+        message(WARNING "  - unspecified optimization and debug information settings")
+    endif()
   endif()
 
   # GNU GCC (C++) specific settings
   if (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
-    message("case of GCC (C++)")
+    #message("case of GCC (C++)")
     # Set standard to C++ 17, enable -Wall and -Wextra
     add_definitions("-std=gnu++17")
     # Disable some warnings
@@ -45,18 +67,18 @@ macro(set_project_default_properties)
     add_definitions("-Wno-reorder -Wno-sign-compare -Wno-missing-braces -Wno-unused-parameter")
   endif()
 
-    # (2) MSVC C++ settings
-    # TODO: Raise an error if the MSVC version is too low.
-    if (${NUCLEUS_CXX_COMPILER_ID} EQUAL ${NUCLEUS_CXX_COMPILER_ID_MSVC})
-      message("case of MSVC (C++)")
+  # (2) MSVC C++ settings
+  # TODO: Raise an error if the MSVC version is too low.
+  if (${NUCLEUS_CXX_COMPILER_ID} EQUAL ${NUCLEUS_CXX_COMPILER_ID_MSVC})
+    #message("case of MSVC (C++)")
     if (MSVC_VERSION GREATER_EQUAL "1900")
-        include(CheckCXXCompilerFlag)
-        CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
-        if (_cpp_latest_flag_supported)
-          add_compile_options("/std:c++latest")
-        endif()
+      include(CheckCXXCompilerFlag)
+      CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
+      if (_cpp_latest_flag_supported)
+        add_compile_options("/std:c++latest")
       endif()
     endif()
+  endif()
 
   # (2) MSVC (C/C++) settings
   if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})

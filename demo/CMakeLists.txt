@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.8)
 
 # Project.
-project (nucleus-demo C)
+project (Nucleus.Demo C)
 
 if (NUCLEUS_PATH)
   include(${NUCLEUS_PATH}/buildsystem/detect_compiler_and_platform.cmake)
@@ -17,20 +17,11 @@ endif()
 
 set_project_default_properties()
 
-# Module directory.
-set(ModuleDirectory "${CMAKE_CURRENT_SOURCE_DIR}")
-#message(STATUS "Nucleus.Demo.ModuleDirectory:\n ${ModuleDirectory}")
-# Include directory.
-set(IncludeDirectory "${ModuleDirectory}/rc")
-#message(STATUS "Nucleus.Demo.IncludeDirectory:\n ${IncludeDirectory}")
-# Source directory.
-set(SourceDirectory "${ModuleDirectory}/src")
-#message(STATUS "Nucleus.Demo.SourceDirectory:\n ${SourceDirectory}")
-# Sources.
-file(GLOB Sources "${SourceDirectory}/*.c")
-#message(STATUS "Nucleus.Demo.Sources:\n ${Sources}")
-# Executable.
-add_executable(nucleus-demo "${Sources}")
-
-# "Nucleus.Demo" requires "Nucleus.Library"
-target_link_libraries(nucleus-demo nucleus-library)
+# Find and configure source files.
+file(GLOB_RECURSE SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.c")
+# Find and configure header files.
+file(GLOB_RECURSE HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.h")
+set_source_files_properties(${HEADER_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+# Add and configure executable.
+add_executable(Nucleus.Demo ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(Nucleus.Demo Nucleus.Library)
