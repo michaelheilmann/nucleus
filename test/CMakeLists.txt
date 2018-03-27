@@ -5,7 +5,8 @@
 cmake_minimum_required(VERSION 3.8)
 
 # Project.
-project (nucleus-test C)
+project (Nucleus.Test C)
+message("building Nucleus.Test")
 
 if (NUCLEUS_PATH)
   include(${NUCLEUS_PATH}/buildsystem/detect_compiler_and_platform.cmake)
@@ -23,8 +24,8 @@ file(GLOB SOURCE_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.c")
 file(GLOB HEADER_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.h")
 set_source_files_properties(${HEADER_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
 # Add and configure executable.
-add_executable(nucleus-test-executable ${SOURCE_FILES} ${HEADER_FILES})
-target_link_libraries(nucleus-test-executable nucleus-library)
+add_executable(Nucleus.Test ${SOURCE_FILES} ${HEADER_FILES})
+target_link_libraries(Nucleus.Test Nucleus.Library)
 
 # Test.
-add_test(NAME nucleus-test-1 COMMAND $<TARGET_FILE:nucleus-test-executable>)
+add_test(NAME Nucleus.Test-1 COMMAND $<TARGET_FILE:Nucleus.Test>)

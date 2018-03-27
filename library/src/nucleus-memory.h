@@ -1,7 +1,4 @@
-/// @file nucleus-memory.h
-/// @brief Allocation and deallocation or memory blocks, valuation and manipulation of memory blocks and their contents
-/// @author Michael Heilmann
-/// @copyright Copyright (c) Michael Heilmann 2017
+// Copyright (c) Michael Heilmann 2017, 2018
 
 #pragma once
 
@@ -10,27 +7,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-/// @defgroup Memory memory block support
-/// @brief
-/// allocation and deallocation of memory blocks, valuation and manipulation of memory blocks and their contents
-/// @remark
-/// A memory block is a sequence of Byte variables that are consecutively layed-out in memory.
-/// As usual woth C, a pointer p to the first Byte increment by 1 will point to the second Byte, a pointer p to the second Byte increment by 1 will point to the third Byte an so on.
-/// The number of Byte variables of a memory block is the size of a memory region.
-///
-/// @remark
-/// The tasks of allocation and deallocation of memory blocks, valuation and manipulation of memory blocks and their contents are in C frequently performed over memory blocks
-/// of which their sizes are specified in terms of array semantics: The memory block is considered as an array 
-/// To support this frequent task the @a (*ArrayMemory) function exist for convenience. Another reason for their existence is safety: These function fail if the multiplication     of @a n
-/// and @a m would overflow.
-
-/// @ingroup Memory
-/// @brief Allocate a memory block of a specified size.
-/// @param [out] p a pointer to a @a (void *) variable
-/// @param n the size, in Bytes, of the memory block to allocate. Note that @a 0 is a valid size.
-/// @defaultReturn
-/// @success a pointer to the first Byte of the memory block was assigned to @a (*p)
-/// @failure @a p was not dereferenced
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_allocateMemory.md
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_allocateMemory
     (
@@ -38,16 +15,7 @@ Nucleus_allocateMemory
         size_t n
     );
     
-/// @ingroup Memory
-/// @brief Allocate a memory block of a specified size.
-/// @param [out] p a pointer to a @a (void *) variable
-/// @param n, m the product of @a n and @a m is the size, in Bytes, of the memory block to allocate. Note that @a 0 is a valid size.
-/// @defaultReturn
-/// @success a pointer to the first Byte of the memory block was assigned to @a (*p)
-/// @failure @a p was not dereferenced
-/// @remark The size is specified in terms of array semantics i.e. @a n should be thought of as the array size, in elements, and @a m as the element size, in Bytes.
-///         The @a *_ArrayMemory function exist for convenience as a frequent task in C program is the allocation of arrays.
-///         Another reason is safety: This function fails if the product of @a n and @a m is not representable by @a size_t t.
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_allocateArrayMemory.md
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_allocateArrayMemory
     (
@@ -55,23 +23,15 @@ Nucleus_allocateArrayMemory
         size_t n,
         size_t m
     );
-    
-/// @ingroup Memory
-/// @brief Deallocate a memory block.
-/// @param p a pointer to a memory block previously allocated by Nucleus_allocateMemory or Nucleus_allocateArrayMemory.
+
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_deallocateMemory.md
 Nucleus_NoError() void
 Nucleus_deallocateMemory
     (
         void *p
     );
 
-/// @ingroup Memory
-/// @brief Copy the contents of a memory block to another memory block.
-/// @param p a pointer to the first Byte of the target memory block
-/// @param q a pointer to the first Byte of the source memory block
-/// @param n the number of Byte to copy
-/// @defaultReturn
-/// @remark The source and the target memory blocks may or may not overlap.
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_copyMemory.md
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_copyMemory
     (
@@ -80,16 +40,7 @@ Nucleus_copyMemory
         size_t n
     );
 
-/// @ingroup Memory
-/// @brief Copy the prefix of a memory block to a prefix of another memory block.
-/// @param p a pointer to the first Byte of the target memory block
-/// @param q a pointer to the first Byte of the source memory block
-/// @param n the size, in elements, of the memory block array prefix to copy. Note that @a 0 is a valid size.
-/// @param m the size, in Bytes, of an element of the memory block array prefix to copy. Note that @a 0 is a valid size.
-/// @defaultReturn
-/// @remark The source and the target memory blocks may or may not overlap.
-/// @remark The size is specified in terms of array semantics i.e. by an array size, in elements, and an element size, in Bytes.
-///         This function fails if the product of @a n and @a m is not representable by @a size_t t.
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_copyArrayMemory.md
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_copyArrayMemory
     (
@@ -99,14 +50,7 @@ Nucleus_copyArrayMemory
         size_t m
     );
 
-/// @ingroup Memory
-/// @brief Get if two memory blocks are equal.
-/// @param p, q pointers to the memory blocks
-/// @param n the size, in Bytes, of the memory blocks. Note that @a 0 is a valid size.
-/// @param [out] r a pointer to a @a (bool) variable
-/// @defaultReturn
-/// @success @a (*r) was assigned @a true if the memory regions are equal and was assigned @a false if the memory regions are not equal
-/// @failure @a r was not dereferenced
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_compareMemory.md
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_compareMemory
     (
@@ -116,16 +60,7 @@ Nucleus_compareMemory
         bool *r
     );
 
-/// @ingroup Memory
-/// @brief Get if two memory blocks are equal.
-/// @param p, q pointers to the memory blocks
-/// @param n the size, in elements, of the memory blocks. Note that @a 0 is a valid size.
-/// @param m the size, in Bytes, of an element of the memory blocks. Note that @a 0 is a valid size.
-/// @defaultReturn
-/// @success @a (*r) was assigned @a true if the memory regions are equal and was assigned @a false if the memory regions are not equal
-/// @failure @a r was not dereferenced
-/// @remark The size is specified in terms of array semantics i.e. by an array size, in elements, and an element size, in Bytes.
-///         This function fails if the product of @a n and @a m is not representable by @a size_t t.
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_compareArrayMemory.md
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_compareArrayMemory
     (
@@ -136,14 +71,7 @@ Nucleus_compareArrayMemory
         bool *r
     );
 
-/// @ingroup Memory Hash
-/// @brief Compute the hash value of an array of Bytes.
-/// @param p a pointer to an array of @a numberOfBytes Bytes
-/// @param n the number of Bytes in the array pointed to by @a Bytes
-/// @param [out] hv a pointer to an @a (unsigned int) variable
-/// @defaultReturn
-/// @success @a (*hv) was assigned the hash value of the memory block
-/// @failure @a hv was not dereferenced
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_hashMemory.md
 Nucleus_NoError() Nucleus_NonNull(1, 3) Nucleus_Status
 Nucleus_hashMemory
     (
@@ -152,17 +80,7 @@ Nucleus_hashMemory
         unsigned int *hv
     );
     
-/// @ingroup Memory Hash
-/// @brief Compute the hash value of an array of Bytes.
-/// @param p a pointer to an array of @a numberOfBytes Bytes
-/// @param n the size, in elements, of the memory blocks. Note that @a 0 is a valid size.
-/// @param m the size, in Bytes, of an element of the memory blocks. Note that @a 0 is a valid size.
-/// @param [out] hv a pointer to an @a (unsigned int) variable
-/// @defaultReturn
-/// @success @a (*hv) was assigned the hash value of the memory block
-/// @failure @a hv was not dereferenced
-/// @remark The size is specified in terms of array semantics i.e. by an array size, in elements, and an element size, in Bytes.
-///         This function fails if the product of @a n and @a m is not representable by @a size_t t.
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_hashArrayMemory.md
 Nucleus_NoError() Nucleus_NonNull(1, 4) Nucleus_Status
 Nucleus_hashArrayMemory
     (

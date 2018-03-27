@@ -5,10 +5,21 @@
 cmake_minimum_required(VERSION 3.8)
 
 # Project.
-project (nucleus C)
+project (Nucleus C)
+message("building Nucleus")
 
 include(CTest)
 enable_testing()
+
+if (NOT DEFINED With-Optimizations)
+  set(With-Optimizations ON CACHE BOOL
+      "enable/disable compilation with optimizations. ON enables compilation with optimizations, OFF disables compilation with optimizations. Initial value is ON." FORCE)
+endif()
+
+if (NOT DEFINED With-Debug-Information)
+  set(With-Debug-Information OFF CACHE BOOL
+      "enable/disable compilation with debug information. ON enables compilation with debug information, OFF disables compilation with debug information. Initial value is OFF." FORCE)
+endif()
 
 # The output directories.
 # TODO: Change to "products".
