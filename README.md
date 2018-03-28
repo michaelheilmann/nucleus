@@ -93,8 +93,6 @@ The Array-functions do not only exist for convenience, but also for safety: Thes
 
 #### Reference
 
-The following functions are currently available.
-
 - [Nucleus_allocateMemory](documentation/Nucleus_allocateMemory.md)
 - [Nucleus_allocateArrayMemory](documentation/Nucleus_allocateArrayMemory.md)
 - [Nucleus_deallocateMemory](documentation/Nucleus_deallocateMemory.md)
@@ -104,6 +102,25 @@ The following functions are currently available.
 - [Nucleus_compareArrayMemory](documentation/Nucleus_compareArrayMemory.md)
 - [Nucleus_hashMemory](documentation/Nucleus_hashMemory.md)
 - [Nucleus_hashArrayMemory](documentation/Nucleus_hashArrayMemory.md)
+
+### Nucleus floating point module
+The Nucleus floating point module provides functionality to evaluate and generate single, double, and quadruple precision floating point values.
+
+#### Reference
+
+- [Nucleus_Single,
+   Nucleus_Double,
+   Nucleus_Quadruple](documentation/[Floating-Point-Type].md)
+- [Nucleus_Single_hash,
+   Nucleus_Double_hash,
+   Nucleus_Quadruple_hash](documentation/[Floating-Point-Type]_hash.md)
+- [Nucleus_Single_isNaN,
+   Nucleus_Double_isNaN,
+   Nucleus_Quadruple_isNaN](documentation/[Floating-Point-Type]_isNaN.md)
+- [Nucleus_Single_isSubnormal,
+   Nucleus_Double_isSubnormal,
+   Nucleus_Quadruple_isSubnormal](documentation/[Floating-Point-Type]_isSubnormal.md)
+
 
 #### Continuous Integrations Status Maxtrix
 
