@@ -61,6 +61,33 @@ Nucleus_deallocateMemory
     free(p);
 }
 
+Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
+Nucleus_fillMemory
+    (
+        void *p,
+        int v,
+        size_t n
+    )
+{
+    if (!p) return Nucleus_Status_InvalidArgument;
+    memset(p, v, n);
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
+Nucleus_fillArrayMemory
+    (
+        void *p,
+        int v,
+        size_t n,
+        size_t m
+    )
+{
+    size_t k;
+    if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
+    return Nucleus_fillMemory(p, v, k);
+}
+
 Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_copyMemory
     (
