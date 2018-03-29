@@ -24,3 +24,10 @@ as expecting pointers as their arguments that are not null pointers
 ```
 Nucleus_NonNull() void f(char *x, char *y, char *z, char *w);
 ```
+
+## Requirements
+
+|                      | Windows                  | Linux                     |
+|----------------------|--------------------------|---------------------------|
+| *Header*             | `Nucleus/Annotations.h`  | `Nucleus/Annotations.h`   |
+| *Static library*     |          -               |           -               |

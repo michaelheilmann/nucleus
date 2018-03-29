@@ -28,3 +28,10 @@ The source and the target memory blocks may or may not overlap.
 The number of Bytes (to copy) is specified in terms of array semantics i.e. `n` should be thought of as the array size, in elements, and `m` as the element size, in Bytes.
 The `*_ArrayMemory` functions exist for convenience as a frequent task in C program is the copying of arrays.
 Another reason is safety: This function fails and return `Nucleus_Status_Overflow` if the product of `n` and `m` would overflow`.
+
+## Requirements
+
+|                      | Windows                  | Linux                     |
+|----------------------|--------------------------|---------------------------|
+| *Header*             | `Nucleus/Memory.h`       | `Nucleus/Memory.h`        |
+| *Static library*     | `Nucleus.Library.lib`    | `libNucleus.Library.a`    |

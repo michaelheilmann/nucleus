@@ -15,9 +15,24 @@ Nucleus_allocateMemory
         size_t n
     );
 
+Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
+Nucleus_reallocateMemory
+    (
+        void **p,
+        size_t n
+    );
+
 // https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_allocateArrayMemory.md
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_allocateArrayMemory
+    (
+        void **p,
+        size_t n,
+        size_t m
+    );
+
+Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
+Nucleus_reallocateArrayMemory
     (
         void **p,
         size_t n,

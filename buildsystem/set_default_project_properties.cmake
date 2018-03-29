@@ -31,6 +31,7 @@ macro(set_project_default_properties)
     add_definitions("-Wall -Wextra -D_GNU_SOURCE")
     add_definitions("-Werror=implicit-function-declaration")
     add_definitions("-Werror=incompatible-pointer-types")
+    add_definitions("-Werror=unused-function")
   endif()
 
   # GNU GCC (C/C++) settings
