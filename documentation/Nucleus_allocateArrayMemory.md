@@ -27,3 +27,10 @@ Another reason is safety: This function fails and return `Nucleus_Status_Overflo
 
 ## Undefined behavior
 If `p` is not a null pointer and does not point to a `void *` variable, the behavior of this function is undefined.
+
+## Requirements
+
+|                      | Windows                  | Linux                     |
+|----------------------|--------------------------|---------------------------|
+| *Header*             | `Nucleus/Memory.h`       | `Nucleus/Memory.h`        |
+| *Static library*     | `Nucleus.Library.lib`    | `libNucleus.Library.a`    |

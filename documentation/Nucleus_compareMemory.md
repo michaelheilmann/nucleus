@@ -26,3 +26,10 @@ If this function succeeds:
 - `Nucleus_Status_Success` was returned.
 
 Otherwise: A non-zero status code is returned. In particular, if `p` or `q` is a null pointer, `Nucleus_Status_InvalidArgument` is returned.
+
+## Requirements
+
+|                      | Windows                  | Linux                     |
+|----------------------|--------------------------|---------------------------|
+| *Header*             | `Nucleus/Memory.h`       | `Nucleus/Memory.h`        |
+| *Static library*     | `Nucleus.Library.lib`    | `libNucleus.Library.a`    |

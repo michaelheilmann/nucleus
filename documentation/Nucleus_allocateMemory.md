@@ -23,3 +23,10 @@ Otherwise a non-zero status code is returned. In particular, if `p` is a null po
 
 ## Undefined behavior
 If `p` is not a null pointer and does not point to a `void *` variable, the behavior of this function is undefined.
+
+## Requirements
+
+|                      | Windows                  | Linux                     |
+|----------------------|--------------------------|---------------------------|
+| *Header*             | `Nucleus/Memory.h`       | `Nucleus/Memory.h`        |
+| *Static library*     | `Nucleus.Library.lib`    | `libNucleus.Library.a`    |

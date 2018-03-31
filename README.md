@@ -65,7 +65,7 @@ cmake -DWith-Optimizations=ON -DWith-Debug-Information=ON CMakeLists.txt
 ## Documentation
 The documentation of Nucleus is in the process of being converted to Markdown for being directly available on Github.
 
-### Nucleus annotations Module
+### Nucleus Annotations Module
 The Nucleus Annotations module provides annotations for functions, parameters, and expressions.
 
 #### Reference
@@ -75,8 +75,8 @@ The following annotations are currently available.
 - [Nucleus_NonNull](documentation/Nucleus_NonNull.md)
 - [Nucleus_NoReturn](documentation/Nucleus_NoReturn.md)
 
-### Nucleus memory module
-The Nucleus memory module provides functionality to allocate and deallocate memory blocks, as well as valuation and manipulation of memory blocks and their contents.
+### Nucleus Memory Module
+The Nucleus Memory Module provides functionality to allocate and deallocate memory blocks, as well as valuation and manipulation of memory blocks and their contents.
 
 For the purpose of this documentation, any consecutive - possibly empty - sequence of Bytes starting at some address is called a memory block.
 As usual with C, a pointer p to the first Byte of a memory block increment by 1 will point to the second Byte, a pointer p to the second Byte increment by 1 will point to the third Byte an so on.
@@ -103,8 +103,8 @@ The Array-functions do not only exist for convenience, but also for safety: Thes
 - [Nucleus_hashMemory](documentation/Nucleus_hashMemory.md)
 - [Nucleus_hashArrayMemory](documentation/Nucleus_hashArrayMemory.md)
 
-### Nucleus floating point module
-The Nucleus floating point module provides functionality to evaluate and generate single, double, and quadruple precision floating point values.
+### Nucleus Floating Point Module
+The Nucleus Floating Point Module provides functionality to evaluate and generate single, double, and quadruple precision floating point values.
 
 #### Reference
 
@@ -121,8 +121,13 @@ The Nucleus floating point module provides functionality to evaluate and generat
    Nucleus_Double_isSubnormal,
    Nucleus_Quadruple_isSubnormal](documentation/[Floating-Point-Type]_isSubnormal.md)
 
+### Nucleus Dynamic Byte Array Module __DRAFT__
+This Nucleus Dynamic Byte Array Module provides dynamically resizing arrays of Bytes.
+Its documentation can be found [here](documentation/Nucleus_DynamicByteArray.md).
 
-#### Continuous Integrations Status Maxtrix
+#### Reference
+
+## Continuous Integrations Status Maxtrix
 
 |              | master                                                                                                                                                                          | develop                                                                                                                                                                           |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

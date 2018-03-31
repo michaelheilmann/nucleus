@@ -40,6 +40,20 @@ Nucleus_allocateMemory
 }
 
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
+Nucleus_reallocateMemory
+    (
+        void **p,
+        size_t n
+    )
+{
+    if (!p || !*p) return Nucleus_Status_InvalidArgument;
+    void *q = realloc(*p, n > 0 ? n : 1);
+    if (!q) return Nucleus_Status_AllocationFailed;
+    *p = q;
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_allocateArrayMemory
     (
         void **p,
@@ -50,6 +64,19 @@ Nucleus_allocateArrayMemory
     size_t k;
     if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
     return Nucleus_allocateMemory(p, k);
+}
+
+Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
+Nucleus_reallocateArrayMemory
+    (
+        void **p,
+        size_t n,
+        size_t m
+    )
+{
+    size_t k;
+    if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
+    return Nucleus_reallocateMemory(p, k);
 }
 
 Nucleus_NoError() void
