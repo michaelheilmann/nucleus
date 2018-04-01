@@ -1,6 +1,10 @@
 # Nucleus
-Nucleus is basic C project with CMake support.
-Nucleus works for Windows and Linux.
+
+Nucleus is a C cross-platform utility library for Windows, Linux, and OS X.
+Nucleus is made available publicly under the
+[MIT license](https://github.com/primordialmachine/nucleus/blob/master/LICENSE.md) 
+on
+[Github](https://github.com/primordialmachine/nucleus).
 
 ## Building the demo (Windows)
 Visual Studio is currently *still* supported.
@@ -11,13 +15,13 @@ Change the directory to the directory of this file.
 
 Enter
 ```
-cmake CMakeLists.txt -a Win32
+cmake -a Win32 CMakeLists.txt
 ```
 to generate the project files for Win32.
 
 Enter
 ```
-cmake CMakeLists.txt -a x64
+cmake -a x64 CMakeLists.txt
 ```
 to generate the project files for x64.
 
@@ -95,6 +99,8 @@ The Array-functions do not only exist for convenience, but also for safety: Thes
 
 - [Nucleus_allocateMemory](documentation/Nucleus_allocateMemory.md)
 - [Nucleus_allocateArrayMemory](documentation/Nucleus_allocateArrayMemory.md)
+- [Nucleus_reallocateMemory](documentation/Nucleus_reallocateMemory.md)
+- [Nucleus_reallocateArrayMemory](documentation/Nucleus_reallocateArrayMemory.md)
 - [Nucleus_deallocateMemory](documentation/Nucleus_deallocateMemory.md)
 - [Nucleus_copyMemory](documentation/Nucleus_copyMemory.md)
 - [Nucleus_copyArrayMemory](documentation/Nucleus_copyArrayMemory.md)

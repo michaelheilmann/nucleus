@@ -15,6 +15,7 @@ Nucleus_allocateMemory
         size_t n
     );
 
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_reallocateMemory.md
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_reallocateMemory
     (
@@ -31,6 +32,7 @@ Nucleus_allocateArrayMemory
         size_t m
     );
 
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_reallocateArrayMemory.md
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_reallocateArrayMemory
     (

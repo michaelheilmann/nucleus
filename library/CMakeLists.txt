@@ -23,8 +23,11 @@ file(GLOB_RECURSE SOURCE_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.c")
 # Find and configure header files.
 file(GLOB_RECURSE HEADER_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.h")
 set_source_files_properties(${HEADER_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
+# Find and configure inlay files.
+file(GLOB_RECURSE INLAY_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.i")
+set_source_files_properties(${INLAY_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
 # Define and configure the library.
-add_library(Nucleus.Library STATIC ${SOURCE_FILES} ${HEADER_FILES})
+add_library(Nucleus.Library STATIC ${SOURCE_FILES} ${HEADER_FILES} ${INLAY_FILES})
 target_include_directories(Nucleus.Library PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_include_directories(Nucleus.Library INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 

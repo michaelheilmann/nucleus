@@ -1,19 +1,20 @@
+// Copyright (c) Michael Heilmann 2018
 #pragma once
 
 #include "Nucleus/Annotations.h"
 #include "Nucleus/Status.h"
 #include <stddef.h> // For size_t.
 
-/// @brief A dynamically resizing Byte buffer.
+/// @brief A dynamic array of Bytes.
 typedef struct Nucleus_DynamicByteArray Nucleus_DynamicByteArray;
 
 struct Nucleus_DynamicByteArray
 {
-    /// @brief A pointer to an array of @a capacity Bytes.
+    /// @brief A pointer to an array of @a capacity @a (char) elements.
     char *array;
-    /// @brief The size, in Bytes, of the array pointed to by @a array.
+    /// @brief The capacity, in elements, of the array pointed to by @a array.
     size_t capacity;
-    /// @brief The number of Bytes in this string buffer. 
+    /// @brief The number of elements in this array. 
     size_t size;
 }; // struct Nucleus_DynamicByteArray
 

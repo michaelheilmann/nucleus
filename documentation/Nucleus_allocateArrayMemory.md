@@ -1,5 +1,5 @@
 # `Nucleus_allocateMemory`
-*Allocate a memory block of a specified size.*
+*Allocate a memory block.*
 
 ## C Specification
 ```
