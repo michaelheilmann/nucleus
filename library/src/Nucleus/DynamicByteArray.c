@@ -29,6 +29,7 @@ Nucleus_DynamicByteArray_uninitialize
     dynamicByteArray->array = NULL;
 }
 
+// TODO: Use Nucleus_reallocate(Array)Memory.
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_ensureFreeCapacity
     (
@@ -54,6 +55,7 @@ Nucleus_DynamicByteArray_ensureFreeCapacity
         Nucleus_deallocateMemory(oldArray);
         dynamicByteArray->capacity = newCapacity;
     }
+    return Nucleus_Status_Success;
 }
 
 Nucleus_NonNull() Nucleus_Status

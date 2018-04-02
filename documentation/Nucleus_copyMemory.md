@@ -21,7 +21,7 @@ Nucleus_copyMemory
 This function copies contents of a memory block to another memory block.
 
 If this function succeeds, `n` Bytes were copied from the memory block pointed to by `q` to the memory block pointed to by `p`.
-Otherwise a non-zero status code is returned. In particular, if `p` or `q` is a null pointer `Nucleus_Status_InvalidArgument` is returned.
+This function fails if and only if `p` or `q` is a null pointers. `Nucleus_Status_InvalidArgument` is returned in that case.
 The source and the target memory blocks may or may not overlap.
 
 ## Requirements

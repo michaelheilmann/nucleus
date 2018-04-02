@@ -1,4 +1,4 @@
-# `Nucleus_copyMemory`
+# `Nucleus_copyArrayMemory`
 *Copy contents of a memory block to another memory block.*
 
 ## C Specification
@@ -22,7 +22,8 @@ Nucleus_copyMemory
 This function copies contents of a memory block to another memory block.
 
 If this function succeeds, `n` Bytes were copied from the memory block pointed to by `q` to the memory block pointed to by `p`.
-Otherwise a non-zero status code is returned. In particular, if `p` or `q` is a null pointer `Nucleus_Status_InvalidArgument` is returned.
+This function fails if and only if `p` or `q` is a null pointer or `n * m` would overflow. `Nucleus_Status_InvalidArgument`
+is returned in the former case, `Nucleus_Status_Overflow` is returned in the latter case.
 The source and the target memory blocks may or may not overlap.
 
 The number of Bytes (to copy) is specified in terms of array semantics i.e. `n` should be thought of as the array size, in elements, and `m` as the element size, in Bytes.
