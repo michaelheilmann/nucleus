@@ -78,6 +78,8 @@ The following annotations are currently available.
 
 - [Nucleus_NonNull](documentation/Nucleus_NonNull.md)
 - [Nucleus_NoReturn](documentation/Nucleus_NoReturn.md)
+- [Nucleus_Likely](documentation/Nucleus_Likely.md)
+- [Nucleus_Unlikely](documentation/Nucleus_Unlikely.md)
 
 ### Nucleus Memory Module
 The Nucleus Memory Module provides functionality to allocate and deallocate memory blocks, as well as valuation and manipulation of memory blocks and their contents.
@@ -108,6 +110,7 @@ The Array-functions do not only exist for convenience, but also for safety: Thes
 - [Nucleus_compareArrayMemory](documentation/Nucleus_compareArrayMemory.md)
 - [Nucleus_hashMemory](documentation/Nucleus_hashMemory.md)
 - [Nucleus_hashArrayMemory](documentation/Nucleus_hashArrayMemory.md)
+- [Nucleus_getPageSize](documentation/Nucleus_getPageSize.md)
 
 ### Nucleus Floating Point Module
 The Nucleus Floating Point Module provides functionality to evaluate and generate single, double, and quadruple precision floating point values.
@@ -128,7 +131,7 @@ The Nucleus Floating Point Module provides functionality to evaluate and generat
    Nucleus_Quadruple_isSubnormal](documentation/[Floating-Point-Type]_isSubnormal.md)
 
 ### Nucleus Dynamic Byte Array Module __DRAFT__
-This Nucleus Dynamic Byte Array Module provides dynamically resizing arrays of Bytes.
+The Nucleus Dynamic Byte Array Module provides dynamically resizing arrays of Bytes.
 Its documentation can be found [here](documentation/Nucleus_DynamicByteArray.md).
 
 #### Reference

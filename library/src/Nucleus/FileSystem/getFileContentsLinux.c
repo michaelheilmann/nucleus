@@ -1,4 +1,4 @@
-/// @file filesystem/get-file-contents-linux.c
+/// @file Nucleus/FileSystem/getFileContentsLinux.c
 /// @author Michael Heilmann
 /// @brief Get the contents of a file (Linux).
 
