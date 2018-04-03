@@ -1,3 +1,4 @@
+// Copyright (c) Michael Heilmann 2018
 #include "Nucleus/CommandLine/CommandLine-private.c.i"
 
 Nucleus_NonNull() Nucleus_Status

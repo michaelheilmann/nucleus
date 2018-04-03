@@ -1,3 +1,4 @@
+// Copyright (c) Michael Heilmann 2018
 #include "Nucleus/SafeArithmeticOperations.h"
 #include "Nucleus/Configuration.h"
 

@@ -1,3 +1,4 @@
+// Copyright (c) Michael Heilmann 2018
 // A command is split into an array of strings named arguments.
 // Argument 0 is (normally) the command name, argument 1, the first element following the command, and so on.
 //

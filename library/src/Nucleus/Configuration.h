@@ -20,7 +20,12 @@
     #define Nucleus_Compiler_MSVC
 #endif
 
-#if defined (_WIN32)
+#if defined(WIN32) || defined(_WIN32) || defined (__WIN32) || defined(__WIN32__) || defined(__WIN64__) || defined(WIN64) || defined(_WIN64) || defined(__WIN64)
     /// @brief If defined, then the target platform is "Windows".
     #define Nucleus_Platform_Windows
+#endif
+
+#if defined(__CYGWIN__) || defined(__linux__) || defined(__linux) || defined(linux) || defined(__gnu_linux)
+    /// @brief If defined, then the target platform is "Linux".
+    #define Nucleus_Platform_Linux
 #endif

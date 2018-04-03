@@ -26,7 +26,7 @@
     #define Nucleus_ReturnNonNull()
 #endif
 
-// // https://github.com/primordialmachine/blob/master/documentation/Nucleus_NoReturn.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_NoReturn.md
 #if defined(Nucleus_Compiler_GCC) && !defined(DOXYGEN)
     #define Nucleus_NoReturn() __attribute__ ((noreturn)) /**< @hideinitializer */
 #elif defined(Nucleus_Compiler_MSVC) && !defined(DOXYGEN)
@@ -79,24 +79,23 @@
 /// @param parameter the parameter declaration
 #define Nucleus_OutputInputParameter(parameter) parameter /**< @hideinitializer */
 
-/// @ingroup Annotations
-/// @brief Expression annotation. Provides branch prediction information.
-/// @details Given an expression @a e this macro evaluates to @a 1 or @a 0.depending on wether @a e evalutates to logically true or logically false.
-///          The branch prediction assumption is that @a e is more likely to evaluate to logically true.
-/// @param expression an expression
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Likely.md
 #if defined(Nucleus_Compiler_GCC)
     #define Nucleus_Likely(expression) (__builtin_expect((expression) ? 1 : 0, 1)) /**< @hideinitializer */
 #else
     #define Nucleus_Likely(expression) (expression) /**< @hideinitializer */
 #endif
 
-/// @ingroup Annotations
-/// @brief Expression annotation. Provides branch prediction information.
-/// @details Given an expression @a e this macro evaluates to @a 1 or @a 0.depending on wether @a e evaluates to logically true or logically false.
-///          The branch prediction assumption is that @a e is more likely to evaluate to logically false.
-/// @param expresion an expression
+// ttps://github.com/primordialmachine/blob/master/documentation/Nucleus_Unlikely.md
 #if defined(Nucleus_Compiler_GCC)
     #define Nucleus_Unlikely(expression) (__builtin_expect((expression) ? 1 : 0, 0)) /**< @hideinitializer */
 #else
     #define Nucleus_Unlikely(expression) (expression) /**< @hideinitializer */
+#endif
+
+/// @todo Add Nucleus_Restrict.md
+#if defined(Nucleus_Compiler_GCC)
+    #define Nucleus_Restrict() restrict
+#else
+    #define Nucleus_Restrict()
 #endif
