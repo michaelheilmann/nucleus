@@ -130,6 +130,13 @@ The Nucleus Floating Point Module provides functionality to evaluate and generat
    Nucleus_Double_isSubnormal,
    Nucleus_Quadruple_isSubnormal](documentation/[Floating-Point-Type]_isSubnormal.md)
 
+### Nucleus File System Module
+The Nucleus Dynamic Byte Array Module provides functionality related to the filesystem.
+
+#### Reference
+
+- [Nucleus_setFileContents](documentation/Nucleus_setFileContents.md)
+
 ### Nucleus Dynamic Byte Array Module __DRAFT__
 The Nucleus Dynamic Byte Array Module provides dynamically resizing arrays of Bytes.
 Its documentation can be found [here](documentation/Nucleus_DynamicByteArray.md).
