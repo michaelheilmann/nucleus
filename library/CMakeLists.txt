@@ -30,6 +30,10 @@ add_library(Nucleus.Library STATIC ${SOURCE_FILES} ${HEADER_FILES} ${INLAY_FILES
 target_include_directories(Nucleus.Library PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_include_directories(Nucleus.Library INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
+if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
+  target_link_libraries(Nucleus.Library m)
+endif()
+
 FIND_PACKAGE(Doxygen)
 IF(DOXYGEN_FOUND)
     ADD_CUSTOM_TARGET(Nucleus.Library.Documentation ${DOXYGEN_EXECUTABLE} COMMENT "Building documentation")

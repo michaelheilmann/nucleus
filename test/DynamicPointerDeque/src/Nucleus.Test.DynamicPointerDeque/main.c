@@ -1,5 +1,5 @@
 // Copyright (c) Michael Heilmann 2018
-#include "Nucleus/DynamicPointerDeque.h"
+#include "Nucleus/Collections/PointerDeque.h"
 #include <stdlib.h>
 
 static Nucleus_Status
@@ -22,14 +22,14 @@ test1
     (
     )
 {
-    Nucleus_DynamicPointerDeque pointerDequeue;
+    Nucleus_Collections_PointerDeque pointerDequeue;
     Nucleus_Status status;
     
-    status = Nucleus_DynamicPointerDeque_initialize(&pointerDequeue, 0, NULL, NULL);
+    status = Nucleus_Collections_PointerDeque_initialize(&pointerDequeue, 0, NULL, NULL);
     if (status) return status;
     
     size_t size;
-    status = Nucleus_DynamicPointerDeque_getSize(&pointerDequeue, &size);
+    status = Nucleus_Collections_PointerDeque_getSize(&pointerDequeue, &size);
     if (status) goto Exit;
     
     if (size != 0)
@@ -38,7 +38,7 @@ test1
         goto Exit;
     }
 Exit:
-    Nucleus_DynamicPointerDeque_uninitialize(&pointerDequeue);
+    Nucleus_Collections_PointerDeque_uninitialize(&pointerDequeue);
     return status;
 }
 
@@ -54,18 +54,18 @@ test2
         "2",
         "3",
     };
-    Nucleus_DynamicPointerDeque pointerDequeue;
+    Nucleus_Collections_PointerDeque pointerDequeue;
     Nucleus_Status status;
 
-    status = Nucleus_DynamicPointerDeque_initialize(&pointerDequeue, 0, NULL, NULL);
+    status = Nucleus_Collections_PointerDeque_initialize(&pointerDequeue, 0, NULL, NULL);
     if (status) return status;
 
-    status = Nucleus_DynamicPointerDeque_prepend(&pointerDequeue, (void *)pointers[0]);   if (status) goto Exit;
-    status = Nucleus_DynamicPointerDeque_insert(&pointerDequeue, (void *)pointers[1], 1); if (status) goto Exit;
-    status = Nucleus_DynamicPointerDeque_insert(&pointerDequeue, (void *)pointers[2], 2); if (status) goto Exit;
-    status = Nucleus_DynamicPointerDeque_append(&pointerDequeue, (void *)pointers[3]);    if (status) goto Exit;
+    status = Nucleus_Collections_PointerDeque_prepend(&pointerDequeue, (void *)pointers[0]);   if (status) goto Exit;
+    status = Nucleus_Collections_PointerDeque_insert(&pointerDequeue, (void *)pointers[1], 1); if (status) goto Exit;
+    status = Nucleus_Collections_PointerDeque_insert(&pointerDequeue, (void *)pointers[2], 2); if (status) goto Exit;
+    status = Nucleus_Collections_PointerDeque_append(&pointerDequeue, (void *)pointers[3]);    if (status) goto Exit;
     size_t size;
-    status = Nucleus_DynamicPointerDeque_getSize(&pointerDequeue, &size);
+    status = Nucleus_Collections_PointerDeque_getSize(&pointerDequeue, &size);
     if (status) goto Exit;
     if (size != 4)
     {
@@ -75,7 +75,7 @@ test2
     for (size_t i = 0, n = size; i < n; ++i)
     {
         char *pointer;
-        status = Nucleus_DynamicPointerDeque_at(&pointerDequeue, i, (void **)&pointer);
+        status = Nucleus_Collections_PointerDeque_at(&pointerDequeue, i, (void **)&pointer);
         if (status)
         {
             goto Exit;
@@ -87,7 +87,7 @@ test2
         }
     }
 Exit:
-    Nucleus_DynamicPointerDeque_uninitialize(&pointerDequeue);
+    Nucleus_Collections_PointerDeque_uninitialize(&pointerDequeue);
     return status;
 }
 
@@ -103,18 +103,18 @@ test3
         "2",
         "3",
     };
-    Nucleus_DynamicPointerDeque pointerDequeue;
+    Nucleus_Collections_PointerDeque pointerDequeue;
     Nucleus_Status status;
 
-    status = Nucleus_DynamicPointerDeque_initialize(&pointerDequeue, 0, NULL, NULL);
+    status = Nucleus_Collections_PointerDeque_initialize(&pointerDequeue, 0, NULL, NULL);
     if (status) return status;
 
-    status = Nucleus_DynamicPointerDeque_prepend(&pointerDequeue, (void *)pointers[0]);   if (status) goto Exit;
-    status = Nucleus_DynamicPointerDeque_insert(&pointerDequeue, (void *)pointers[1], 1); if (status) goto Exit;
-    status = Nucleus_DynamicPointerDeque_insert(&pointerDequeue, (void *)pointers[2], 2); if (status) goto Exit;
-    status = Nucleus_DynamicPointerDeque_append(&pointerDequeue, (void *)pointers[3]);    if (status) goto Exit;
+    status = Nucleus_Collections_PointerDeque_prepend(&pointerDequeue, (void *)pointers[0]);   if (status) goto Exit;
+    status = Nucleus_Collections_PointerDeque_insert(&pointerDequeue, (void *)pointers[1], 1); if (status) goto Exit;
+    status = Nucleus_Collections_PointerDeque_insert(&pointerDequeue, (void *)pointers[2], 2); if (status) goto Exit;
+    status = Nucleus_Collections_PointerDeque_append(&pointerDequeue, (void *)pointers[3]);    if (status) goto Exit;
     size_t size;
-    status = Nucleus_DynamicPointerDeque_getSize(&pointerDequeue, &size);
+    status = Nucleus_Collections_PointerDeque_getSize(&pointerDequeue, &size);
     if (status) goto Exit;
     if (size != 4)
     {
@@ -124,7 +124,7 @@ test3
     for (size_t i = 0, n = size; i < n; ++i)
     {
         char *pointer;
-        status = Nucleus_DynamicPointerDeque_at(&pointerDequeue, i, (void **)&pointer);
+        status = Nucleus_Collections_PointerDeque_at(&pointerDequeue, i, (void **)&pointer);
         if (status)
         {
             goto Exit;
@@ -136,7 +136,7 @@ test3
         }
     }
 Exit:
-    Nucleus_DynamicPointerDeque_uninitialize(&pointerDequeue);
+    Nucleus_Collections_PointerDeque_uninitialize(&pointerDequeue);
     return status;
 }
 

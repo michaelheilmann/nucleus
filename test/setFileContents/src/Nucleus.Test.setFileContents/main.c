@@ -1,5 +1,5 @@
 // Copyright (c) Michael Heilmann 2018
-#include "Nucleus/DynamicByteArray.h"
+#include "Nucleus/Collections/ByteArray.h"
 #include "Nucleus/FileSystem.h"
 #include "Nucleus/Memory.h"
 #include <string.h>
@@ -7,12 +7,12 @@
 Nucleus_NonNull(2) Nucleus_Status
 callback
     (
-        Nucleus_DynamicByteArray *byteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         const char *bytes,
         size_t numberOfBytes
     )
 {
-    return Nucleus_DynamicByteArray_appendMany(byteArray, bytes, numberOfBytes);
+    return Nucleus_Collections_ByteArray_appendMany(byteArray, bytes, numberOfBytes);
 }
 
 Nucleus_NonNull() static Nucleus_Status
@@ -30,15 +30,15 @@ test
     status = Nucleus_setFileContents(pathname, content, contentSize);
     if (status) return status;
 
-    Nucleus_DynamicByteArray buffer;
-    status = Nucleus_DynamicByteArray_initialize(&buffer, 0);
+    Nucleus_Collections_ByteArray buffer;
+    status = Nucleus_Collections_ByteArray_initialize(&buffer, 0);
     if (status) return status;
 
     status = Nucleus_getFileContentsExtended(pathname, &buffer,
                                              (Nucleus_getFileContentsExtendedCallbackFunction *)(&callback));
     if (status)
     {
-        Nucleus_DynamicByteArray_uninitialize(&buffer);
+        Nucleus_Collections_ByteArray_uninitialize(&buffer);
         return status;
     }
 
@@ -46,18 +46,18 @@ test
     size_t readContentSize = 0;
 
     // TODO: API violates the API conventions of Nucleus.
-    readContent = Nucleus_DynamicByteArray_getBytes(&buffer);
+    readContent = Nucleus_Collections_ByteArray_getBytes(&buffer);
 
-    status = Nucleus_DynamicByteArray_getSize(&buffer, &readContentSize);
+    status = Nucleus_Collections_ByteArray_getSize(&buffer, &readContentSize);
     if (status)
     {
-        Nucleus_DynamicByteArray_uninitialize(&buffer);
+        Nucleus_Collections_ByteArray_uninitialize(&buffer);
         return status;
     }
 
     if (contentSize != readContentSize)
     {
-        Nucleus_DynamicByteArray_uninitialize(&buffer);
+        Nucleus_Collections_ByteArray_uninitialize(&buffer);
         return Nucleus_Status_InternalError; // TODO: Add and use Nucleus_Status_TestFailed.
     }
 
@@ -65,11 +65,11 @@ test
     status = Nucleus_compareMemory(content, readContent, contentSize, &result);
     if (status)
     {
-        Nucleus_DynamicByteArray_uninitialize(&buffer);
+        Nucleus_Collections_ByteArray_uninitialize(&buffer);
         return Nucleus_Status_InternalError; // TODO: Add and use Nucleus_Status_TestFailed.
     }
 
-    Nucleus_DynamicByteArray_uninitialize(&buffer);
+    Nucleus_Collections_ByteArray_uninitialize(&buffer);
 
     if (!result)
     {
