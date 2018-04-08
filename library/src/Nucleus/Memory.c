@@ -124,8 +124,15 @@ Nucleus_copyMemory
     )
 {
     if (!p || !q) return Nucleus_Status_InvalidArgument;
-    if (overlapping(p, q, n)) memmove(p, q, n);
-    else memcpy(p, q, n);
+    if (n == 0) return Nucleus_Status_Success;
+    if (overlapping(p, q, n))
+    {
+        memmove(p, q, n);
+    }
+    else
+    {
+        memcpy(p, q, n);
+    }
     return Nucleus_Status_Success;
 }
 
@@ -138,6 +145,8 @@ Nucleus_copyArrayMemory
         size_t m
     )
 {
+    if (!p || !q) return Nucleus_Status_InvalidArgument;
+    if (!n || !m) return Nucleus_Status_Success;
     size_t k;
     if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
     return Nucleus_copyMemory(p, q, k);

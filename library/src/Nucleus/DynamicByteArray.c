@@ -62,16 +62,33 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_append
     (
         Nucleus_DynamicByteArray *dynamicByteArray,
+        char byte
+    )
+{ return Nucleus_DynamicByteArray_appendMany(dynamicByteArray, &byte, 1); }
+
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_DynamicByteArray_appendMany
+    (
+        Nucleus_DynamicByteArray *dynamicByteArray,
         const char *bytes,
         size_t numberOfBytes
     )
 {
     if (Nucleus_Unlikely(!dynamicByteArray)) return Nucleus_Status_InvalidArgument;
-    return Nucleus_DynamicByteArray_insert(dynamicByteArray, bytes, numberOfBytes, dynamicByteArray->size);
+    return Nucleus_DynamicByteArray_insertMany(dynamicByteArray, bytes, numberOfBytes, dynamicByteArray->size);
 }
 
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_prepend
+    (
+        Nucleus_DynamicByteArray *dynamicByteArray,
+        char byte
+    )
+{ return Nucleus_DynamicByteArray_prependMany(dynamicByteArray, &byte, 1); }
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_DynamicByteArray_prependMany
     (
         
         Nucleus_DynamicByteArray *dynamicByteArray,
@@ -80,11 +97,20 @@ Nucleus_DynamicByteArray_prepend
     )
 {
     if (Nucleus_Unlikely(!dynamicByteArray)) return Nucleus_Status_InvalidArgument;
-    return Nucleus_DynamicByteArray_insert(dynamicByteArray, bytes, numberOfBytes, 0);
+    return Nucleus_DynamicByteArray_insertMany(dynamicByteArray, bytes, numberOfBytes, 0);
 }
 
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_insert
+    (
+        Nucleus_DynamicByteArray *dynamicByteArray,
+        char byte,
+        size_t index
+    )
+{ return Nucleus_DynamicByteArray_insertMany(dynamicByteArray, &byte, 1, index); }
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_DynamicByteArray_insertMany
     (
         Nucleus_DynamicByteArray *dynamicByteArray,
         const char *bytes,
@@ -98,9 +124,24 @@ Nucleus_DynamicByteArray_insert
     Nucleus_Status status;
     status = Nucleus_DynamicByteArray_ensureFreeCapacity(dynamicByteArray, numberOfBytes);
     if (Nucleus_Unlikely(status)) return status;
-    Nucleus_copyMemory(dynamicByteArray->array + index, dynamicByteArray->array + index + numberOfBytes, numberOfBytes);
+    Nucleus_copyMemory(dynamicByteArray->array + index + numberOfBytes, dynamicByteArray->array + index,
+                       dynamicByteArray->size - index);
     Nucleus_copyMemory(dynamicByteArray->array + index, bytes, numberOfBytes);
     dynamicByteArray->size += numberOfBytes;
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_DynamicByteArray_at
+    (
+        Nucleus_DynamicByteArray *dynamicByteArray,
+        size_t index,
+        char *byte
+    )
+{
+    if (Nucleus_Unlikely(!dynamicByteArray || !byte)) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(index >= dynamicByteArray->size)) return Nucleus_Status_IndexOutOfBounds;
+    *byte = dynamicByteArray->array[index];
     return Nucleus_Status_Success;
 }
 
