@@ -4,7 +4,7 @@
 #include "Nucleus/Memory.h"
 #include <string.h>
 
-Nucleus_NonNull(2) Nucleus_Status
+Nucleus_NoError() Nucleus_NonNull(2) static Nucleus_Status
 callback
     (
         Nucleus_DynamicByteArray *byteArray,
@@ -26,9 +26,6 @@ test
     if (!pathname || !content) return Nucleus_Status_InvalidArgument;
 
     Nucleus_Status status;
-
-    status = Nucleus_setFileContents(pathname, content, contentSize);
-    if (status) return status;
 
     Nucleus_DynamicByteArray buffer;
     status = Nucleus_DynamicByteArray_initialize(&buffer, 0);

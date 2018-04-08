@@ -14,7 +14,7 @@ struct Nucleus_DynamicPointerArray
     void **elements;
     /// @brief The capacity, in elements, of the array pointed to by @a array.
     size_t capacity;
-    /// @brief The number of elements in this array. 
+    /// @brief The number of elements in this array.
     size_t size;
     /// @brief A pointer to the @a Nucleus_LockFunction function or a null pointer.
     Nucleus_LockFunction *lockFunction;
@@ -39,15 +39,7 @@ Nucleus_DynamicPointerArray_uninitialize
         Nucleus_DynamicPointerArray *dynamicPointerArray
     );
 
-/// @brief Ensure the free capacity of a @a (Nucleus_DynamicPointerArray) is greater than or equal a required free capacity.
-/// @param dynamicPointerArray a pointer to an initialized @a (Nucleus_DynamicPointerArray) object
-/// @param requiredFreeCapacity the required free capacity
-/// @details The free capacity of the @a (Nucleus_DynamicPointerArray) object pointed to by @a (dynamicPointerArray) is greater than or
-/// equal to the required free capacity @a requiredFreeCapacity on success and #Nucleus_Status_Success is returned.
-/// On error, one of the non-zero status codes below is returned:
-/// - `Nucleus_Status_InvalidArgument`: ``dynamicPointerArray` is a null pointer
-/// - `Nucleus_Status_AllocationFailed`: an allocation failed
-/// - `Nucleus_Status_Overflow`: the required free capacity `requiredFreeCapacity` is too big
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_ensureFreeCapacity.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicPointerArray_ensureFreeCapacity
     (
@@ -55,7 +47,7 @@ Nucleus_DynamicPointerArray_ensureFreeCapacity
         size_t requiredFreeCapacity
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicPointerArray_append.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_append.md
 Nucleus_NonNull(1) Nucleus_Status
 Nucleus_DynamicPointerArray_append
     (
@@ -63,7 +55,7 @@ Nucleus_DynamicPointerArray_append
         void *pointer
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicPointerArray_prepend.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_prepend.md
 Nucleus_NonNull(1) Nucleus_Status
 Nucleus_DynamicPointerArray_prepend
     (
@@ -71,7 +63,7 @@ Nucleus_DynamicPointerArray_prepend
         void *pointer
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicPointerArray_insert.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_insert.md
 Nucleus_NonNull(1) Nucleus_Status
 Nucleus_DynamicPointerArray_insert
     (
@@ -80,7 +72,7 @@ Nucleus_DynamicPointerArray_insert
         size_t index
     );
 
-/// @ingroup dl
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_at.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicPointerArray_at
     (
@@ -89,7 +81,7 @@ Nucleus_DynamicPointerArray_at
         void **pointer
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicPointerArray_getSize.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Collection-Type]_getSize.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicPointerArray_getSize
     (
@@ -97,7 +89,7 @@ Nucleus_DynamicPointerArray_getSize
         size_t *size
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicPointerArray_getCapacity.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_getCapacity.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicPointerArray_getCapacity
     (
@@ -105,7 +97,7 @@ Nucleus_DynamicPointerArray_getCapacity
         size_t *capacity
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicPointerArray_getFreeCapacity.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_getFreeCapacity.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicPointerArray_getFreeCapacity
     (
@@ -113,7 +105,7 @@ Nucleus_DynamicPointerArray_getFreeCapacity
         size_t *freeCapacity
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicPointerArray_clear.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Collection-Type]_clear.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicPointerArray_clear
     (

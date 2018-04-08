@@ -2,7 +2,7 @@
 
 Nucleus is a C cross-platform utility library for Windows, Linux, and OS X.
 Nucleus is made available publicly under the
-[MIT license](https://github.com/primordialmachine/nucleus/blob/master/LICENSE.md) 
+[MIT license](https://github.com/primordialmachine/nucleus/blob/master/LICENSE.md)
 on
 [Github](https://github.com/primordialmachine/nucleus).
 
@@ -41,7 +41,7 @@ Change the directory to the directory of this file.
 
 Enter
 ```
-cmake CMakeLists.txt 
+cmake CMakeLists.txt
 ```
 to generate the project files.
 
@@ -91,7 +91,7 @@ The number of Byte variables of a memory block is the size of a memory region. T
 The tasks of allocation and deallocation of memory blocks, valuation and manipulation of memory blocks and their contents are in C frequently performed over memory blocks
 of which their sizes are specified in terms of array semantics: The memory block is considered as an array and it size is specified as its number of elements and the size,
 in Bytes, of an element. Consequently, each function taking a specification of a size of a memory block as a single value, is accompanied by function taking the specification
-of the size of the memory block as two values. In this API, you You can easily find the related functions: 
+of the size of the memory block as two values. In this API, you You can easily find the related functions:
 - The functions taking the size, in Bytes, do not include the word `Array` in their function names,
 - the functions taking the number of elements and the element size, in Bytes, include the word `Array` somewhere in their function names.
 
@@ -139,9 +139,42 @@ The Nucleus Dynamic Byte Array Module provides functionality related to the file
 
 ### Nucleus Dynamic Byte Array Module __DRAFT__
 The Nucleus Dynamic Byte Array Module provides dynamically resizing arrays of Bytes.
+Any collection provided supports
 Its documentation can be found [here](documentation/Nucleus_DynamicByteArray.md).
 
 #### Reference
+
+- [Nucleus_DynamicByteArray_getSize,
+   Nucleus_DynamicPointerArray_getSize,
+   Nucleus_DynamicPointerDeque_getSize](documentation/Nucleus_Dynamic[Collection-Type]_getSize.md).
+
+- [Nucleus_DynamicByteArray_getCapacity,
+   Nucleus_DynamicPointerArray_getCapacity,
+   Nucleus_DynamicPointerDeque_getCapacity](documentation/Nucleus_Dynamic[Array-Collection-Type]_getCapacity.md).
+
+- [Nucleus_DynamicByteArray_getFreeCapacity,
+   Nucleus_DynamicPointerArray_getFreeCapacity,
+   Nucleus_DynamicPointerDeque_getFreeCapacity](documentation/Nucleus_Dynamic[Array-Collection-Type]_getFreeCapacity.md).
+
+- [Nucleus_DynamicByteArray_ensureFreeCapacity,
+   Nucleus_DynamicPointerArray_ensureFreeCapacity,
+   Nucleus_DynamicPointerDeque_ensureFreeCapacity](documentation/Nucleus_Dynamic[Array-Collection-Type]_ensureFreeCapacity.md)
+
+- [Nucleus_DynamicByteArray_clear,
+   Nucleus_DynamicPointerArray_clear,
+   Nucleus_DynamicPointerDeque_clear](documentation/Nucleus_Dynamic[Collection-Type]_clear.md).
+
+- [Nucleus_DynamicByteArray_insert,
+   Nucleus_DynamicPointerArray_insert,
+   Nucleus_DynamicPointerDeque_insert](documentation/Nucleus_Dynamic[Array-Collection-Type]_insert.md).
+
+- [Nucleus_DynamicByteArray_append,
+   Nucleus_DynamicPointerArray_append,
+   Nucleus_DynamicPointerDeque_append](documentation/Nucleus_Dynamic[Array-Collection-Type]_append.md).
+
+- [Nucleus_DynamicByteArray_prepend,
+   Nucleus_DynamicPointerArray_prepend,
+   Nucleus_DynamicPointerDeque_prepend](documentation/Nucleus_Dynamic[Array-Collection-Type]_prepend.md).
 
 ## Continuous Integrations Status Maxtrix
 

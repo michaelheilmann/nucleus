@@ -14,7 +14,7 @@ struct Nucleus_DynamicByteArray
     char *array;
     /// @brief The capacity, in elements, of the array pointed to by @a array.
     size_t capacity;
-    /// @brief The number of elements in this array. 
+    /// @brief The number of elements in this array.
     size_t size;
 }; // struct Nucleus_DynamicByteArray
 
@@ -33,15 +33,7 @@ Nucleus_DynamicByteArray_uninitialize
         Nucleus_DynamicByteArray *dynamicByteArray
     );
 
-/// @brief Ensure the free capacity of a @a (Nucleus_DynamicByteArray) is greater than or equal a required free capacity.
-/// @param dynamicByteArray a pointer to an initialized @a (Nucleus_DynamicByteArray) object
-/// @param requiredFreeCapacity the required free capacity
-/// @details The free capacity of the @a (Nucleus_DynamicByteArray) object pointed to by @a (dynamicByteArray) is greater than or
-/// equal to the required free capacity @a requiredFreeCapacity on success and #Nucleus_Status_Success is returned.
-/// On error, one of the non-zero status codes below is returned:
-/// - `Nucleus_Status_InvalidArgument`: `dynamicByteArray` is a null pointer
-/// - `Nucleus_Status_AllocationFailed`: an allocation failed
-/// - `Nucleus_Status_Overflow`: the required free capacity `requiredFreeCapacity` is too big
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_ensureFreeCapacity.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_ensureFreeCapacity
     (
@@ -49,32 +41,66 @@ Nucleus_DynamicByteArray_ensureFreeCapacity
         size_t requiredFreeCapacity
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicByteArray_append.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_append.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_append
     (
         Nucleus_DynamicByteArray *dynamicByteArray,
-        const char *bytes,
-        size_t numberOfBytes
+        char byte
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicByteArray_prepend.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicByteArray_appendMany.md
 Nucleus_NonNull() Nucleus_Status
-Nucleus_DynamicByteArray_prepend
+Nucleus_DynamicByteArray_appendMany
     (
         Nucleus_DynamicByteArray *dynamicByteArray,
         const char *bytes,
         size_t numberOfBytes
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicByteArray_insert.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_prepend.md
+Nucleus_NonNull() Nucleus_Status
+Nucleus_DynamicByteArray_prepend
+    (
+        Nucleus_DynamicByteArray *dynamicByteArray,
+        char byte
+    );
+
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicByteArray_prependMany.md
+Nucleus_NonNull() Nucleus_Status
+Nucleus_DynamicByteArray_prependMany
+    (
+        Nucleus_DynamicByteArray *dynamicByteArray,
+        const char *bytes,
+        size_t numberOfBytes
+    );
+
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_insert.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_insert
+    (
+        Nucleus_DynamicByteArray *dynamicByteArray,
+        char byte,
+        size_t index
+    );
+
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicByteArray_insertMany.md
+Nucleus_NonNull() Nucleus_Status
+Nucleus_DynamicByteArray_insertMany
     (
         Nucleus_DynamicByteArray *dynamicByteArray,
         const char *bytes,
         size_t numberOfBytes,
         size_t index
+    );
+
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_at.md
+Nucleus_NonNull() Nucleus_Status
+Nucleus_DynamicByteArray_at
+    (
+        Nucleus_DynamicByteArray *dynamicByteArray,
+        size_t index,
+        char *byte
     );
 
 /// @ingroup dl
@@ -84,7 +110,7 @@ Nucleus_DynamicByteArray_getBytes
         Nucleus_DynamicByteArray *dynamicByteArray
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicByteArray_getSize.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Collection-Type]_getSize.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_getSize
     (
@@ -92,7 +118,7 @@ Nucleus_DynamicByteArray_getSize
         size_t *size
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicByteArray_getCapacity.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Collection-Type]_getCapacity.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_getCapacity
     (
@@ -100,7 +126,7 @@ Nucleus_DynamicByteArray_getCapacity
         size_t *capacity
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicByteArray_getFreeCapacity.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Array-Collection-Type]_getFreeCapacity.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_getFreeCapacity
     (
@@ -108,7 +134,7 @@ Nucleus_DynamicByteArray_getFreeCapacity
         size_t *freeCapacity
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_DynamicByteArray_clear.md
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Dynamic[Collection-Type]_clear.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DynamicByteArray_clear
     (
