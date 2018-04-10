@@ -6,19 +6,27 @@
 Nucleus_Status
 Nucleus_hashMemory
     (
-        void *p,
+        const void *p,
         size_t n,
-        unsigned int *hv
+        Nucleus_HashValue *hv
     )
 ```
 
 ## Parameters
 - `p` a pointer to a memory block
-- `n` the size, in Bytes, of the memory block pointed to by `p`
+- `n` the size, in Bytes, of the memory block pointed to by `p`. `0` is a valid size.
 - `hv` a pointer to a `int` variable
 
 ## Description
-This function computes the hash value of a memory block.
+This function computes the hash value a memory block.
 
-If this function succeeds, `*hv` was assigned the hash value of the memory block pointed to by `p` and `Nucleus_Status_Success` was returned.
-Otherwise a non-zero status code is returned. In particular, if `p` is a null pointer `Nucleus_Status_InvalidArgument` is returned.
+`*hv* was assigned the hash value of `v` and `Nucleus_Status_Success` was returned if this function succeeded.
+This function fails if and only if  `p` or `hv` is a null pointer.
+In that case, `Nucleus_Status_InvalidArgument` is returned.
+
+## Requirements
+
+|                      | Windows                                         | Linux                                           |
+|----------------------|-------------------------------------------------|-------------------------------------------------|
+| *Header*             | `Nucleus/Hash.h`                                | `Nucleus/Hash.h`                                |
+| *Static library*     | `Nucleus.Library.lib`                           | `libNucleus.Library.a`                          |

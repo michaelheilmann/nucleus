@@ -130,6 +130,19 @@ The Nucleus Floating Point Module provides functionality to evaluate and generat
    Nucleus_Double_isSubnormal,
    Nucleus_Quadruple_isSubnormal](documentation/[Floating-Point-Type]_isSubnormal.md)
 
+### Nucleus Hash Module
+The Nucleus Hash provides functionality to compute hash values from boolean values, numeric values, pointer values,
+and Byte array values as well hash value combinators.
+
+#### Reference
+
+- [Nucleus_hash[NumericType]](documentation/Nucleus_hash[NumericType].md)
+- [Nucleus_hashPointer](documentation/Nucleus_hashPointer_hash.md)
+- [Nucleus_hashBoolean](documentation/Nucleus_hashBoolean.md)
+- [Nucleus_hashHashValue](documentation/Nucleus_hashHashValue.md)
+- [Nucleus_hashMemory](documentation/Nucleus_hashMemory.md)
+- [Nucleus_hashArrayMemory](documentation/Nucleus_hashArrayMemory.md)
+
 ### Nucleus File System Module
 The Nucleus Dynamic Byte Array Module provides functionality related to the filesystem.
 
@@ -137,44 +150,44 @@ The Nucleus Dynamic Byte Array Module provides functionality related to the file
 
 - [Nucleus_setFileContents](documentation/Nucleus_setFileContents.md)
 
-### Nucleus Dynamic Byte Array Module __DRAFT__
-The Nucleus Dynamic Byte Array Module provides dynamically resizing arrays of Bytes.
+### Nucleus Collections Module __DRAFT__
+The Nucleus Collections Module provides collections e.g. arrays, deques.
 Any collection provided supports
-Its documentation can be found [here](documentation/Nucleus_DynamicByteArray.md).
+Its documentation can be found [here](documentation/Nucleus_Collections_ByteArray.md).
 
 #### Reference
 
-- [Nucleus_DynamicByteArray_getSize,
-   Nucleus_DynamicPointerArray_getSize,
-   Nucleus_DynamicPointerDeque_getSize](documentation/Nucleus_Dynamic[Collection-Type]_getSize.md).
+- [Nucleus_Collections_ByteArray_getSize,
+   Nucleus_Collections_PointerArray_getSize,
+   Nucleus_Collections_PointerDeque_getSize](documentation/Nucleus_Collections_[Collection-Type]_getSize.md).
 
-- [Nucleus_DynamicByteArray_getCapacity,
-   Nucleus_DynamicPointerArray_getCapacity,
-   Nucleus_DynamicPointerDeque_getCapacity](documentation/Nucleus_Dynamic[Array-Collection-Type]_getCapacity.md).
+- [Nucleus_Collections_ByteArray_getCapacity,
+   Nucleus_Collections_PointerArray_getCapacity,
+   Nucleus_Collections_PointerDeque_getCapacity](documentation/Nucleus_Collections_[Array-Collection-Type]_getCapacity.md).
 
-- [Nucleus_DynamicByteArray_getFreeCapacity,
-   Nucleus_DynamicPointerArray_getFreeCapacity,
-   Nucleus_DynamicPointerDeque_getFreeCapacity](documentation/Nucleus_Dynamic[Array-Collection-Type]_getFreeCapacity.md).
+- [Nucleus_Collections_ByteArray_getFreeCapacity,
+   Nucleus_Collections_PointerArray_getFreeCapacity,
+   Nucleus_Collections_PointerDeque_getFreeCapacity](documentation/Nucleus_Collections_[Array-Collection-Type]_getFreeCapacity.md).
 
-- [Nucleus_DynamicByteArray_ensureFreeCapacity,
-   Nucleus_DynamicPointerArray_ensureFreeCapacity,
-   Nucleus_DynamicPointerDeque_ensureFreeCapacity](documentation/Nucleus_Dynamic[Array-Collection-Type]_ensureFreeCapacity.md)
+- [Nucleus_Collections_ByteArray_ensureFreeCapacity,
+   Nucleus_Collections_PointerArray_ensureFreeCapacity,
+   Nucleus_Collections_PointerDeque_ensureFreeCapacity](documentation/Nucleus_Collections_[Array-Collection-Type]_ensureFreeCapacity.md)
 
-- [Nucleus_DynamicByteArray_clear,
-   Nucleus_DynamicPointerArray_clear,
-   Nucleus_DynamicPointerDeque_clear](documentation/Nucleus_Dynamic[Collection-Type]_clear.md).
+- [Nucleus_Collections_ByteArray_clear,
+   Nucleus_Collections_PointerArray_clear,
+   Nucleus_Collections_PointerDeque_clear](documentation/Nucleus_Collections_[Collection-Type]_clear.md).
 
-- [Nucleus_DynamicByteArray_insert,
-   Nucleus_DynamicPointerArray_insert,
-   Nucleus_DynamicPointerDeque_insert](documentation/Nucleus_Dynamic[Array-Collection-Type]_insert.md).
+- [Nucleus_Collections_ByteArray_insert,
+   Nucleus_Collections_PointerArray_insert,
+   Nucleus_Collections_PointerDeque_insert](documentation/Nucleus_Collections_[Array-Collection-Type]_insert.md).
 
-- [Nucleus_DynamicByteArray_append,
-   Nucleus_DynamicPointerArray_append,
-   Nucleus_DynamicPointerDeque_append](documentation/Nucleus_Dynamic[Array-Collection-Type]_append.md).
+- [Nucleus_Collections_ByteArray_append,
+   Nucleus_Collections_PointerArray_append,
+   Nucleus_Collections_PointerDeque_append](documentation/Nucleus_Collections_[Array-Collection-Type]_append.md).
 
-- [Nucleus_DynamicByteArray_prepend,
-   Nucleus_DynamicPointerArray_prepend,
-   Nucleus_DynamicPointerDeque_prepend](documentation/Nucleus_Dynamic[Array-Collection-Type]_prepend.md).
+- [Nucleus_Collections_ByteArray_prepend,
+   Nucleus_Collections_PointerArray_prepend,
+   Nucleus_Collections_PointerDeque_prepend](documentation/Nucleus_Collections_[Array-Collection-Type]_prepend.md).
 
 ## Continuous Integrations Status Maxtrix
 

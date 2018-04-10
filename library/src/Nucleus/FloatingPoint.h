@@ -85,30 +85,3 @@ Nucleus_Quadruple_isNaN
         Nucleus_Quadruple x,
         bool *r
     );
-
-
-
-
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[Floating-Point-Type]_hash.md
-Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
-Nucleus_Single_hash
-    (
-        Nucleus_Single x,
-        unsigned int *hv
-    );
-
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[Floating-Point-Type]_hash.md
-Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
-Nucleus_Double_hash
-    (
-        Nucleus_Double x,
-        unsigned int *hv
-    );
-
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[Floating-Point-Type]_hash.md
-Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
-Nucleus_Quadruple_hash
-    (
-        Nucleus_Quadruple x,
-        unsigned int *hv
-    );

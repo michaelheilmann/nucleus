@@ -120,7 +120,7 @@ OptionSet_initialize
         OptionSet *optionSet
     )
 {
-    Nucleus_Status status = Nucleus_DynamicPointerHashMap_initialize(&optionSet->hashMap,
+    Nucleus_Status status = Nucleus_Collections_PointerHashMap_initialize(&optionSet->hashMap,
                                                                      16,
                                                                      NULL,
                                                                      NULL,
@@ -137,7 +137,7 @@ OptionSet_uninitialize
     (
         OptionSet *optionSet
     )
-{ Nucleus_DynamicPointerHashMap_uninitialize(&optionSet->hashMap); }
+{ Nucleus_Collections_PointerHashMap_uninitialize(&optionSet->hashMap); }
 
 Nucleus_NonNull() static Nucleus_Status
 OptionSet_add
@@ -147,7 +147,7 @@ OptionSet_add
     )
 {
     if (!optionSet || !option) return Nucleus_Status_InvalidArgument;
-    Nucleus_Status status = Nucleus_DynamicPointerHashMap_set(&optionSet->hashMap, option->name, option, false);
+    Nucleus_Status status = Nucleus_Collections_PointerHashMap_set(&optionSet->hashMap, option->name, option, false);
     if (status == Nucleus_Status_Exists)
     { return status; }
     else if (status)
@@ -164,7 +164,7 @@ OptionSet_find
     )
 {
     if (!optionSet || !optionName || !option) return Nucleus_Status_InvalidArgument;
-    Nucleus_Status status = Nucleus_DynamicPointerHashMap_get(&optionSet->hashMap, (void *)optionName, (void **)option);
+    Nucleus_Status status = Nucleus_Collections_PointerHashMap_get(&optionSet->hashMap, (void *)optionName, (void **)option);
     if (status == Nucleus_Status_NotExists)
     { return status; }
     else if (status)
@@ -181,7 +181,7 @@ ParameterList_initialize
     )
 {
     if (!parameterList) return Nucleus_Status_InvalidArgument;
-    return Nucleus_DynamicPointerArray_initialize(&parameterList->array, 8,
+    return Nucleus_Collections_PointerArray_initialize(&parameterList->array, 8,
                                                   NULL,
                                                   (void (*)(void *))&destroyParameter);
 }
@@ -191,7 +191,7 @@ ParameterList_uninitialize
     (
         ParameterList *parameterList
     )
-{ Nucleus_DynamicPointerArray_uninitialize(&parameterList->array); }
+{ Nucleus_Collections_PointerArray_uninitialize(&parameterList->array); }
 
 Nucleus_NonNull() static Nucleus_Status
 ParameterList_append
@@ -199,7 +199,7 @@ ParameterList_append
         ParameterList *parameterList,
         Nucleus_CommandLine_Parameter *parameter
     )
-{ return Nucleus_DynamicPointerArray_append(&parameterList->array, parameter); }
+{ return Nucleus_Collections_PointerArray_append(&parameterList->array, parameter); }
 
 Nucleus_NonNull() static Nucleus_Status
 ParameterList_getSize
@@ -209,7 +209,7 @@ ParameterList_getSize
     )
 {
     if (!parameterList) return Nucleus_Status_InvalidArgument;
-    return Nucleus_DynamicPointerArray_getSize(&parameterList->array, size);
+    return Nucleus_Collections_PointerArray_getSize(&parameterList->array, size);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

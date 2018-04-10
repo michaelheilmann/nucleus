@@ -71,7 +71,7 @@ Nucleus_CommandLine_Command_getParameter
     )
 {
     if (!command) return Nucleus_Status_InvalidArgument;
-    return Nucleus_DynamicPointerArray_at(&command->parameterList.array, index, (void **)parameter);
+    return Nucleus_Collections_PointerArray_at(&command->parameterList.array, index, (void **)parameter);
 }
 
 Nucleus_NonNull() Nucleus_Status
@@ -82,7 +82,7 @@ Nucleus_CommandLine_Option_getParameter
         Nucleus_CommandLine_Parameter **parameter)
 {
     if (!option) return Nucleus_Status_InvalidArgument;
-    return Nucleus_DynamicPointerArray_at(&option->parameterList.array, index, (void **)parameter);
+    return Nucleus_Collections_PointerArray_at(&option->parameterList.array, index, (void **)parameter);
 }
 
 Nucleus_NonNull() Nucleus_Status

@@ -3,8 +3,9 @@
 
 #include "Nucleus/CommandLine/CommandLine.h"
 #include "Nucleus/Memory.h"
-#include "Nucleus/DynamicPointerArray.h"
-#include "Nucleus/DynamicPointerHashMap.h"
+#include "Nucleus/Hash/Memory.h"
+#include "Nucleus/Collections/PointerArray.h"
+#include "Nucleus/Collections/PointerHashMap.h"
 #include <malloc.h> // For malloc() and free().
 #include <string.h> // For strcmp() and strdup().
 #include <stdio.h>  // For fprintf().
@@ -30,7 +31,7 @@ parseArgument
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 typedef struct ParameterList
-{ Nucleus_DynamicPointerArray array; } ParameterList;
+{ Nucleus_Collections_PointerArray array; } ParameterList;
 
 Nucleus_NonNull() static Nucleus_Status
 ParameterList_initialize
@@ -61,7 +62,7 @@ ParameterList_getSize
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 typedef struct OptionSet
-{ Nucleus_DynamicPointerHashMap hashMap; } OptionSet;
+{ Nucleus_Collections_PointerHashMap hashMap; } OptionSet;
 
 Nucleus_NonNull() static Nucleus_Status
 hashFunction
