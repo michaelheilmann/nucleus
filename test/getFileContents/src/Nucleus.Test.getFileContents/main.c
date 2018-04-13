@@ -39,13 +39,11 @@ test
         return status;
     }
 
-    const char *readContent = NULL;
+    void *readContent = NULL;
     size_t readContentSize = 0;
 
     // TODO: API violates the API conventions of Nucleus.
-    readContent = Nucleus_Collections_ByteArray_getBytes(&buffer);
-
-    status = Nucleus_Collections_ByteArray_getSize(&buffer, &readContentSize);
+    status = Nucleus_Collections_ByteArray_lock(&buffer, &readContent, &readContentSize);
     if (status)
     {
         Nucleus_Collections_ByteArray_uninitialize(&buffer);
@@ -54,6 +52,7 @@ test
 
     if (contentSize != readContentSize)
     {
+        Nucleus_Collections_ByteArray_unlock(&buffer);
         Nucleus_Collections_ByteArray_uninitialize(&buffer);
         return Nucleus_Status_InternalError; // TODO: Add and use Nucleus_Status_TestFailed.
     }
@@ -62,10 +61,12 @@ test
     status = Nucleus_compareMemory(content, readContent, contentSize, &result);
     if (status)
     {
+        Nucleus_Collections_ByteArray_unlock(&buffer);
         Nucleus_Collections_ByteArray_uninitialize(&buffer);
         return Nucleus_Status_InternalError; // TODO: Add and use Nucleus_Status_TestFailed.
     }
 
+    Nucleus_Collections_ByteArray_unlock(&buffer);
     Nucleus_Collections_ByteArray_uninitialize(&buffer);
 
     if (!result)

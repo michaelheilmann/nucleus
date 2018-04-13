@@ -22,7 +22,7 @@ struct Nucleus_Collections_ByteArray
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_initialize
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         size_t initialCapacity
     );
 
@@ -30,14 +30,14 @@ Nucleus_Collections_ByteArray_initialize
 Nucleus_NonNull() void
 Nucleus_Collections_ByteArray_uninitialize
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray
+        Nucleus_Collections_ByteArray *byteArray
     );
 
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_Collections_[Array-Collection-Type]_ensureFreeCapacity.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_ensureFreeCapacity
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         size_t requiredFreeCapacity
     );
 
@@ -45,7 +45,7 @@ Nucleus_Collections_ByteArray_ensureFreeCapacity
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_append
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         char byte
     );
 
@@ -53,7 +53,7 @@ Nucleus_Collections_ByteArray_append
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_appendMany
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         const char *bytes,
         size_t numberOfBytes
     );
@@ -62,7 +62,7 @@ Nucleus_Collections_ByteArray_appendMany
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_prepend
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         char byte
     );
 
@@ -70,7 +70,7 @@ Nucleus_Collections_ByteArray_prepend
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_prependMany
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         const char *bytes,
         size_t numberOfBytes
     );
@@ -79,7 +79,7 @@ Nucleus_Collections_ByteArray_prependMany
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_insert
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         char byte,
         size_t index
     );
@@ -88,7 +88,7 @@ Nucleus_Collections_ByteArray_insert
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_insertMany
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         const char *bytes,
         size_t numberOfBytes,
         size_t index
@@ -98,23 +98,30 @@ Nucleus_Collections_ByteArray_insertMany
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_at
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         size_t index,
         char *byte
     );
 
-/// @ingroup dl
-Nucleus_NonNull() const char *
-Nucleus_Collections_ByteArray_getBytes
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_ByteArray_lock
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray
+        Nucleus_Collections_ByteArray *byteArray,
+        void **bytes,
+        size_t *numberOfBytes
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_ByteArray_unlock
+    (
+        Nucleus_Collections_ByteArray *byteArray
     );
 
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_Collections_[Collection-Type]_getSize.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_getSize
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         size_t *size
     );
 
@@ -122,7 +129,7 @@ Nucleus_Collections_ByteArray_getSize
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_getCapacity
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         size_t *capacity
     );
 
@@ -130,7 +137,7 @@ Nucleus_Collections_ByteArray_getCapacity
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_getFreeCapacity
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Collections_ByteArray *byteArray,
         size_t *freeCapacity
     );
 
@@ -138,5 +145,5 @@ Nucleus_Collections_ByteArray_getFreeCapacity
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_clear
     (
-        Nucleus_Collections_ByteArray *dynamicByteArray
+        Nucleus_Collections_ByteArray *byteArray
     );

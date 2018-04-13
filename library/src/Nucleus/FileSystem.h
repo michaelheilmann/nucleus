@@ -1,4 +1,4 @@
-
+// Copyright (c) Michael Heilmann 2018
 #pragma once
 
 #include "Nucleus/FileSystem/getFileContents.h"

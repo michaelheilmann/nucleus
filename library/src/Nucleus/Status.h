@@ -19,7 +19,7 @@ typedef enum Nucleus_Status_Category
 {
     /// @brief Status code category for general status codes.
     Nucleus_Status_Category_General = 0,
-    
+
     /// @brief Status code category for aggregate-related status codes.
     Nucleus_Status_Category_Aggregate = 1000,
 
@@ -73,10 +73,13 @@ typedef enum Nucleus_Status_Category
 /// @brief Status code indicating a failure because a length was too long.
 #define Nucleus_Status_TooLong (Nucleus_Status_Category_General | 9)
 
+/// @brief Status code indicating a failure because an operation of the environment failed.
+#define Nucleus_Status_EnvironmentFailed (Nucleus_Status_Category_General | 10)
 
 
 
-/// @ingroup Aggrregate
+
+/// @ingroup Aggregate
 /// @brief Status code indicating a failure because an aggregate is empty.
 #define Nucleus_Status_Empty (Nucleus_Status_Category_Aggregate | 1)
 
@@ -98,9 +101,24 @@ typedef enum Nucleus_Status_Category
 /// @brief Status code indicating a failure because an allocation failed.
 #define Nucleus_Status_AllocationFailed  (Nucleus_Status_Category_Memory | 1)
 
-/// @ingroup Memory
-/// @brief Status code indicating a failure because an operation of the environment failed.
-#define Nucleus_Status_EnvironmentFailed (Nucleus_Status_Category_Memory | 2)
+
+
+
+/// @ingroup Concurrency
+/// @brief Status code indicating a failure because something (e.g. a mutex) is already locked.
+#define Nucleus_Status_AlreadyLocked (Nucleus_Status_Category_Concurrency | 1)
+
+/// @ingroup Concurrency
+/// @brief Status code indicating a failure because something (e.g. a thread) was already started.
+#define Nucleus_Status_AlreadyStarted (Nucleus_Status_Category_Concurrency | 4)
+
+/// @ingroup Concurrency
+/// @brief Status code indicating a failure because something (e.g. a thread) was not started.
+#define Nucleus_Status_NotStarted (Nucleus_Status_Category_Concurrency | 8)
+
+/// @ingroup Concurrency
+/// @brief Status code indicating a failure because something (e.g. a thread) was already stopped.
+#define Nucleus_Status_AlreadyStopped (Nucleus_Status_Category_Concurrency | 16)
 
 
 

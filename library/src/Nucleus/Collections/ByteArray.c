@@ -153,6 +153,26 @@ Nucleus_Collections_ByteArray_getBytes
 { return dynamicByteArray->array; }
 
 Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_ByteArray_lock
+    (
+        Nucleus_Collections_ByteArray *byteArray,
+        void **bytes,
+        size_t *numberOfBytes
+    )
+{
+    *bytes = byteArray->array;
+    *numberOfBytes = byteArray->size;
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_ByteArray_unlock
+    (
+        Nucleus_Collections_ByteArray *byteArray
+    )
+{ return Nucleus_Status_Success; }
+
+Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_getSize
     (
         Nucleus_Collections_ByteArray *dynamicByteArray,
