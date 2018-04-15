@@ -30,9 +30,14 @@ add_library(Nucleus.Library STATIC ${SOURCE_FILES} ${HEADER_FILES} ${INLAY_FILES
 target_include_directories(Nucleus.Library PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_include_directories(Nucleus.Library INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
+# GCC: Link library with the platform's math libraries.
 if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
   target_link_libraries(Nucleus.Library m)
 endif()
+
+# Link library with the platform's threading libraries.
+find_package (Threads)
+target_link_libraries (Nucleus.Library ${CMAKE_THREAD_LIBS_INIT})
 
 FIND_PACKAGE(Doxygen)
 IF(DOXYGEN_FOUND)
