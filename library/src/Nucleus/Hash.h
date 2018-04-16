@@ -8,3 +8,4 @@
 #include "Nucleus/Hash/HashValue.h"
 #include "Nucleus/Hash/Memory.h"
 #include "Nucleus/Hash/Size.h"
+#include "Nucleus/Hash/combineHashValues.h"

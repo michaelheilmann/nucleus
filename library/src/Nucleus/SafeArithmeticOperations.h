@@ -1,22 +1,22 @@
 // Copyright (c) Michael Heilmann 2018
 #pragma once
 
-#include <stddef.h>
-#include <stdbool.h>
+#include "Nucleus/Types/Size.h"
 #include "Nucleus/Annotations.h"
+#include "Nucleus/Status.h"
 
-Nucleus_NonNull(3) bool
+Nucleus_NonNull(3) Nucleus_Status
 Nucleus_safeAdd
     (
-        size_t x,
-        size_t y,
-        size_t *z
+        Nucleus_Size x,
+        Nucleus_Size y,
+        Nucleus_Size *z
     );
 
-Nucleus_NonNull(3) bool
+Nucleus_NonNull(3) Nucleus_Status
 Nucleus_safeMul
     (
-        size_t x,
-        size_t y,
-        size_t *z
+        Nucleus_Size x,
+        Nucleus_Size y,
+        Nucleus_Size *z
     );

@@ -14,6 +14,7 @@ Nucleus_hashArrayMemory
     )
 {
     size_t k;
-    if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
+    Nucleus_Status status = Nucleus_safeMul(n, m, &k);
+    if (status) return status;
     return Nucleus_hashMemory(p, k, hv);
 }
