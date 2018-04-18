@@ -62,7 +62,8 @@ Nucleus_allocateArrayMemory
     )
 {
     size_t k;
-    if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
+    Nucleus_Status status = Nucleus_safeMul(n, m, &k);
+    if (status) return status;
     return Nucleus_allocateMemory(p, k);
 }
 
@@ -75,7 +76,8 @@ Nucleus_reallocateArrayMemory
     )
 {
     size_t k;
-    if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
+    Nucleus_Status status = Nucleus_safeMul(n, m, &k);
+    if (status) return status;
     return Nucleus_reallocateMemory(p, k);
 }
 
@@ -111,7 +113,8 @@ Nucleus_fillArrayMemory
     )
 {
     size_t k;
-    if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
+    Nucleus_Status status = Nucleus_safeMul(n, m, &k);
+    if (status) return status;
     return Nucleus_fillMemory(p, v, k);
 }
 
@@ -145,10 +148,11 @@ Nucleus_copyArrayMemory
         size_t m
     )
 {
-    if (!p || !q) return Nucleus_Status_InvalidArgument;
-    if (!n || !m) return Nucleus_Status_Success;
+    if (Nucleus_Unlikely(!p || !q)) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!n || !m)) return Nucleus_Status_Success;
     size_t k;
-    if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
+    Nucleus_Status status = Nucleus_safeMul(n, m, &k);
+    if (status) status;
     return Nucleus_copyMemory(p, q, k);
 }
 
@@ -161,7 +165,7 @@ Nucleus_compareMemory
         bool *r
     )
 {
-    if (!p || !q || !r) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!p || !q || !r)) return Nucleus_Status_InvalidArgument;
     *r = !memcmp(p, q, n);
     return Nucleus_Status_Success;
 }
@@ -177,6 +181,7 @@ Nucleus_compareArrayMemory
     )
 {
     size_t k;
-    if (!Nucleus_safeMul(n, m, &k)) return Nucleus_Status_Overflow;
+    Nucleus_Status status = Nucleus_safeMul(n, m, &k);
+    if (status) return status;
     return Nucleus_compareMemory(p, q, k, r);
 }

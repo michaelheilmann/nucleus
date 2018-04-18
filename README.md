@@ -142,6 +142,7 @@ and Byte array values as well hash value combinators.
 - [Nucleus_hashHashValue](documentation/Nucleus_hashHashValue.md)
 - [Nucleus_hashMemory](documentation/Nucleus_hashMemory.md)
 - [Nucleus_hashArrayMemory](documentation/Nucleus_hashArrayMemory.md)
+- [Nucleus_combineHashValues](documentation/Nucleus_combineHashValues.md)
 
 ### Nucleus File System Module
 The Nucleus Dynamic Byte Array Module provides functionality related to the filesystem.
