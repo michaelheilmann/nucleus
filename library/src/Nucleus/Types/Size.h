@@ -2,7 +2,7 @@
 #pragma once
 
 #include <stddef.h>
-#include <limits.h>
+#include <stdint.h>
 
 typedef size_t Nucleus_Size;
 #define Nucleus_Size_Least (0)

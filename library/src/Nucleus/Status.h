@@ -91,8 +91,8 @@ typedef enum Nucleus_Status_Category
 
 
 /// @ingroup Conversion
-/// @brief Status code indicating a failure because a cast failed.
-#define Nucleus_Status_CastFailed (Nucleus_Status_Category_Conversion | 1)
+/// @brief Status code indicating a failure because a conversion failed.
+#define Nucleus_Status_ConversionFailed (Nucleus_Status_Category_Conversion | 1)
 
 
 

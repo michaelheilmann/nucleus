@@ -2,11 +2,13 @@
 
 #include "Nucleus/Memory.h"
 
+static const Nucleus_Size greatestCapacity = Nucleus_Size_Greatest / sizeof(char);
+
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_initialize
     (
         Nucleus_Collections_ByteArray *dynamicByteArray,
-        size_t initialCapacity
+        Nucleus_Size initialCapacity
     )
 {
     if (Nucleus_Unlikely(!dynamicByteArray)) return Nucleus_Status_InvalidArgument;
@@ -29,31 +31,40 @@ Nucleus_Collections_ByteArray_uninitialize
     dynamicByteArray->array = NULL;
 }
 
-// TODO: Use Nucleus_reallocate(Array)Memory.
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_ByteArray_increaseCapacity
+    (
+        Nucleus_Collections_ByteArray *dynamicByteArray,
+        Nucleus_Size requiredAdditionalCapacity
+    )
+{
+    if (Nucleus_Unlikely(!dynamicByteArray)) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!requiredAdditionalCapacity)) return Nucleus_Status_Success;
+    Nucleus_Size oldCapacity = dynamicByteArray->capacity;
+    if (greatestCapacity - oldCapacity < requiredAdditionalCapacity) return Nucleus_Status_Overflow;
+    Nucleus_Size newCapacity = oldCapacity + requiredAdditionalCapacity;
+    Nucleus_Status status = Nucleus_reallocateArrayMemory((void **)&dynamicByteArray->array,
+                                                          newCapacity,
+                                                          sizeof(char));
+    if (Nucleus_Unlikely(status)) return status;
+    dynamicByteArray->capacity = newCapacity;
+    return Nucleus_Status_Success;
+}
+
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_ensureFreeCapacity
     (
         Nucleus_Collections_ByteArray *dynamicByteArray,
-        size_t requiredFreeCapacity
+        Nucleus_Size requiredFreeCapacity
     )
 {
     if (Nucleus_Unlikely(!dynamicByteArray)) return Nucleus_Status_InvalidArgument;
-    size_t availableFreeCapacity = dynamicByteArray->capacity - dynamicByteArray->size;
+    if (Nucleus_Unlikely(!requiredFreeCapacity)) return Nucleus_Status_Success;
+    Nucleus_Size availableFreeCapacity = dynamicByteArray->capacity - dynamicByteArray->size;
     if (availableFreeCapacity < requiredFreeCapacity)
     {
-        size_t additionalCapacity = requiredFreeCapacity - availableFreeCapacity;
-        size_t oldCapacity = dynamicByteArray->capacity;
-        size_t newCapacity = oldCapacity + additionalCapacity;
-        char *oldArray = dynamicByteArray->array;
-        char *newArray;
-        Nucleus_Status status = Nucleus_allocateArrayMemory((void **)&newArray,
-                                                            newCapacity,
-                                                            sizeof(char));
-        if (Nucleus_Unlikely(status)) return status;
-        Nucleus_copyArrayMemory(newArray, oldArray, oldCapacity, sizeof(char));
-        dynamicByteArray->array = newArray;
-        Nucleus_deallocateMemory(oldArray);
-        dynamicByteArray->capacity = newCapacity;
+        Nucleus_Size requiredAdditionalCapacity = requiredFreeCapacity - availableFreeCapacity;
+        return Nucleus_Collections_ByteArray_increaseCapacity(dynamicByteArray, requiredAdditionalCapacity);
     }
     return Nucleus_Status_Success;
 }
@@ -72,7 +83,7 @@ Nucleus_Collections_ByteArray_appendMany
     (
         Nucleus_Collections_ByteArray *dynamicByteArray,
         const char *bytes,
-        size_t numberOfBytes
+        Nucleus_Size numberOfBytes
     )
 {
     if (Nucleus_Unlikely(!dynamicByteArray)) return Nucleus_Status_InvalidArgument;
@@ -105,7 +116,7 @@ Nucleus_Collections_ByteArray_insert
     (
         Nucleus_Collections_ByteArray *dynamicByteArray,
         char byte,
-        size_t index
+        Nucleus_Size index
     )
 { return Nucleus_Collections_ByteArray_insertMany(dynamicByteArray, &byte, 1, index); }
 
@@ -114,8 +125,8 @@ Nucleus_Collections_ByteArray_insertMany
     (
         Nucleus_Collections_ByteArray *dynamicByteArray,
         const char *bytes,
-        size_t numberOfBytes,
-        size_t index
+        Nucleus_Size numberOfBytes,
+        Nucleus_Size index
     )
 {
     if (Nucleus_Unlikely(!dynamicByteArray || !bytes)) return Nucleus_Status_InvalidArgument;
@@ -135,7 +146,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_at
     (
         Nucleus_Collections_ByteArray *dynamicByteArray,
-        size_t index,
+        Nucleus_Size index,
         char *byte
     )
 {
@@ -176,7 +187,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_getSize
     (
         Nucleus_Collections_ByteArray *dynamicByteArray,
-        size_t *size
+        Nucleus_Size *size
     )
 {
     if (Nucleus_Unlikely(!dynamicByteArray || !size)) return Nucleus_Status_InvalidArgument;
@@ -188,7 +199,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_getCapacity
     (
         Nucleus_Collections_ByteArray *dynamicByteArray,
-        size_t *capacity
+        Nucleus_Size *capacity
     )
 {
     if (Nucleus_Unlikely(!dynamicByteArray || !capacity)) return Nucleus_Status_InvalidArgument;
@@ -200,7 +211,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_ByteArray_getFreeCapacity
     (
         Nucleus_Collections_ByteArray *dynamicByteArray,
-        size_t *freeCapacity
+        Nucleus_Size *freeCapacity
     )
 { 
     if (Nucleus_Unlikely(!dynamicByteArray || !freeCapacity)) return Nucleus_Status_InvalidArgument;
