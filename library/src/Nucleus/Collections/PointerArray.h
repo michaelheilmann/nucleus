@@ -3,7 +3,7 @@
 
 #include "Nucleus/Annotations.h"
 #include "Nucleus/Collections/Callbacks.h"
-#include <stddef.h> // For size_t.
+#include "Nucleus/Types/Size.h"
 
 /// @brief A dynamic array of pointers.
 typedef struct Nucleus_Collections_PointerArray Nucleus_Collections_PointerArray;
@@ -27,7 +27,7 @@ Nucleus_NonNull(1) Nucleus_Status
 Nucleus_Collections_PointerArray_initialize
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t initialCapacity,
+        Nucleus_Size initialCapacity,
         Nucleus_LockFunction *lockFunction,
         Nucleus_UnlockFunction *unlockFunction
     );
@@ -39,12 +39,20 @@ Nucleus_Collections_PointerArray_uninitialize
         Nucleus_Collections_PointerArray *dynamicPointerArray
     );
 
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Collections_[Array-Collection-Type]_increaseCapacity.md
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_increaseCapacity
+    (
+        Nucleus_Collections_PointerArray *dynamicPointerArray,
+        Nucleus_Size requiredAdditionalCapacity
+    );
+
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_Collections_[Array-Collection-Type]_ensureFreeCapacity.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerArray_ensureFreeCapacity
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t requiredFreeCapacity
+        Nucleus_Size requiredFreeCapacity
     );
 
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_Collections_[Array-Collection-Type]_append.md
@@ -69,7 +77,7 @@ Nucleus_Collections_PointerArray_insert
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
         void *pointer,
-        size_t index
+        Nucleus_Size index
     );
 
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_Collections_[Array-Collection-Type]_at.md
@@ -77,7 +85,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerArray_at
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t index,
+        Nucleus_Size index,
         void **pointer
     );
 
@@ -86,7 +94,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerArray_getSize
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t *size
+        Nucleus_Size *size
     );
 
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_Collections_[Array-Collection-Type]_getCapacity.md
@@ -94,7 +102,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerArray_getCapacity
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t *capacity
+        Nucleus_Size *capacity
     );
 
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_Collections_[Array-Collection-Type]_getFreeCapacity.md
@@ -102,7 +110,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerArray_getFreeCapacity
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t *freeCapacity
+        Nucleus_Size *freeCapacity
     );
 
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_Collections_[Collection-Type]_clear.md

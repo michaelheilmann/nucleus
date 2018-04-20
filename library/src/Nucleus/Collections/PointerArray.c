@@ -3,6 +3,8 @@
 
 #include "Nucleus/Memory.h"
 
+static const Nucleus_Size greatestCapacity = Nucleus_Size_Greatest / sizeof(void *);
+
 Nucleus_NonNull(1) Nucleus_Status
 Nucleus_Collections_PointerArray_initialize
     (
@@ -50,31 +52,40 @@ Nucleus_Collections_PointerArray_uninitialize
     return Nucleus_Status_Success;
 }
 
-// TODO: Use Nucleus_reallocate(Array)Memory.
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_increaseCapacity
+    (
+        Nucleus_Collections_PointerArray *dynamicPointerArray,
+        Nucleus_Size requiredAdditionalCapacity
+    )
+{
+    if (Nucleus_Unlikely(!dynamicPointerArray)) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!requiredAdditionalCapacity)) return Nucleus_Status_Success;
+    Nucleus_Size oldCapacity = dynamicPointerArray->capacity;
+    if (greatestCapacity - oldCapacity < requiredAdditionalCapacity) return Nucleus_Status_Overflow;
+    Nucleus_Size newCapacity = oldCapacity + requiredAdditionalCapacity;
+    Nucleus_Status status = Nucleus_reallocateArrayMemory((void **)&dynamicPointerArray->elements,
+                                                          newCapacity,
+                                                          sizeof(void *));
+    if (Nucleus_Unlikely(status)) return status;
+    dynamicPointerArray->capacity = newCapacity;
+    return Nucleus_Status_Success;
+}
+
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerArray_ensureFreeCapacity
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t requiredFreeCapacity
+        Nucleus_Size requiredFreeCapacity
     )
 {
     if (Nucleus_Unlikely(!dynamicPointerArray)) return Nucleus_Status_InvalidArgument;
-    size_t availableFreeCapacity = dynamicPointerArray->capacity - dynamicPointerArray->size;
+    if (Nucleus_Unlikely(!requiredFreeCapacity)) return Nucleus_Status_Success;
+    Nucleus_Size availableFreeCapacity = dynamicPointerArray->capacity - dynamicPointerArray->size;
     if (availableFreeCapacity < requiredFreeCapacity)
     {
-        size_t additionalCapacity = requiredFreeCapacity - availableFreeCapacity;
-        size_t oldCapacity = dynamicPointerArray->capacity;
-        size_t newCapacity = oldCapacity + additionalCapacity;
-        void **oldElements = dynamicPointerArray->elements;
-        void **newElements;
-        Nucleus_Status status = Nucleus_allocateArrayMemory((void **)&newElements,
-                                                            newCapacity,
-                                                            sizeof(void *));
-        if (Nucleus_Unlikely(status)) return status;
-        Nucleus_copyArrayMemory(newElements, oldElements, oldCapacity, sizeof(void *));
-        dynamicPointerArray->elements = newElements;
-        Nucleus_deallocateMemory(oldElements);
-        dynamicPointerArray->capacity = newCapacity;
+        Nucleus_Size requiredAdditionalCapacity = requiredFreeCapacity - availableFreeCapacity;
+        return Nucleus_Collections_PointerArray_increaseCapacity(dynamicPointerArray, requiredAdditionalCapacity);
     }
     return Nucleus_Status_Success;
 }
@@ -106,7 +117,7 @@ Nucleus_Collections_PointerArray_insert
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
         void *pointer,
-        size_t index
+        Nucleus_Size index
     )
 {
     if (Nucleus_Unlikely(!dynamicPointerArray)) return Nucleus_Status_InvalidArgument;
@@ -156,7 +167,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerArray_getCapacity
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t *capacity
+        Nucleus_Size *capacity
     )
 {
     if (Nucleus_Unlikely(!dynamicPointerArray || !capacity)) return Nucleus_Status_InvalidArgument;
