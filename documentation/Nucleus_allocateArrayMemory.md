@@ -7,13 +7,13 @@ Nucleus_Status
 Nucleus_allocateMemory
     (
         void **p,
-        size_t n
+        Nucleus_Size n
     )
 ```
 
 ## Parameters
 - `p` a pointer to a `void *` variable
-- `n`, `m` the product of @a n and @a m is the size, in Bytes, of the memory block to allocate. Note that @a 0 is a valid size.
+- `n`, `m` the product of `n` and `m` is the size, in Bytes, of the memory block to allocate. Note that `0` is a valid size.
 
 ## Description
 This function allocates a memory block of a specified size.

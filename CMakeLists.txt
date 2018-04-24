@@ -21,6 +21,12 @@ if (NOT DEFINED With-Debug-Information)
       "enable/disable compilation with debug information. ON enables compilation with debug information, OFF disables compilation with debug information. Initial value is OFF." FORCE)
 endif()
 
+# Enable/disable compilation and execution of unit tests.
+# The value of this option can be set from the command-line by -Didlib-with-tests=(ON|OFF).
+option(Nucleus-With-Tests
+       "enable/disable compilation and execution of unit tests. ON enables compilation and execution of unit tests, OFF disables compilation and execution of unit tests. Initial value is ON."
+       ON)
+
 # The output directories.
 # TODO: Change to "products".
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)

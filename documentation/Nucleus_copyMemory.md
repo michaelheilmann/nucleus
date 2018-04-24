@@ -7,15 +7,15 @@ Nucleus_Status
 Nucleus_copyMemory
     (
         void *p,
-        void *q,
-        size_t n
+        const void *q,
+        Nucleus_Size n
     )
 ```
 
 ## Parameters
 - `p` a pointer to the first Byte of the target memory block
 - `q` a pointer to the first Byte of the source memory block
-- `n` the number of Byte to copy. Note that @a 0 is a valid number of Bytes.
+- `n` the number of Byte to copy. Note that `0` is a valid number of Bytes.
 
 ## Description
 This function copies contents of a memory block to another memory block.
