@@ -8,7 +8,7 @@ Nucleus_Status
 Nucleus_reallocateMemory
     (
         void **p,
-        size_t n
+        Nucleus_Size n
     );
 ```
 
@@ -20,7 +20,7 @@ Nucleus_reallocateMemory
 This function reallocates a memory block.
 
 If this function succeeds, then this function conceptually performed the following tasks:
-The function conceptually allocates a new memory block of size `n` and copies `min(n, k)` Bytes from the old
+The function allocates a new memory block of size `n` and copies `min(n, k)` Bytes from the old
 memory block pointed to by `*p` of size `k` to the new memory block. The old memory block is then deallocated.
 The address of the new memory block is is assigned to `*p` and `Nucleus_Status_Success` is returned.
 
@@ -28,9 +28,8 @@ This function fails if and only if one or more of the following conditions are m
 - `p` or `*p` is a null pointer or
 - the allocation of the new memory block failed
 
-
-Under the former condition `Nucleus_InvalidArgument` is returned and
-under the latter condition `Nucleus_AllocationFailed` is returned.
+Under the former condition `Nucleus_InvalidArgument` is returned,
+under the latter condition `Nucleus_AllocationFailed`` is returned.
 
 ## Requirements
 

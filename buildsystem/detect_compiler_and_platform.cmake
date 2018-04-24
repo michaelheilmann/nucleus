@@ -5,20 +5,22 @@
 # - NUCLEUS_CPP_COMPILER_ID_CLANG
 # - NUCLEUS_CPP_COMPILER_ID_GCC
 # - NUCLEUS_CPP_COMPILER_ID_MSVC
+# - NUCLEUS_CPP_COMPILER_ID_MINGW
 #
-# If compiler detection succeeds, define NUCLEUS_CPP_COMPILER_ID to NUCLEUS_CPP_COMPILER_ID_CLANG, NUCLEUS_CPP_COMPILER_ID_GCC,
-# or NUCLEUS_CPP_COMPILER_ID_CLANG_MSVC. Define IDLIX_CPP_COMPILER_ID to NUCLEUS_CPP_COMPILER_ID_UNKNOWN otherwise. Defines the
-# macro nucleus_report_cpp_compiler_id to report the value of NUCLEUS_CPP_COMPILER_ID.
+# If compiler detection succeeds, define NUCLEUS_CPP_COMPILER_ID to one of the constants listed above except for
+# NUCLEUS_CPP_COMPILER_ID_UNKNOWN. If compiler detection fails, define NUCLEUS_CPP_COMPILER_ID to
+# NUCLEUS_CPP_COMPILER_ID_UNKNOWN. Defines the macro nucleus_report_cpp_compiler_id to report the value of NUCLEUS_CPP_COMPILER_ID.
 
 # Provides the following numeric constants for identifying C compilers:
 # - NUCLEUS_C_COMPILER_ID_UNKNOWN
 # - NUCLEUS_C_COMPILER_ID_CLANG
 # - NUCLEUS_C_COMPILER_ID_GCC
 # - NUCLEUS_C_COMPILER_ID_MSVC
+# - NUCLEUS_C_COMPILER_ID_MINGW
 #
-# If compiler detection succeeds, define NUCLEUS_C_COMPILER_ID to NUCLEUS_C_COMPILER_ID_CLANG, NUCLEUS_C_COMPILER_ID_GCC,
-# or NUCLEUS_C_COMPILER_ID_CLANG_MSVC. Define IDLIX_CPP_COMPILER_ID to NUCLEUS_C_COMPILER_ID_UNKNOWN otherwise. Defines the
-# macro nucleus_report_c_compiler_id to report the value of NUCLEUS_C_COMPILER_ID.
+# If compiler detection succeeds, define NUCLEUS_C_COMPILER_ID to one of the constants listed above except for
+# NUCLEUS_C_COMPILER_ID_UNKNOWN. If compiler detection fails, define NUCLEUS_C_COMPILER_ID to
+# NUCLEUS_C_COMPILER_ID_UNKNOWN otherwise. Defines the macro nucleus_report_c_compiler_id to report the value of NUCLEUS_C_COMPILER_ID.
 #
 #
 # Provides the following numeric constants:
@@ -40,6 +42,7 @@ set(NUCLEUS_C_COMPILER_ID_UNKNOWN 0)
 set(NUCLEUS_C_COMPILER_ID_CLANG 1)
 set(NUCLEUS_C_COMPILER_ID_MSVC 2)
 set(NUCLEUS_C_COMPILER_ID_GCC 3)
+set(NUCLEUS_C_COMPILER_ID_MINGW 4)
 
 set(NUCLEUS_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_UNKNOWN})
 
@@ -58,6 +61,11 @@ if (CMAKE_C_COMPILER_ID)
       #message("compiler `MSVC` detected")
       set(NUCLEUS_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_MSVC})
     endif()
+
+    if (MINGW)
+      #message("compiler `MINGW` detected")
+      set(NUCLEUS_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_MINGW})
+    endif()
 endif()
 
 macro(nucleus_report_c_compiler_id)
@@ -67,6 +75,8 @@ macro(nucleus_report_c_compiler_id)
     message("  - Nucleus C Compiler Id: GCC")
   elseif (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC})
     message("  - Nucleus C Compiler Id: MSVC")
+  elseif (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MINGW})
+    message("  - Nucleus C Compiler Id: MINGW")
   elseif (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_UNKNOWN})
     message("  - Nucleus C Compiler Id: Unknown")
   else()
@@ -80,23 +90,30 @@ set(NUCLEUS_CPP_COMPILER_ID_UNKNOWN 0)
 set(NUCLEUS_CPP_COMPILER_ID_CLANG 1)
 set(NUCLEUS_CPP_COMPILER_ID_MSVC 2)
 set(NUCLEUS_CPP_COMPILER_ID_GCC 3)
+set(NUCLEUS_CPP_COMPILER_ID_MINGW 4)
 
 set(NUCLEUS_CPP_COMPILER_ID ${NUCLEUS_CPP_COMPILER_ID_UNKNOWN})
 
-if (CMAKE_CPP_COMPILER_ID)
-    if (CMAKE_CPP_COMPILER MATCHES ".*clang")
+message("CMAKE_CXX_COMPILER_ID = ${CMAKE_CXX_COMPILER_ID}")
+if (CMAKE_CXX_COMPILER_ID)
+    if (CMAKE_CXX_COMPILER MATCHES ".*clang")
       #message("compiler `CLANG` detected")
       set(NUCLEUS_CPP_COMPILER_ID ${NUCLEUS_CPP_COMPILER_ID_CLANG})
     endif()
 
-    if (CMAKE_CPP_COMPILER_ID STREQUAL "GNU")
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
       #message("compiler `GCC` detected")
       set(NUCLEUS_CPP_COMPILER_ID ${NUCLEUS_CPP_COMPILER_ID_GCC})
     endif()
 
-    if (CMAKE_CPP_COMPILER_ID STREQUAL "MSVC")
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
       #message("compiler `MSVC` detected")
       set(NUCLEUS_CPP_COMPILER_ID ${NUCLEUS_CPP_COMPILER_ID_MSVC})
+    endif()
+
+    if (MINGW)
+      #message("compiler `MINGW` detected")
+      set(NUCLEUS_CPP_COMPILER_ID ${NUCLEUS_CPP_COMPILER_ID_MINGW})
     endif()
 endif()
 
@@ -107,6 +124,8 @@ macro(nucleus_report_cpp_compiler_id)
     message("  - Nucleus C++ Compiler Id: GCC")
   elseif (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
     message("  - Nucleus C++ Compiler Id: MSVC")
+  elseif (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MINGW})
+    message("  - Nucleus C++ Compiler Id: MINGW")
   elseif (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_UNKNOWN})
     message("  - Nucleus C++ Compiler Id: Unknown")
   else()

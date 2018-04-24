@@ -185,3 +185,33 @@ Nucleus_compareArrayMemory
     if (status) return status;
     return Nucleus_compareMemory(p, q, k, r);
 }
+
+Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
+Nucleus_cloneMemory
+    (
+        void **p,
+        const void *q,
+        Nucleus_Size n
+     )
+{
+    if (Nucleus_Unlikely(!p || !q)) return Nucleus_Status_InvalidArgument;
+    Nucleus_Status status = Nucleus_allocateMemory(p, n);
+    if (status) return status;
+    memcpy(*p, q, n);
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
+Nucleus_cloneArrayMemory
+    (
+        void **p,
+        const void *q,
+        Nucleus_Size n,
+        Nucleus_Size m
+    )
+{
+    Nucleus_Size k;
+    Nucleus_Status status = Nucleus_safeMulSize(n, m, &k);
+    if (status) return status;
+    return Nucleus_cloneMemory(p, q, k);
+}

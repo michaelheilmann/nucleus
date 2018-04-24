@@ -106,3 +106,22 @@ Nucleus_compareArrayMemory
         Nucleus_Size m,
         Nucleus_Boolean *r
     );
+
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_cloneMemory.md
+Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
+Nucleus_cloneMemory
+    (
+        void **p,
+        const void *q,
+        Nucleus_Size n
+     );
+
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_cloneArrayMemory.md
+Nucleus_NoError() Nucleus_NonNull(1, 2) Nucleus_Status
+Nucleus_cloneArrayMemory
+    (
+        void **p,
+        const void *q,
+        Nucleus_Size n,
+        Nucleus_Size m
+    );

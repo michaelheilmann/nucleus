@@ -6,7 +6,7 @@ Nucleus is made available publicly under the
 on
 [Github](https://github.com/primordialmachine/nucleus).
 
-## Building the demo (Windows)
+## Building under Visual Studio 2017/Windows
 Visual Studio is currently *still* supported.
 
 Open the console.
@@ -34,7 +34,17 @@ ctest -C <configuration>
 
 ```configuration``` is one of `Debug`, `Release`, `MinSizeRel`, `RelWithDebInfo`.
 
-## Building the demo (Linux and Cygwin)
+### Compilation options (Visual Studio)
+For Visual Studio builds, the option `With-Static-Runtime=(ON|OFF)` is supported.
+`ON` enables static linking with the C runtime, `OFF` enables dynamic linking with the runtime.
+The default value is `ON`.
+
+For example, to enable dynamic linking with the runtime enter
+```
+cmake -DWith-Static-Runtime=OFF CMakeLists.txt
+```
+
+## Building under Linux and Cygwin
 Open the console.
 
 Change the directory to the directory of this file.
@@ -106,6 +116,8 @@ The Array-functions do not only exist for convenience, but also for safety: Thes
 - [Nucleus_deallocateMemory](documentation/Nucleus_deallocateMemory.md)
 - [Nucleus_copyMemory](documentation/Nucleus_copyMemory.md)
 - [Nucleus_copyArrayMemory](documentation/Nucleus_copyArrayMemory.md)
+- [Nucleus_cloneMemory](documentation/Nucleus_cloneMemory.md)
+- [Nucleus_cloneArrayMemory](documentation/Nucleus_cloneArrayMemory.md)
 - [Nucleus_fillMemory](documentation/Nucleus_fillMemory.md)
 - [Nucleus_fillArrayMemory](documentation/Nucleus_fillArrayMemory.md)
 - [Nucleus_compareMemory](documentation/Nucleus_compareMemory.md)

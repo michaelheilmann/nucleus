@@ -164,9 +164,9 @@ isEnd
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-static const Nucleus_DecimalDigit NaN[] = { 'n', 'a', 'n' };
+static const Nucleus_DecimalFloat_Digit NaN[] = { 'n', 'a', 'n' };
 
-static const Nucleus_DecimalDigit Inf[] = { 'i', 'n', 'f' };
+static const Nucleus_DecimalFloat_Digit Inf[] = { 'i', 'n', 'f' };
 
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DecimalFloat_createNaN
@@ -199,7 +199,7 @@ Nucleus_DecimalFloat_createInf
     if (status) return status;
     temporary->sign = sign;
     temporary->numberOfDigits = 0;
-    temporary->digits = (Nucleus_Natural8 *)Inf;
+    temporary->digits = (Nucleus_DecimalFloat_Digit *)Inf;
     temporary->exponent = 0;
     *decimalFloat = temporary;
     return Nucleus_Status_Success;
@@ -243,7 +243,7 @@ Nucleus_DecimalFloat_create_fromString
         .magnitude = 0,
     };
 
-    status = Nucleus_allocateArrayMemory((void **)&buffer, numberOfBytes, sizeof(uint8_t));
+    status = Nucleus_allocateArrayMemory((void **)&buffer, numberOfBytes, sizeof(Nucleus_DecimalFloat_Digit));
     if (status) return status;
 
     Nucleus_Integer32 decimalExponent = -((Nucleus_Integer32)(fractional.end - fractional.begin));
@@ -470,8 +470,8 @@ Nucleus_DecimalFloat_destroy
         Nucleus_DecimalFloat *decimalFloat
     )
 {
-    if (decimalFloat->digits != (Nucleus_Natural8 *)Inf &&
-        decimalFloat->digits != (Nucleus_Natural8 *)NaN)
+    if (decimalFloat->digits != (Nucleus_DecimalFloat_Digit *)Inf &&
+        decimalFloat->digits != (Nucleus_DecimalFloat_Digit *)NaN)
     {
         Nucleus_deallocateMemory(decimalFloat->digits);
         decimalFloat->digits = NULL;
@@ -511,7 +511,7 @@ Nucleus_DecimalFloat_isNegativeInfinity
     )
 {
     if (Nucleus_Unlikely(!decimalFloat || !isNegativeInfinity)) return Nucleus_Status_InvalidArgument;
-    *isNegativeInfinity = decimalFloat->sign == Nucleus_Sign_Minus && decimalFloat->digits == (Nucleus_DecimalDigit *)Inf;
+    *isNegativeInfinity = decimalFloat->sign == Nucleus_Sign_Minus && decimalFloat->digits == (Nucleus_DecimalFloat_Digit *)Inf;
     return Nucleus_Status_Success;
 }
 
@@ -532,7 +532,7 @@ Nucleus_DecimalFloat_getDigit
     (
         Nucleus_DecimalFloat *decimalFloat,
         Nucleus_Size indexOfDigit,
-        Nucleus_DecimalDigit *digit
+        Nucleus_DecimalFloat_Digit *digit
     )
 {
     if (Nucleus_Unlikely(!decimalFloat || !digit)) return Nucleus_Status_InvalidArgument;
