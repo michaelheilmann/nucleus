@@ -5,14 +5,14 @@ Nucleus_NoError() Nucleus_NonNull(1) static unsigned int
 hash1
     (
         const char *p,
-        size_t l
+        Nucleus_Size l
     );
 
 Nucleus_NoError() Nucleus_NonNull(1) static unsigned int 
 hash1
     (
         const char *p,
-        size_t l
+        Nucleus_Size l
     )
 {
     unsigned int h = (unsigned int)l;
@@ -26,7 +26,7 @@ Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_hashMemory
     (
         const void *p,
-        size_t n,
+        Nucleus_Size n,
         Nucleus_HashValue *hv
     )
 {

@@ -76,6 +76,8 @@ typedef enum Nucleus_Status_Category
 /// @brief Status code indicating a failure because an operation of the environment failed.
 #define Nucleus_Status_EnvironmentFailed (Nucleus_Status_Category_General | 10)
 
+/// @brief Status code indicating a failure because a functionality is not currently/yet available.
+#define Nucleus_Status_NotAvailable (Nucleus_Status_Category_General | 11)
 
 
 

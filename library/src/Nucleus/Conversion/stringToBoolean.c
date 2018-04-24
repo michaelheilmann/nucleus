@@ -1,4 +1,5 @@
-#include "Nucleus/stringToBoolean.h"
+// Copyright (c) Michael Heilmann 2018
+#include "Nucleus/Conversion/stringToBoolean.h"
 
 #include "Nucleus/Memory.h"
 

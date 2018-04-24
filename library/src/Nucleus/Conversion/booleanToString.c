@@ -1,5 +1,5 @@
 // Copyright (c) Michael Heilmann 2018
-#include "Nucleus/booleanToString.h"
+#include "Nucleus/Conversion/booleanToString.h"
 
 #include "Nucleus/Memory.h"
 

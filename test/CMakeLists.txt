@@ -1,6 +1,7 @@
 # Copyright (c) Michael Heilmann 2017, 2018
 
 add_subdirectory(empty)
+add_subdirectory(FloatingDecimal)
 add_subdirectory(setFileContents)
 add_subdirectory(getFileContents)
 add_subdirectory(booleanToString)

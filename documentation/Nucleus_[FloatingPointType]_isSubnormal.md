@@ -4,13 +4,13 @@
 ## C Signature
 ```
 Nucleus_Status
-[Floating-Point-Type]_isSubnormal
+Nucleus_[FloatingPointType]_isSubnormal
     (
-        [Floating-Point-Type] x,
+        [FloatingPointType] x,
         bool *r
     )
 ```
-where `[Floating-Point-Type]` is one of `Nucleus_Single`, `Nucleus_Double`, or `Nucleus_Quadruple`.
+where `[FloatingPointType]` is one of `Single`, `Double`, or `Quadruple`.
 
 ## Parameters
 - `x` a `[Floating-Point-Type]` value
