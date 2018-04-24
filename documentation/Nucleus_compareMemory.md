@@ -6,16 +6,16 @@
 Nucleus_Status
 Nucleus_compareMemory
     (
-        void *p,
-        void *q,
-        size_t n,
-        bool *r
+        const void *p,
+        const void *q,
+        Nucleus_Size n,
+        Nucleus_Boolean *r
     )
 ```
 
 ## Parameters
 - `p`, `q` pointers to the memory blocks
-- `n` the size, in Bytes, of the memory blocks. Note that @a 0 is a valid size.
+- `n` the size, in Bytes, of the memory blocks. Note that `0` is a valid size.
 - `r` a pointer to a `bool` variable
 
 ## Description

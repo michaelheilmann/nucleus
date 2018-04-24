@@ -1,4 +1,4 @@
-#`Nucleus_hash[NumberType]`
+# `Nucleus_hash[NumberType]`
 *Compute the hash value of an [NumberType].*
 
 # C Signature

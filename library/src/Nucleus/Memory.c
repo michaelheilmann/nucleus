@@ -18,7 +18,7 @@ overlapping
     (
         const void *a,
         const void *b,
-        size_t n
+        Nucleus_Size n
     )
 {
     const char *x = a, *y =  b;
@@ -29,7 +29,7 @@ Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_allocateMemory
     (
         void **p,
-        size_t n
+        Nucleus_Size n
     )
 {
     if (!p) return Nucleus_Status_InvalidArgument;
@@ -43,7 +43,7 @@ Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_reallocateMemory
     (
         void **p,
-        size_t n
+        Nucleus_Size n
     )
 {
     if (!p || !*p) return Nucleus_Status_InvalidArgument;
@@ -57,11 +57,11 @@ Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_allocateArrayMemory
     (
         void **p,
-        size_t n,
-        size_t m
+        Nucleus_Size n,
+        Nucleus_Size m
     )
 {
-    size_t k;
+    Nucleus_Size k;
     Nucleus_Status status = Nucleus_safeMul(n, m, &k);
     if (status) return status;
     return Nucleus_allocateMemory(p, k);
@@ -71,11 +71,11 @@ Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_reallocateArrayMemory
     (
         void **p,
-        size_t n,
-        size_t m
+        Nucleus_Size n,
+        Nucleus_Size m
     )
 {
-    size_t k;
+    Nucleus_Size k;
     Nucleus_Status status = Nucleus_safeMul(n, m, &k);
     if (status) return status;
     return Nucleus_reallocateMemory(p, k);
@@ -95,7 +95,7 @@ Nucleus_fillMemory
     (
         void *p,
         int v,
-        size_t n
+        Nucleus_Size n
     )
 {
     if (!p) return Nucleus_Status_InvalidArgument;
@@ -108,11 +108,11 @@ Nucleus_fillArrayMemory
     (
         void *p,
         int v,
-        size_t n,
-        size_t m
+        Nucleus_Size n,
+        Nucleus_Size m
     )
 {
-    size_t k;
+    Nucleus_Size k;
     Nucleus_Status status = Nucleus_safeMul(n, m, &k);
     if (status) return status;
     return Nucleus_fillMemory(p, v, k);
@@ -123,7 +123,7 @@ Nucleus_copyMemory
     (
         void *p,
         const void *q,
-        size_t n
+        Nucleus_Size n
     )
 {
     if (!p || !q) return Nucleus_Status_InvalidArgument;
@@ -144,13 +144,13 @@ Nucleus_copyArrayMemory
     (
         void *p,
         const void *q,
-        size_t n,
-        size_t m
+        Nucleus_Size n,
+        Nucleus_Size m
     )
 {
     if (Nucleus_Unlikely(!p || !q)) return Nucleus_Status_InvalidArgument;
     if (Nucleus_Unlikely(!n || !m)) return Nucleus_Status_Success;
-    size_t k;
+    Nucleus_Size k;
     Nucleus_Status status = Nucleus_safeMul(n, m, &k);
     if (status) status;
     return Nucleus_copyMemory(p, q, k);
@@ -161,8 +161,8 @@ Nucleus_compareMemory
     (
         const void *p,
         const void *q,
-        size_t n,
-        bool *r
+        Nucleus_Size n,
+        Nucleus_Boolean *r
     )
 {
     if (Nucleus_Unlikely(!p || !q || !r)) return Nucleus_Status_InvalidArgument;
@@ -175,12 +175,12 @@ Nucleus_compareArrayMemory
     (
         const void *p,
         const void *q,
-        size_t n,
-        size_t m,
-        bool *r
+        Nucleus_Size n,
+        Nucleus_Size m,
+        Nucleus_Boolean *r
     )
 {
-    size_t k;
+    Nucleus_Size k;
     Nucleus_Status status = Nucleus_safeMul(n, m, &k);
     if (status) return status;
     return Nucleus_compareMemory(p, q, k, r);

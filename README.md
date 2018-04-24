@@ -15,13 +15,13 @@ Change the directory to the directory of this file.
 
 Enter
 ```
-cmake -a Win32 CMakeLists.txt
+cmake -G "Visual Studio 15 2017" CMakeLists.txt
 ```
 to generate the project files for Win32.
 
 Enter
 ```
-cmake -a x64 CMakeLists.txt
+cmake -G "Visual Studio 15 2017 Win64" CMakeLists.txt
 ```
 to generate the project files for x64.
 
@@ -106,6 +106,8 @@ The Array-functions do not only exist for convenience, but also for safety: Thes
 - [Nucleus_deallocateMemory](documentation/Nucleus_deallocateMemory.md)
 - [Nucleus_copyMemory](documentation/Nucleus_copyMemory.md)
 - [Nucleus_copyArrayMemory](documentation/Nucleus_copyArrayMemory.md)
+- [Nucleus_fillMemory](documentation/Nucleus_fillMemory.md)
+- [Nucleus_fillArrayMemory](documentation/Nucleus_fillArrayMemory.md)
 - [Nucleus_compareMemory](documentation/Nucleus_compareMemory.md)
 - [Nucleus_compareArrayMemory](documentation/Nucleus_compareArrayMemory.md)
 - [Nucleus_hashMemory](documentation/Nucleus_hashMemory.md)
