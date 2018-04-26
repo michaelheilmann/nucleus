@@ -1,16 +1,16 @@
-# `[Floating-Point-Type]_isNaN`
+# `Nucleus_[FloatingPointType]_isNaN`
 *Get if a floating point value is a not a number value (NaN).*
 
 ## C Signature
 ```
 Nucleus_Status
-[Floating-Point-Type]_isNaN
+Nucleus_[FloatingPointType]_isNaN
     (
-        [Floating-Point-Type] x,
+        Nucleus_[FloatingPointType] x,
         bool *r
     )
 ```
-where `[Floating-Point-Type]` is one of `Nucleus_Single`, `Nucleus_Double`, or `Nucleus_Quadruple`.
+where `[FloatingPointType]` is one of `Single`, `Double`, or `Quadruple`.
 
 ## Parameters
 - `x` a `[Floating-Point-Type]` value

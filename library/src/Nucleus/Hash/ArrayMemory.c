@@ -8,13 +8,13 @@ Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_hashArrayMemory
     (
         const void *p,
-        size_t n,
-        size_t m,
+        Nucleus_Size n,
+        Nucleus_Size m,
         Nucleus_HashValue *hv
     )
 {
-    size_t k;
-    Nucleus_Status status = Nucleus_safeMul(n, m, &k);
+    Nucleus_Size k;
+    Nucleus_Status status = Nucleus_safeMulSize(n, m, &k);
     if (status) return status;
     return Nucleus_hashMemory(p, k, hv);
 }

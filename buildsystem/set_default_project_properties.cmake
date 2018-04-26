@@ -35,6 +35,7 @@ macro(set_project_default_properties)
     add_definitions("-Werror=format-extra-args")
     add_definitions("-Werror=int-conversion")
     add_definitions("-Werror=return-type")
+    add_definitions("-Werror=discarded-qualifiers")
   endif()
 
   # GNU GCC (C/C++) settings

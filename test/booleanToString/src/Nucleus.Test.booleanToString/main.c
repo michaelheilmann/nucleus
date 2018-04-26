@@ -1,5 +1,5 @@
-#include "Nucleus/booleanToString.h"
-#include "Nucleus/stringToBoolean.h"
+#include "Nucleus/Conversion/booleanToString.h"
+#include "Nucleus/Conversion/stringToBoolean.h"
 #include "Nucleus/Memory.h"
 #include <stdlib.h>
 

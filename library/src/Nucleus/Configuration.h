@@ -1,4 +1,4 @@
-/// @file nucleus-config.h
+/// @file Nucleus/Configuration.h
 /// @brief The configuration file of Nucleus.
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017

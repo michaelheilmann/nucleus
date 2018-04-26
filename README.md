@@ -121,16 +121,28 @@ The Nucleus Floating Point Module provides functionality to evaluate and generat
 
 - [Nucleus_Single,
    Nucleus_Double,
-   Nucleus_Quadruple](documentation/[Floating-Point-Type].md)
+   Nucleus_Quadruple](documentation/Nucleus_[FloatingPointType].md)
+- [Nucleus_Single_Least,
+   Nucleus_Double_Least,
+   Nucleus_Quadruple_Least](documentation/Nucleus_[FloatingPointType].md)
+- [Nucleus_Single_Greatest,
+   Nucleus_Double_Greatest,
+   Nucleus_Quadruple_Greatest](documentation/Nucleus_[FloatingPointType].md)
+- [Nucleus_Single_NegativeInfinity,
+   Nucleus_Double_NegativeInfinity,
+   Nucleus_Quadruple_NegativeInfinity](documentation/Nucleus_[FloatingPointType].md)
+- [Nucleus_Single_PositiveInfinity,
+   Nucleus_Double_PositiveInfinity,
+   Nucleus_Quadruple_PositiveInfinity](documentation/Nucleus_[FloatingPointType].md)
 - [Nucleus_Single_hash,
    Nucleus_Double_hash,
-   Nucleus_Quadruple_hash](documentation/[Floating-Point-Type]_hash.md)
+   Nucleus_Quadruple_hash](documentation/Nucleus_[FloatingPointType]_hash.md)
 - [Nucleus_Single_isNaN,
    Nucleus_Double_isNaN,
-   Nucleus_Quadruple_isNaN](documentation/[Floating-Point-Type]_isNaN.md)
+   Nucleus_Quadruple_isNaN](documentation/Nucleus_[FloatingPointType]_isNaN.md)
 - [Nucleus_Single_isSubnormal,
    Nucleus_Double_isSubnormal,
-   Nucleus_Quadruple_isSubnormal](documentation/[Floating-Point-Type]_isSubnormal.md)
+   Nucleus_Quadruple_isSubnormal](documentation/Nucleus_[FloatingPointType]_isSubnormal.md)
 
 ### Nucleus Hash Module
 The Nucleus Hash provides functionality to compute hash values from boolean values, numeric values, pointer values,
