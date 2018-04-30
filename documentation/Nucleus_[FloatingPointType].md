@@ -15,7 +15,7 @@ definitions are supporting orthogonality of naming.
 
 
 
-# `[FloatingPointType]_Greatest`, `[FloatingPointType]_Least`
+# `Nucleus_[FloatingPointType]_Greatest`, `Nucleus_[FloatingPointType]_Least`
 
 ## C Signature
 ```
@@ -31,7 +31,7 @@ of values of the the type `Nucleus_[FloatingPointType]`.
 
 
 
-# `[FloatingPointType]_NaN`
+# `Nucleus_[FloatingPointType]_NaN`
 
 ## C Signature
 ```
@@ -44,7 +44,7 @@ where `[FloatingPointType]` is one of `Single`, `Double`, or `Quadruple`.
 
 
 
-# `[FloatingPointType]_PositiveInfinity`, `[FloatingPointType]_NegativeInfinity`
+# `Nucleus_[FloatingPointType]_PositiveInfinity`, `Nucleus_[FloatingPointType]_NegativeInfinity`
 
 ## C Signature
 ```
@@ -59,6 +59,22 @@ where `[FloatingPointType]` is one of `Single`, `Double`, or `Quadruple`.
 
 
 
+
+# `Nucleus_[FloatingPointType]_LeastExponentValueBase[Base]`, `Nucleus_[FloatingPointType]_GreatestExponentValueBase[Base]`
+
+## C Signature
+```
+#define Nucleus_[FloatingPointType]_GreatestExponentValue[Base] /* hidden */
+#define Nucleus_[FloatingPointType]_LeastExponentValue[Base] /* hidden */
+```
+where `[FloatingPointType]` is one of `Single`, `Double`, or `Quadruple` and `[Base]` is one of `2` or `10`.
+
+## Description
+`Nucleus_[FloatingPointType]_GreatestExponentValue[Base]` is the greatest integer such that `[Base]` raised by power
+__one more than that__ is a normalized floating-point number of type `Nucleus_[FloatingPointType]`.
+
+`Nucleus_[FloatingPointType]_LeatExponentValue[Base]` is the least integer such that `[Base]` raised by power
+__one less than that__ is a normalized floating-point number of type `Nucleus_[FloatingPointType]`.
 
 ## Requirements
 

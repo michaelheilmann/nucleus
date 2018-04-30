@@ -10,7 +10,7 @@
 #include "Nucleus/Types/Size.h"
 #include "Nucleus/Sign.h"
 
-typedef uint8_t Nucleus_DecimalDigit;
+typedef uint8_t Nucleus_DecimalFloat_Digit;
 
 typedef struct Nucleus_DecimalFloat Nucleus_DecimalFloat;
 
@@ -19,7 +19,7 @@ struct Nucleus_DecimalFloat
     Nucleus_Sign sign;
     Nucleus_Integer64 exponent;
     Nucleus_Size numberOfDigits;
-    Nucleus_DecimalDigit *digits;
+    Nucleus_DecimalFloat_Digit *digits;
 }; // struct Nucleus_DecimalFloat
 
 Nucleus_NonNull() Nucleus_Status
@@ -82,5 +82,5 @@ Nucleus_DecimalFloat_getDigit
     (
         Nucleus_DecimalFloat *decimalFloat,
         Nucleus_Size indexOfDigit,
-        Nucleus_DecimalDigit *digit
+        Nucleus_DecimalFloat_Digit *digit
     );

@@ -97,12 +97,23 @@ macro(set_project_default_properties)
       CMAKE_CXX_FLAGS_MINSIZEREL
       CMAKE_CXX_FLAGS_RELEASE
       CMAKE_CXX_FLAGS_RELWITHDEBINFO)
-    foreach(variable ${variables})
-    if(${variable} MATCHES "/MD")
-      string(REGEX REPLACE "/MD" "/MT" ${variable} "${${variable}}")
+    if (With-Static-Runtime)
+      # Enable static runtime.
+      foreach(variable ${variables})
+        if(${variable} MATCHES "/MD")
+          string(REGEX REPLACE "/MD" "/MT" ${variable} "${${variable}}")
+        endif()
+      endforeach()
+      set(MSVC_RUNTIME "static")
+    else()
+      # Enable dynamic runtime.
+      foreach(variable ${variables})
+        if(${variable} MATCHES "/MT")
+          string(REGEX REPLACE "/MT" "/MD" ${variable} "${${variable}}")
+        endif()
+      endforeach()
+      set(MSVC_RUNTIME "dynamic")
     endif()
-    endforeach()
-    set(MSVC_RUNTIME "static")
   endif()
 
   # (3) MSVC C++ settings

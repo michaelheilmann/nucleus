@@ -26,7 +26,20 @@ typedef float Nucleus_Single;
 #define Nucleus_Single_NegativeInfinity (-INFINITY)
 
 #define Nucleus_Single_MaximumNumberOfDecimalDigits (FLT_DIG)
-#define Nucleus_Single_MaximumNumberOfDecimalExponentDigits (FLT_MAX_10_EXP)
+
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+#define Nucleus_Single_GreatestExponentValueBase10 (FLT_MAX_10_EXP)
+
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+#define Nucleus_Single_LeastExponentValueBase10 (FLT_MIN_10_EXP)
+
+// All machines we're aware of define this to 2 except of IBM 360 and derivatives.
+#if defined(FLT_RADIX) && 2 == FLT_RADIX
+    // https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+    #define Nucleus_Single_GreatestExponentValueBase2 (FLT_MAX_EXP)
+    // https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+    #define Nucleus_Single_LeastExponentValueBase2 (FLT_MIN_EXP)
+#endif
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -49,7 +62,20 @@ typedef double Nucleus_Double;
 #define Nucleus_Double_NegativeInfinity (-INFINITY)
 
 #define Nucleus_Double_MaximumNumberOfDecimalDigits (DBL_DIG)
-#define Nucleus_Double_MaximumNumberOfDecimalExponentDigits (DBL_MAX_10_EXP)
+
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+#define Nucleus_Double_GreatestExponentValueBase10 (DBL_MAX_10_EXP)
+
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+#define Nucleus_Double_LeastExponentValueBase10 (DBL_MIN_10_EXP)
+
+// All machines we're aware of define this to 2 except of IBM 360 and derivatives.
+#if defined(FLT_RADIX) && 2 == FLT_RADIX
+    // https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+    #define Nucleus_Double_GreatestExponentValueBase2 (DBL_MAX_EXP)
+    // https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+    #define Nucleus_Double_LeastExponentValueBase2 (DBL_MIN_EXP)
+#endif
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -72,6 +98,19 @@ typedef long double Nucleus_Quadruple;
 #define Nucleus_Quadruple_NegativeInfinity (-INFINITY)
 
 #define Nucleus_Quadruple_MaximumNumberOfDecimalDigits (LDBL_DIG)
-#define Nucleus_Quadruple_MaximumNumberOfDecimalExponentDigits (LDBL_MAX_10_EXP)
+
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+#define Nucleus_Quadruple_GreatestExponentValueBase10 (LDBL_MAX_10_EXP)
+
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+#define Nucleus_Quadruple_LeastExponentValueBase10 (LDBL_MIN_10_EXP)
+
+// All machines we're aware of define this to 2 except of IBM 360 and derivatives.
+#if defined(FLT_RADIX) && 2 == FLT_RADIX
+    // https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+    #define Nucleus_Quadruple_GreatestExponentValueBase2 (LDBL_MAX_EXP)
+    // https://github.com/primordialmachine/blob/master/documentation/Nucleus_[FloatingPointType].md
+    #define Nucleus_Quadruple_LeastExponentValueBase2 (LDBL_MIN_EXP)
+#endif
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
