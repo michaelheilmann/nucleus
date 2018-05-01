@@ -140,3 +140,7 @@ typedef enum Nucleus_Status_Category
 /// @ingroup InputOutput
 /// @brief Status code indicating a failure because a file does not exist.
 #define Nucleus_Status_FileDoesNotExist (Nucleus_Status_Category_InputOutput | 4)
+
+/// @ingroup InputOutput
+/// @brief Status code indicating a failure because a file is closed.
+#define Nucleus_Status_FileClosed (Nucleus_Status_Category_InputOutput | 5)

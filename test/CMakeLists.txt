@@ -3,6 +3,7 @@
 add_subdirectory(empty)
 add_subdirectory(DecimalFloat)
 add_subdirectory(DecimalInteger)
+add_subdirectory(DirectoryEnumerator)
 add_subdirectory(setFileContents)
 add_subdirectory(getFileContents)
 add_subdirectory(booleanToString)
