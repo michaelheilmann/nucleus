@@ -366,7 +366,7 @@ Nucleus_DecimalFloat_create_fromString
         {
             longjmp(parser.environment, -1);
         }
-        decimalExponent = -(fractional.end - fractional.begin);
+        decimalExponent = -(Nucleus_Integer32)(fractional.end - fractional.begin);
 
         // Parse optional exponent.
         if (isExponentCharacter(&parser))

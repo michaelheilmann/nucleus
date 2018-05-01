@@ -3,9 +3,11 @@
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
 
-#if defined(_WIN32)
-
 #pragma once
+
+#include "Nucleus/Configuration.h"
+
+#if defined(Nucleus_Platform_Windows)
 
 #include "Nucleus/FileSystem/setFileContentsInterface.h"
 

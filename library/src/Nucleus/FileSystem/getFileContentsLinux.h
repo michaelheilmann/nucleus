@@ -5,7 +5,9 @@
 
 #pragma once
 
-#if defined(unix)
+#include "Nucleus/Configuration.h"
+
+#if defined(Nucleus_Platform_Linux)
 
 #include "Nucleus/FileSystem/getFileContentsInterface.h"
 

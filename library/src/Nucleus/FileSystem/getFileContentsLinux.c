@@ -2,9 +2,10 @@
 /// @author Michael Heilmann
 /// @brief Get the contents of a file (Linux).
 
-#if defined(unix)
-
 #include "Nucleus/FileSystem/getFileContentsLinux.h"
+
+#if defined(Nucleus_Platform_Linux)
+
 #include "Nucleus/FileSystem/FileHandleLinux.h"
 
 // For fprintf.

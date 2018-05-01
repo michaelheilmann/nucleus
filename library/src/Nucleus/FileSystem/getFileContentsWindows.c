@@ -2,10 +2,11 @@
 /// @author Michael Heilmann
 /// @brief Get the contents of a file (Windows).
 
-#if defined(_WIN32)
+#include "Nucleus/FileSystem/getFileContentsWindows.h"
+
+#if defined(Nucleus_Platform_Windows)
 
 #include "Nucleus/IncludesWindows.h"
-#include "Nucleus/FileSystem/getFileContentsWindows.h"
 #include "Nucleus/FileSystem/FileHandleWindows.h"
 
 // For fprintf.
