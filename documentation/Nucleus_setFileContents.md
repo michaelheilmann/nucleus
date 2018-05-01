@@ -29,3 +29,10 @@ This function fails if `pathname` or `memoryBlock` is a null pointer. `Nucleus_S
 is returned in that case. If this function fails with `Nucleus_Status_EnvironmentFailed`, then the
 environment failed or refused to provide service. In that case it is undetermined wether the file
 exists and if it exists what its contents are.
+
+## Requirements
+
+|                      | Windows                  | Linux                   |
+|----------------------|--------------------------|-------------------------|
+| *Header*             | `Nucleus/FileSystem.h`   | `Nucleus/FileSystem.h`  |
+| *Static library*     | `Nucleus.Library.lib`    | `libNucleus.Library.a`  |

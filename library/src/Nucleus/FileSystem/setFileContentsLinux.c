@@ -3,9 +3,10 @@
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
 
-#if defined(unix)
-
 #include "Nucleus/FileSystem/setFileContentsLinux.h"
+
+#if defined(Nucleus_Platform_Linux)
+
 #include "Nucleus/FileSystem/FileHandleLinux.h"
 
 // For fprintf.

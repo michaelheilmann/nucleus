@@ -17,21 +17,6 @@ typedef Nucleus_Natural8 Nucleus_DecimalInteger_Digit;
 
 typedef struct Nucleus_DecimalInteger Nucleus_DecimalInteger;
 
-struct Nucleus_DecimalInteger
-{
-    /// @brief A pointer to an array of @a numberOfDigits @a (Nucleus_DecimalDigit) values.
-    /// @a (digit[0]) is the least significant digit.
-    Nucleus_DecimalInteger_Digit *digits;
-    /// @brief The number of used elements in the array pointed to by @a digits.
-    /// This number is at least @a 1.
-    Nucleus_Size numberOfDigits;
-    /// @brief The number of elements in the array pointed to by @a digits.
-    /// This number of at least @a 1.
-    Nucleus_Size capacityInDigits;
-    /// @brief The sign of the decimal integer.
-    Nucleus_DecimalInteger_Sign sign;
-}; // struct Nucleus_DecimalInteger
-
 Nucleus_NonNull() Nucleus_Status
 Nucleus_DecimalInteger_fromInteger8
     (

@@ -3,10 +3,11 @@
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
 
-#if defined(_WIN32)
+#include "Nucleus/FileSystem/setFileContentsWindows.h"
+
+#if defined(Nucleus_Platform_Windows)
 
 #include "Nucleus/IncludesWindows.h"
-#include "Nucleus/FileSystem/setFileContentsWindows.h"
 #include "Nucleus/FileSystem/FileHandleWindows.h"
 
 // For fprintf.

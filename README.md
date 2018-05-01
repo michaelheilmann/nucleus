@@ -44,7 +44,7 @@ For example, to enable dynamic linking with the runtime enter
 cmake -DWith-Static-Runtime=OFF CMakeLists.txt
 ```
 
-## Building under Linux and Cygwin
+## Building under GCC/Linux and GCC/Cygwin
 Open the console.
 
 Change the directory to the directory of this file.
@@ -66,7 +66,7 @@ To execute the unit tests, enter
 ctest
 ```
 
-### Compilation options (Linux and Cygwin)
+### Compilation options (GCC/Linux and GCC/Cygwin)
 For Linux and Cygwin builds, certain CMake options are supported.
 The currently supported options are `With-Debug-Information=(ON|OFF)`
 and `With-Optimizations=(ON|OFF)`.
@@ -74,6 +74,29 @@ and `With-Optimizations=(ON|OFF)`.
 For example, to enable both optimizations and debug information enter
 ```
 cmake -DWith-Optimizations=ON -DWith-Debug-Information=ON CMakeLists.txt
+```
+
+## Out of source builds
+The above build instruction for
+Visual Studio 2017/Windows,
+GCC/Linux, and
+GCC/Cygwin
+use CMake to generate project files for in-source builds.
+However, it is recommended to use CMake to generate project files for out-of-source builds.
+
+To generate project files for an out-of-source build,
+simple enter some directory (which should be empty).
+This directory is called the build directory.
+In that directory enter the CMake command with options and generators to your liking as described above.
+However, instead of writing `CMakeLists.txt` in the end, enter the path to the CMakeLists.txt file of
+Nucleus - relative to your build directory.
+
+For example, if you are in the source directory and you want the project files for Visual Studio to be generated
+in `./build/visualstudio`, then simply enter `mkdir build; cd build; mkdir visualstudio`. Then tell CMake to
+generate the build files in there by invokin
+
+```
+cmake -G "Visual Studio 15 2017 Win64" ./../../CMakeLists.txt
 ```
 
 ## Documentation
@@ -176,6 +199,8 @@ The Nucleus Dynamic Byte Array Module provides functionality related to the file
 #### Reference
 
 - [Nucleus_setFileContents](documentation/Nucleus_setFileContents.md)
+- [Nucleus_getFileState](documentation/Nucleus_getFileState.md)
+- [Nucleus_FileState](documentation/Nucleus_FileState.md)
 
 ### Nucleus Collections Module __DRAFT__
 The Nucleus Collections Module provides collections e.g. arrays, deques.
