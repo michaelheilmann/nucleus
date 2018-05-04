@@ -6,16 +6,14 @@
 #include "Nucleus/Types/Boolean.h"
 #include "Nucleus/Types/Size.h"
 
-typedef enum Nucleus_DirectoryEnumerator_State Nucleus_DirectoryEnumerator_State;
-
-enum Nucleus_DirectoryEnumerator_State
+typedef enum Nucleus_DirectoryEnumerator_State
 {
 
     Nucleus_DirectoryEnumerator_State_Open,
 
     Nucleus_DirectoryEnumerator_State_Closed,
 
-}; // enum Nucleus_DirectoryEnumerator_State
+} Nucleus_DirectoryEnumerator_State; // enum Nucleus_DirectoryEnumerator_State
 
 #define NUCLEUS_DIRECTORYENUMERATOR(pointer) ((Nucleus_DirectoryEnumerator *)(pointer))
 typedef struct Nucleus_DirectoryEnumerator Nucleus_DirectoryEnumerator;

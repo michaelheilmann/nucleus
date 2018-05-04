@@ -15,8 +15,6 @@ else()
   include(${CMAKE_SOURCE_DIR}/buildsystem/set_default_project_properties.cmake)
 endif()
 
-set_project_default_properties()
-
 # Find and configure source files.
 file(GLOB_RECURSE  SOURCE_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.c")
 # Find and configure header files.
@@ -26,6 +24,8 @@ set_source_files_properties(${HEADER_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
 add_executable(Nucleus.Test.DecimalInteger ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(Nucleus.Test.DecimalInteger Nucleus.Library)
 target_include_directories(Nucleus.Test.DecimalInteger PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+# Set its properties.
+set_project_default_properties(Nucleus.Test.DecimalInteger)
 
 # Test.
 add_test(NAME Nucleus.Test.DecimalInteger COMMAND $<TARGET_FILE:Nucleus.Test.DecimalInteger>

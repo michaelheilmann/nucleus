@@ -1,7 +1,7 @@
 // Copyright (c) Michael Heilmann 2018
-#include "Nucleus/Concurrency/Pthreads/Mutex.h"
+#include "Nucleus/Concurrency/Winapi/Mutex.h"
 
-#if defined(Nucleus_Platform_Winapi)
+#if defined(Nucleus_Platform_Windows)
 
 #include "Nucleus/Memory.h"
 
