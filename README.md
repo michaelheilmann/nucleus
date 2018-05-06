@@ -194,13 +194,15 @@ and Byte array values as well hash value combinators.
 - [Nucleus_combineHashValues](documentation/Nucleus_combineHashValues.md)
 
 ### Nucleus File System Module
-The Nucleus Dynamic Byte Array Module provides functionality related to the filesystem.
+The Nucleus File System Module provides functionality related to the filesystem.
 
 #### Reference
 
 - [Nucleus_setFileContents](documentation/Nucleus_setFileContents.md)
 - [Nucleus_getFileState](documentation/Nucleus_getFileState.md)
 - [Nucleus_FileState](documentation/Nucleus_FileState.md)
+- [Nucleus_getPathSeparator](documentation/Nucleus_getPathSeparator.md)
+- [Nucleus_getDirectorySeparator](documentation/Nucleus_getDirectorySeparator.md)
 
 ### Nucleus Collections Module __DRAFT__
 The Nucleus Collections Module provides collections e.g. arrays, deques.

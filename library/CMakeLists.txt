@@ -15,8 +15,6 @@ else()
   include(${CMAKE_SOURCE_DIR}/buildsystem/set_default_project_properties.cmake)
 endif()
 
-set_project_default_properties()
-
 # Find and configure source files.
 file(GLOB_RECURSE SOURCE_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.c")
 # Find and configure header files.
@@ -29,6 +27,8 @@ set_source_files_properties(${INLAY_FILES} PROPERTIES HEADER_FILE_ONLY TRUE)
 add_library(Nucleus.Library STATIC ${SOURCE_FILES} ${HEADER_FILES} ${INLAY_FILES})
 target_include_directories(Nucleus.Library PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_include_directories(Nucleus.Library INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+# Set its properties.
+set_project_default_properties(Nucleus.Library)
 
 # GCC: Link library with the platform's math libraries.
 if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})

@@ -34,6 +34,9 @@ Nucleus_Concurrency_Thread_uninitialize
         Nucleus_Concurrency_Thread *thread
     );
 
+/*
+ * This function returns immediatly if the thread is not started yet or terminated already.
+ */
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Concurrency_Thread_join
     (
@@ -47,6 +50,11 @@ Nucleus_Concurrency_Thread_getStatus
         Nucleus_Status *status
     );
 
+/*
+ * The function returns immediatly if the thread started already or terminated already.
+ * In the first case `Nucleus_Status_AlreadyStarted` is returned, in the second case `Nucleus_Status_AlreadyStopped` is returned.
+ * This function is thread-safe.
+ */
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Concurrency_Thread_start
     (
