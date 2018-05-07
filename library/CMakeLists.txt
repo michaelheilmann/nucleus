@@ -36,8 +36,16 @@ if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP
 endif()
 
 # Link library with the platform's threading libraries.
-find_package (Threads)
 target_link_libraries (Nucleus.Library ${CMAKE_THREAD_LIBS_INIT})
+if (CMAKE_USE_PTHREADS_INIT)
+    target_compile_options(Nucleus.Library PRIVATE -DNucleus_Threads_Pthreads=1)
+    if (MSVC)
+      target_compile_options(Nucleus.Library PRIVATE -D_TIMESPEC_DEFINED)
+    endif()
+endif()
+if (CMAKE_USE_WIN32_THREADS_INIT)
+    target_compile_options(Nucleus.Library PRIVATE -DNucleus_Threads_Winapi=1)
+endif()
 
 FIND_PACKAGE(Doxygen)
 IF(DOXYGEN_FOUND)

@@ -3,6 +3,7 @@
 
 #include "Nucleus/Configuration.h"
 
+#include <stdlib.h>
 #if defined(Nucleus_Platform_Linux)
     #include "Nucleus/Concurrency/Pthreads/Mutex.h"
 #elif defined(Nucleus_Platform_Windows)

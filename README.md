@@ -34,7 +34,14 @@ ctest -C <configuration>
 
 ```configuration``` is one of `Debug`, `Release`, `MinSizeRel`, `RelWithDebInfo`.
 
+You can find the build products under `products/<configuration>/<platform>/(bin|lib)`
+where `<configuration>` is one of `debug`, `release`, `minsizerel`, `relwithdebinfo`
+and
+where `<platform>` is one of `x86` or `x64`.
+
 ### Compilation options (Visual Studio)
+
+#### `With-Static-Runtime`
 For Visual Studio builds, the option `With-Static-Runtime=(ON|OFF)` is supported.
 `ON` enables static linking with the C runtime, `OFF` enables dynamic linking with the runtime.
 The default value is `ON`.
@@ -43,6 +50,11 @@ For example, to enable dynamic linking with the runtime enter
 ```
 cmake -DWith-Static-Runtime=OFF CMakeLists.txt
 ```
+
+#### `With-Pthreads`
+For Visual Studio builds, the option `With-Pthreads=(ON|OFF)` is supported.
+`ON` determines that the threading module uses _pthreads-win32_ backend instead of the _Winapi_ backend.
+The default value is `OFF`.
 
 ## Building under GCC/Linux and GCC/Cygwin
 Open the console.
@@ -65,6 +77,11 @@ To execute the unit tests, enter
 ```
 ctest
 ```
+
+```configuration``` is one of `Debug`, `Release`, `MinSizeRel`, `RelWithDebInfo`.
+
+You can find the build products under `products/<platform>/(bin|lib)`
+where `<platform>` is one of `x86` or `x64`.
 
 ### Compilation options (GCC/Linux and GCC/Cygwin)
 For Linux and Cygwin builds, certain CMake options are supported.

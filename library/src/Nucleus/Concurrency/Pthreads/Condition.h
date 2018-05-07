@@ -3,7 +3,7 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Concurrency/Condition.h"
 #include <pthread.h>

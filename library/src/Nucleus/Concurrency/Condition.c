@@ -3,10 +3,10 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
     #include "Nucleus/Concurrency/Pthreads/Condition.h"
     #include "Nucleus/Concurrency/Pthreads/Mutex.h"
-#elif defined(Nucleus_Platform_Windows)
+#elif defined(Nucleus_Platform_Windows) && !defined(Nucleus_Threads_Pthreads)
     #include "Nucleus/Concurrency/Winapi/Condition.h"
     #include "Nucleus/Concurrency/Winapi/Mutex.h"
 #else

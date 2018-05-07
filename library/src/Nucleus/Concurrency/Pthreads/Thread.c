@@ -1,7 +1,7 @@
 // Copyright (c) Michael Heilmann 2018
 #include "Nucleus/Concurrency/Pthreads/Thread.h"
 
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Memory.h"
 
@@ -20,43 +20,25 @@ callback
     Nucleus_Concurrency_ThreadImpl *impl = (Nucleus_Concurrency_ThreadImpl *)p;
     Nucleus_Status status;
 
-    status = Nucleus_Concurrency_Mutex_lock(&impl->mutex);
-    if (status)
+    Nucleus_Concurrency_Mutex_lock(&impl->mutex);
+    // Block execution as long as the state is neither started not terminated.
+    while (impl->state != Nucleus_Concurrency_ThreadState_Started &&
+           impl->state != Nucleus_Concurrency_ThreadState_Terminated)
     {
-        impl->status = status;
-        impl->terminated = true;
-        return p;
+        Nucleus_Concurrency_Condition_wait(&impl->condition, &impl->mutex);
     }
 
-    // Protection from spurious wakeups.
-    while (!impl->startRequested)
+    if (impl->state != Nucleus_Concurrency_ThreadState_Terminated)
     {
-        status = Nucleus_Concurrency_Condition_wait(&impl->condition, &impl->mutex);
-        if (status)
-        {
-            impl->status = status;
-            impl->terminated = true;
-            Nucleus_Concurrency_Mutex_unlock(&impl->mutex);
-            return p;
-        }
-    }
-
-    impl->started = true;
-
-    status = Nucleus_Concurrency_Mutex_unlock(&impl->mutex);
-    if (status)
-    {
-        impl->status = status;
-        return p;
-    }
-
-    // if the thread is not requested to terminate, invoke the function
-    if (!impl->terminationRequested)
-    {
+        Nucleus_Concurrency_Mutex_unlock(&impl->mutex);
         impl->status = impl->callbackFunction(impl->callbackContext);
+        impl->state = Nucleus_Concurrency_ThreadState_Terminated;
+    }
+    else
+    {
+        Nucleus_Concurrency_Mutex_unlock(&impl->mutex);
     }
 
-    impl->terminated = true;
 
     return impl;
 }
@@ -80,10 +62,7 @@ Nucleus_Concurrency_ThreadImpl_create
     //
     threadImpl->callbackContext = callbackContext;
     threadImpl->callbackFunction = callbackFunction;
-    threadImpl->startRequested = false;
-    threadImpl->started = false;
-    threadImpl->terminationRequested = false;
-    threadImpl->terminated = false;
+    threadImpl->state = Nucleus_Concurrency_ThreadState_Initialized;
     threadImpl->status = Nucleus_Status_Success;
     //
     status = Nucleus_Concurrency_Mutex_initialize(&threadImpl->mutex);
@@ -121,13 +100,13 @@ Nucleus_Concurrency_ThreadImpl_destroy
     )
 {
     Nucleus_Concurrency_ThreadImpl *threadImpl = thread;
-    // If the thread was not started yet, unblock the callback.
-    if (!threadImpl->started)
+    Nucleus_Concurrency_Mutex_lock(&thread->mutex);
+    if (!threadImpl->state < Nucleus_Concurrency_ThreadState_Terminated)
     {
-        threadImpl->terminationRequested = true;
-        threadImpl->startRequested = true;
+        threadImpl->state = Nucleus_Concurrency_ThreadState_Terminated;
         Nucleus_Concurrency_Condition_signalAll(&threadImpl->condition);
     }
+    Nucleus_Concurrency_Mutex_unlock(&thread->mutex);
     // Join the thread.
     Nucleus_Concurrency_ThreadImpl_join(threadImpl);
     Nucleus_Concurrency_Condition_uninitialize(&threadImpl->condition);
@@ -142,25 +121,19 @@ Nucleus_Concurrency_ThreadImpl_join
     )
 {
     void *result;
-    // TODO: The thread's mutex needs to be locked.
-    //       If locking fails, then the thread has not started yet.
-
-    // if the thread was not started yet ...
-    if (!thread->started)
+    Nucleus_Concurrency_Mutex_lock(&thread->mutex);
+    if (thread->state == Nucleus_Concurrency_ThreadState_Initialized)
     {
-        // ... return Nucleus_Status_NotStarted;
+        Nucleus_Concurrency_Mutex_unlock(&thread->mutex);
         return Nucleus_Status_NotStarted;
     }
-    // if the thread was terminated already ...
-    if (thread->terminated)
+    if (thread->state == Nucleus_Concurrency_ThreadState_Terminated)
     {
-        // ... return Nucleus_Status_AlreadyStopped.
+        Nucleus_Concurrency_Mutex_unlock(&thread->mutex);
         return Nucleus_Status_AlreadyStopped;
     }
-    else
-    {
-        pthread_join(thread->thread, &result);
-    }
+    Nucleus_Concurrency_Mutex_unlock(&thread->mutex);
+    pthread_join(thread->thread, &result);
     return Nucleus_Status_Success;
 }
 
@@ -182,11 +155,20 @@ Nucleus_Concurrency_ThreadImpl_start
         Nucleus_Concurrency_ThreadImpl *thread
     )
 {
-    if (!thread->startRequested)
+    Nucleus_Concurrency_Mutex_lock(&thread->mutex);
+    if (thread->state == Nucleus_Concurrency_ThreadState_Started)
     {
-        thread->startRequested = true;
-        Nucleus_Concurrency_Condition_signalAll(&thread->condition);
+        Nucleus_Concurrency_Mutex_unlock(&thread->mutex);
+        return Nucleus_Status_AlreadyStarted;
     }
+    if (thread->state == Nucleus_Concurrency_ThreadState_Terminated)
+    {
+        Nucleus_Concurrency_Mutex_unlock(&thread->mutex);
+        return Nucleus_Status_AlreadyStopped;
+    }
+    thread->state = Nucleus_Concurrency_ThreadState_Started;
+    Nucleus_Concurrency_Condition_signalAll(&thread->condition);
+    Nucleus_Concurrency_Mutex_unlock(&thread->mutex);
     return Nucleus_Status_Success;
 }
 

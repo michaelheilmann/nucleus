@@ -4,19 +4,16 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Windows)
+#if defined(Nucleus_Platform_Windows) && !defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Concurrency/Condition.h"
 #include "Nucleus/Concurrency/Mutex.h"
 #include "Nucleus/Concurrency/Thread.h"
+#include "Nucleus/Concurrency/Shared/ThreadState.h"
+#include "Nucleus/Types/Boolean.h"
 #include "Nucleus/IncludesWindows.h"
-#include <stdbool.h>
 
 typedef struct Nucleus_Concurrency_ThreadImpl Nucleus_Concurrency_ThreadImpl;
-
-#define Nucleus_Concurrency_ThreadImpl_Initialized (0)
-#define Nucleus_Concurrency_ThreadImpl_Started (1)
-#define Nucleus_Concurrency_ThreadImpl_Terminated (2)
 
 struct Nucleus_Concurrency_ThreadImpl
 {
@@ -25,7 +22,7 @@ struct Nucleus_Concurrency_ThreadImpl
     Nucleus_Status status;
     Nucleus_Concurrency_Mutex mutex;
     HANDLE thread;
-    int state;
+    Nucleus_Concurrency_ThreadState state;
 }; // struct Nucleus_Concurrency_ThreadImpl
 
 Nucleus_NonNull() Nucleus_Status

@@ -1,0 +1,3 @@
+[submodule "dependencies/pthreads-win32"]
+	path = dependencies/pthreads-win32
+	url = https://github.com/primordialmachine/pthreads-win32

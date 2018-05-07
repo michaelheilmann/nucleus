@@ -1,7 +1,7 @@
 // Copyright (c) Michael Heilmann 2018
 #include "Nucleus/Concurrency/Winapi/Thread.h"
 
-#if defined(Nucleus_Platform_Windows)
+#if defined(Nucleus_Platform_Windows) && !defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Memory.h"
 
@@ -34,9 +34,9 @@ callback
     )
 {
     Nucleus_Concurrency_ThreadImpl *impl = (Nucleus_Concurrency_ThreadImpl *)p;
-    SetState(impl, Nucleus_Concurrency_ThreadImpl_Started);
+    SetState(impl, Nucleus_Concurrency_ThreadState_Started);
     impl->status = impl->callbackFunction(impl->callbackContext);
-    SetState(impl, Nucleus_Concurrency_ThreadImpl_Terminated);
+    SetState(impl, Nucleus_Concurrency_ThreadState_Terminated);
     return impl;
 }
 
@@ -75,7 +75,7 @@ Nucleus_Concurrency_ThreadImpl_create
     threadImpl->callbackContext = callbackContext;
     threadImpl->callbackFunction = callbackFunction;
     threadImpl->status = Nucleus_Status_Success;
-    threadImpl->state = Nucleus_Concurrency_ThreadImpl_Initialized;
+    threadImpl->state = Nucleus_Concurrency_ThreadState_Initialized;
     // Initialize the mutex.
     status = Nucleus_Concurrency_Mutex_initialize(&threadImpl->mutex);
     if (status)
@@ -116,12 +116,12 @@ Nucleus_Concurrency_ThreadImpl_join
     lock(thread);
     switch (thread->state)
     {
-        case Nucleus_Concurrency_ThreadImpl_Initialized:
+        case Nucleus_Concurrency_ThreadState_Initialized:
         {
             unlock(thread);
             return Nucleus_Status_NotStarted;
         }
-        case Nucleus_Concurrency_ThreadImpl_Terminated:
+        case Nucleus_Concurrency_ThreadState_Terminated:
         {
             unlock(thread);
             return Nucleus_Status_AlreadyStopped;
@@ -156,12 +156,12 @@ Nucleus_Concurrency_ThreadImpl_start
     lock(thread);
     switch (thread->state)
     {
-        case Nucleus_Concurrency_ThreadImpl_Started:
+        case Nucleus_Concurrency_ThreadState_Started:
             {
                 unlock(thread);
                 return Nucleus_Status_AlreadyStarted;
             }
-        case Nucleus_Concurrency_ThreadImpl_Terminated:
+        case Nucleus_Concurrency_ThreadState_Terminated:
             {
                 unlock(thread);
                 return Nucleus_Status_AlreadyStopped;

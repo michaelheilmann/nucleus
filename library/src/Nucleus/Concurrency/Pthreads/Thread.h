@@ -3,22 +3,20 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Concurrency/Condition.h"
 #include "Nucleus/Concurrency/Mutex.h"
 #include "Nucleus/Concurrency/Thread.h"
+#include "Nucleus/Concurrency/Shared/ThreadState.h"
+#include "Nucleus/Types/Boolean.h"
 #include <pthread.h>
-#include <stdbool.h>
 
 typedef struct Nucleus_Concurrency_ThreadImpl Nucleus_Concurrency_ThreadImpl;
 
 struct Nucleus_Concurrency_ThreadImpl
 {
-    bool started; ///< @a true if the thread was started, @a false otherwise.
-    bool startRequested; ///< @a true if the thread was requested to start, @a false otherwise.
-    bool terminationRequested;
-    bool terminated;
+    Nucleus_Concurrency_ThreadState state;
     Nucleus_Concurrency_Thread_CallbackContext *callbackContext;
     Nucleus_Concurrency_Thread_CallbackFunction *callbackFunction;
     Nucleus_Status status;
