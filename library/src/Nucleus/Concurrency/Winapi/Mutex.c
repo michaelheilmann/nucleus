@@ -1,7 +1,7 @@
 // Copyright (c) Michael Heilmann 2018
 #include "Nucleus/Concurrency/Winapi/Mutex.h"
 
-#if defined(Nucleus_Platform_Windows)
+#if defined(Nucleus_Platform_Windows) && !defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Memory.h"
 

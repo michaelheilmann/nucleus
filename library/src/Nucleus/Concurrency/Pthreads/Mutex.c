@@ -1,7 +1,7 @@
 // Copyright (c) Michael Heilmann 2018
 #include "Nucleus/Concurrency/Pthreads/Mutex.h"
 
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Memory.h"
 

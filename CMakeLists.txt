@@ -19,6 +19,13 @@ if (MSVC OR MINGW)
          Initial value is ON. \
          Only available under MSVC and MINGW" FORCE)
   endif()
+  if (NOT DEFINED With-Pthreads)
+    set(With-Pthreads OFF CACHE BOOL
+        "enable/disable compilation with pthreads under Windows. \
+         ON enables compilation with pthreads under windows, OFF disables compilation with pthreads under windows. \
+         Initial value is OFF. \
+         Only available under MSVC and MINGW" FORCE)
+  endif()
 endif()
 
 if (NOT DEFINED With-Optimizations)
@@ -48,6 +55,18 @@ option(Nucleus-With-Tests
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# Link library with the platform's threading libraries.
+if (MSVC OR MINGW)
+  # If under Windows and pthreads is required, then the path to pthreads directory must be specified.
+  if (With-Pthreads)
+    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/pthreads-win32)
+    set(CMAKE_THREAD_LIBS_INIT pthreadsVC2)
+    set(CMAKE_USE_PTHREADS_INIT TRUE)
+  endif()
+else()
+  find_package (Threads)
+endif()
 
 # Add module "library".
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/library")

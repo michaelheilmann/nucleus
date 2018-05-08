@@ -3,9 +3,9 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
     #include "Nucleus/Concurrency/Pthreads/Thread.h"
-#elif defined(Nucleus_Platform_Windows)
+#elif defined(Nucleus_Platform_Windows) && !defined(Nucleus_Threads_Pthreads)
     #include "Nucleus/Concurrency/Winapi/Thread.h"
 #else
     #error("platform not supported")

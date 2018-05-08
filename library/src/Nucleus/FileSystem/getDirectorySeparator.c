@@ -2,7 +2,7 @@
 #include "Nucleus/FileSystem/getDirectorySeparator.h"
 
 #if defined(Nucleus_Platform_Windows)
-    static const char directorySeparatorBytes[] = { '\\', '\\', '\0' };
+    static const char directorySeparatorBytes[] = { '\\', '\0' };
 #else
     static const char directorySeparatorBytes[] = { '/', '\0' };
 #endif
