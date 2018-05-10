@@ -37,15 +37,6 @@ Nucleus_setFileContents
         // Return the result.
         return status;
     }
-#if 0
-    // Open file.
-    HANDLE hFile = CreateFileA(pathname, GENERIC_WRITE | GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
-    if (hFile == INVALID_HANDLE_VALUE)
-    {
-        fprintf(stderr, "unable to open file '%s'\n", pathname);
-        return Nucleus_Status_EnvironmentFailed;
-    }
-#endif
     // If the size is zero, this function succeeded.
     if (numberOfBytes == 0)
     {
