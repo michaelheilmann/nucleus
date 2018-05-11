@@ -78,8 +78,6 @@ To execute the unit tests, enter
 ctest
 ```
 
-```configuration``` is one of `Debug`, `Release`, `MinSizeRel`, `RelWithDebInfo`.
-
 You can find the build products under `products/<platform>/(bin|lib)`
 where `<platform>` is one of `x86` or `x64`.
 

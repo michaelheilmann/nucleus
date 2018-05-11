@@ -93,15 +93,17 @@ Nucleus_CommandLine_Command_addParameter
     )
 {
     if (!command || !parameterValue) return Nucleus_Status_InvalidArgument;
-    Nucleus_CommandLine_Parameter *parameter = malloc(sizeof(Nucleus_CommandLine_Parameter));
-    if (!parameter) return Nucleus_Status_AllocationFailed;
+	Nucleus_Status status;
+    Nucleus_CommandLine_Parameter *parameter = NULL;
+	status = Nucleus_allocateMemory((void **)&parameter, sizeof(Nucleus_CommandLine_Parameter));
+	if (status) return status;
     parameter->value = _strdup(parameterValue);
     if (!parameter->value)
     {
-        free(parameter);
+        Nucleus_deallocateMemory(parameter);
         return Nucleus_Status_AllocationFailed;
     }
-    Nucleus_Status status = ParameterList_append(&(command->parameterList), parameter);
+    status = ParameterList_append(&(command->parameterList), parameter);
     if (status) { destroyParameter(parameter); return status; }
     return Nucleus_Status_Success;
 }

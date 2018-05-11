@@ -31,7 +31,7 @@ target_include_directories(Nucleus.Library INTERFACE "${CMAKE_CURRENT_SOURCE_DIR
 set_project_default_properties(Nucleus.Library)
 
 # GCC: Link library with the platform's math libraries.
-if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
+if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_CLANG})
   target_link_libraries(Nucleus.Library m)
 endif()
 

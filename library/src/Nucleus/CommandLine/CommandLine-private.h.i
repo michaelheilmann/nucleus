@@ -6,7 +6,6 @@
 #include "Nucleus/Hash/Memory.h"
 #include "Nucleus/Collections/PointerArray.h"
 #include "Nucleus/Collections/PointerHashMap.h"
-#include <malloc.h> // For malloc() and free().
 #include <string.h> // For strcmp() and strdup().
 #include <stdio.h>  // For fprintf().
 

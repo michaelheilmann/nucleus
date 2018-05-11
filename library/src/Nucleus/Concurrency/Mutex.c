@@ -4,9 +4,9 @@
 #include "Nucleus/Configuration.h"
 
 #include <stdlib.h>
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
     #include "Nucleus/Concurrency/Pthreads/Mutex.h"
-#elif defined(Nucleus_Platform_Windows)
+#elif defined(Nucleus_Platform_Windows) && !defined(Nucleus_Threads_Pthreads)
     #include "Nucleus/Concurrency/Winapi/Mutex.h"
 #else
     #error("platform not supported")

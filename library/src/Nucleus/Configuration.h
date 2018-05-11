@@ -29,3 +29,17 @@
     /// @brief If defined, then the target platform is "Linux".
     #define Nucleus_Platform_Linux
 #endif
+
+#if defined(__APPLE__) && defined (__MACH__)
+	#include <TargetConditionals.h>
+	#if TARGET_IPHONE_SIMULATOR == 1
+		#define Nucleus_Platform_IosSimulator
+		#error iOS in Xcode simulator not yet supported
+	#elif TARGET_OS_IPHONE == 1
+		#define Nucleus_Platform_Ios
+		#error iOS on iPhone, iPad, etc. not yet supported
+	#elif TARGET_OS_MAC == 1
+		#define Nucleus_Platform_Osx
+	#endif
+#endif
+
