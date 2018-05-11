@@ -16,10 +16,8 @@ strndup
 
     if (n < len)
         len = n;
-
-    result = (char *)malloc(len + 1);
-    if (!result)
-        return 0;
+	if (Nucleus_allocateMemory((void **)&result, len + 1))
+	{ return NULL; }
 
     result[len] = '\0';
     return (char *)memcpy(result, s, len);
@@ -62,11 +60,11 @@ parseArgument
         Nucleus_CommandLine_Option *option;
         status = Nucleus_CommandLine_Command_getOption(command, name, &option);
         if (status && status != Nucleus_Status_NotExists)
-        { free(name); return status; }
+        { Nucleus_deallocateMemory(name); return status; }
         if (status == Nucleus_Status_NotExists)
             if (Nucleus_CommandLine_Command_addOption(command, name, &option))
-            { free(name); return status; }
-        free(name);
+            { Nucleus_deallocateMemory(name); return status; }
+        Nucleus_deallocateMemory(name);
         argument = p;
         if (*argument == '\0') return Nucleus_Status_Success;
         else if (*argument == '=') argument++;
@@ -79,8 +77,8 @@ parseArgument
         if (!value) { fprintf(stderr, "<internal error>\n"); return Nucleus_Status_AllocationFailed; }
         status = Nucleus_CommandLine_Option_addParameter(option, value);
         if (status)
-        { free(value); fprintf(stderr, "<internal error>\n"); return status; }
-        free(value);
+        { Nucleus_deallocateMemory(value); fprintf(stderr, "<internal error>\n"); return status; }
+        Nucleus_deallocateMemory(value);
     }
     else
     {
@@ -222,15 +220,17 @@ createOption
     )
 {
     if (!option || !optionName) return Nucleus_Status_InvalidArgument;
-    Nucleus_CommandLine_Option *self = malloc(sizeof(Nucleus_CommandLine_Option));
-    if (!self) return Nucleus_Status_AllocationFailed;
-    Nucleus_Status status = ParameterList_initialize(&self->parameterList);
-    if (status) { free(self); return status; }
+	Nucleus_Status status;
+    Nucleus_CommandLine_Option *self = NULL;
+	status = Nucleus_allocateMemory((void **)&self, sizeof(Nucleus_CommandLine_Option));
+	if (status) return status;
+    status = ParameterList_initialize(&self->parameterList);
+    if (status) { Nucleus_deallocateMemory(self); return status; }
     self->name = _strdup(optionName);
     if (!self->name)
     {
         ParameterList_uninitialize(&self->parameterList);
-        free(self);
+        Nucleus_deallocateMemory(self);
         return Nucleus_Status_AllocationFailed;
     }
     *option = self;
@@ -246,10 +246,10 @@ destroyOption
     ParameterList_uninitialize(&option->parameterList);
     if (option->name)
     {
-        free(option->name);
+        Nucleus_deallocateMemory(option->name);
         option->name = NULL;
     }
-    free(option);
+    Nucleus_deallocateMemory(option);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,12 +262,14 @@ createParameter
     )
 {
     if (!parameter || !parameterValue) return Nucleus_Status_InvalidArgument;
-    Nucleus_CommandLine_Parameter *self = malloc(sizeof(Nucleus_CommandLine_Parameter));
-    if (!self) return Nucleus_Status_AllocationFailed;
+	Nucleus_Status status;
+    Nucleus_CommandLine_Parameter *self = NULL;
+	status = Nucleus_allocateMemory((void **)&self, sizeof(Nucleus_CommandLine_Parameter));
+    if (status) return status;
     self->value = _strdup(parameterValue);
     if (!self->value)
     {
-        free(self);
+        Nucleus_deallocateMemory(self);
         return Nucleus_Status_AllocationFailed;
     }
     *parameter = self;
@@ -282,7 +284,7 @@ uninitializeParameter
 {
     if (parameter->value)
     {
-        free(parameter->value);
+        Nucleus_deallocateMemory(parameter->value);
         parameter->value = NULL;
     }
 }
@@ -294,7 +296,7 @@ destroyParameter
     )
 {
     uninitializeParameter(parameter);
-    free(parameter);
+    Nucleus_deallocateMemory(parameter);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -339,12 +341,14 @@ createCommand
     )
 {
     if (!command) return Nucleus_Status_InvalidArgument;
-    Nucleus_CommandLine_Command *o = malloc(sizeof(Nucleus_CommandLine_Command));
-    if (!o) return Nucleus_Status_AllocationFailed;
-    Nucleus_Status status = initializeCommand(o);
+	Nucleus_Status status;
+    Nucleus_CommandLine_Command *o = NULL;
+	status = Nucleus_allocateMemory((void **)&o, sizeof(Nucleus_CommandLine_Command));
+    if (status) return status;
+    status = initializeCommand(o);
     if (status)
     {
-        free(o);
+        Nucleus_deallocateMemory(o);
         return status;
     }
     *command = o;
@@ -358,5 +362,5 @@ destroyCommand
     )
 {
     uninitializeCommand(command);
-    free(command);
+    Nucleus_deallocateMemory(command);
 }
