@@ -1,7 +1,7 @@
 // Copyright (c) Michael Heilmann 2018
 #include "Nucleus/FileSystem/fileStateLinux.h"
 
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
 
 #include <errno.h>
 #include <sys/types.h>

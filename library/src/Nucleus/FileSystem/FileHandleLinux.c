@@ -2,16 +2,19 @@
 /// @brief A file handle (Windows).
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
-
-#if defined(unix)
-
 #include "Nucleus/FileSystem/FileHandleLinux.h"
+
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
 
 // For fprintf.
 #include <stdio.h>
 
 // For malloc.
-#include <malloc.h>
+#if defined(Nucleus_Platform_Osx)
+	#include <stdlib.h>
+#else
+	#include <malloc.h>
+#endif
 
 // For open.
 #include <sys/types.h>
@@ -26,13 +29,13 @@
 
 Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_FileHandle_create
-(
-    Nucleus_FileHandle **fileHandle,
-    const char *pathname,
-    Nucleus_FileAccessMode fileAccessMode,
-    Nucleus_ExistingFilePolicy existingFilePolicy,
-    Nucleus_NonExistingFilePolicy nonExistingFilePolicy
-)
+	(
+		Nucleus_FileHandle **fileHandle,
+		const char *pathname,
+		Nucleus_FileAccessMode fileAccessMode,
+		Nucleus_ExistingFilePolicy existingFilePolicy,
+		Nucleus_NonExistingFilePolicy nonExistingFilePolicy
+	)
 {
     // Validate arguments.
     if (!fileHandle || !pathname)

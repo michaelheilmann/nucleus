@@ -6,7 +6,11 @@
 
 #include "Nucleus/Configuration.h"
 #include "Nucleus/SafeArithmeticOperations.h"
+#if defined(Nucleus_Platform_Osx)
+#include <stdlib.h>
+#else
 #include <malloc.h>
+#endif
 #include <memory.h>
 
 /// @brief Get if two memory blocks overlap.

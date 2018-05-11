@@ -3,10 +3,10 @@
 
 #include "Nucleus/Annotations.h"
 #include "Nucleus/Status.h"
-#include <stddef.h> // For size_t.
+#include "Nucleus/Types/Size.h"
 
 Nucleus_NonNull() Nucleus_Status
 Nucleus_getPageSize
     (
-        size_t *pageSize
+        Nucleus_Size *pageSize
     );

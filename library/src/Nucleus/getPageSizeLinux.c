@@ -8,7 +8,7 @@
 Nucleus_NonNull() Nucleus_Status
 Nucleus_getPageSizeLinux
     (
-        size_t *pageSize
+        Nucleus_Size *pageSize
     )
 {
     if (!pageSize) return Nucleus_Status_InvalidArgument;

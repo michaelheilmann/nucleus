@@ -2,10 +2,11 @@
 /// @brief A file handle (Linux).
 /// @author Michael Heilmann
 /// @copyright Copyright (c) Michael Heilmann 2017
-
-#if defined(unix)
-
 #pragma once
+
+#include "Nucleus/Configuration.h"
+
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
 
 #include "Nucleus/FileSystem/FileHandleInterface.h"
 

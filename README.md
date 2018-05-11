@@ -111,7 +111,7 @@ in `./build/visualstudio`, then simply enter `mkdir build; cd build; mkdir visua
 generate the build files in there by invokin
 
 ```
-cmake -G "Visual Studio 15 2017 Win64" ./../../CMakeLists.txt
+cmake -G "Visual Studio 15 2017 Win64" . ./../../CMakeLists.txt
 ```
 
 ## Documentation
