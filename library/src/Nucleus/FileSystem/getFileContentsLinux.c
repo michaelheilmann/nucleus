@@ -4,7 +4,7 @@
 
 #include "Nucleus/FileSystem/getFileContentsLinux.h"
 
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
 
 #include "Nucleus/FileSystem/FileHandleLinux.h"
 

@@ -1,11 +1,16 @@
 // Copyright (c) Michael Heilmann 2018
 #include "Nucleus/FileSystem/DirectoryEnumeratorLinux.h"
 
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
 
 #include "Nucleus/Memory.h"
 #include <errno.h>
-#include <dirent.h>
+#if defined(Nucleus_Platform_Osx)
+	#include <sys/types.h>
+	#include <sys/dir.h>
+#else
+	#include <dirent.h>
+#endif
 #include <string.h> // For strlen().
 
 struct Nucleus_DirectoryEnumeratorLinux
@@ -44,7 +49,7 @@ openImpl
         }
         return Nucleus_Status_Success;
     }
-    ((Nucleus_DirectoryEnumerator *)directoryEnumerator)->pathname = directoryEnumerator->dirent->d_name;
+    NUCLEUS_DIRECTORYENUMERATOR(directoryEnumerator)->pathname = directoryEnumerator->dirent->d_name;
     NUCLEUS_DIRECTORYENUMERATOR(directoryEnumerator)->state = Nucleus_DirectoryEnumerator_State_Open;
     return Nucleus_Status_Success;
 }

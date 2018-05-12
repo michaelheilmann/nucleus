@@ -3,7 +3,7 @@
 
 #if defined(Nucleus_Platform_Windows)
     #include "Nucleus/getNumberOfProcessorsWindows.h"
-#elif defined(Nucleus_Platform_Linux)
+#elif defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
     #include "Nucleus/getNumberOfProcessorsLinux.h"
 #else
     #error("platform not supported")
@@ -17,7 +17,7 @@ Nucleus_getNumberOfProcessors
 {
 #if defined(Nucleus_Platform_Windows)
     return Nucleus_getNumberOfProcessorsWindows(numberOfProcessors);
-#elif defined(Nucleus_Platform_Linux)
+#elif defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
     return Nucleus_getNumberOfProcessorsLinux(numberOfProcessors);
 #else
     #error("platform not supported")

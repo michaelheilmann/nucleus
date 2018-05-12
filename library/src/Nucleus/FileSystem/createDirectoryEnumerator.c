@@ -2,12 +2,12 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Linux)
-#include "Nucleus/FileSystem/DirectoryEnumeratorLinux.h"
-#endif
-
-#if defined(Nucleus_Platform_Windows)
-#include "Nucleus/FileSystem/DirectoryEnumeratorWindows.h"
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
+	#include "Nucleus/FileSystem/DirectoryEnumeratorLinux.h"
+#elif defined(Nucleus_Platform_Windows)
+	#include "Nucleus/FileSystem/DirectoryEnumeratorWindows.h"
+#else
+	#error("platform not supported")
 #endif
 
 Nucleus_NonNull() Nucleus_Status
@@ -16,11 +16,11 @@ Nucleus_createDirectoryEnumerator
         Nucleus_DirectoryEnumerator **directoryEnumerator
     )
 {
-#if defined(Nucleus_Platform_Linux)
+#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
     return Nucleus_DirectoryEnumeratorLinux_create((Nucleus_DirectoryEnumeratorLinux **)directoryEnumerator);
-#endif
-
-#if defined(Nucleus_Platform_Windows)
+#elif defined(Nucleus_Platform_Windows)
     return Nucleus_DirectoryEnumeratorWindows_create((Nucleus_DirectoryEnumeratorWindows **)directoryEnumerator);
+#else
+	#error("platform not supported")
 #endif
 }
