@@ -1,4 +1,4 @@
-// Copyright (c) Michael Heilmann 2017, 2018
+// Copyright (c) 2017, 2018 Michael Heilmann
 #include "Nucleus/Hash/ArrayMemory.h"
 
 #include "Nucleus/Hash/Memory.h"

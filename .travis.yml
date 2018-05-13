@@ -7,7 +7,7 @@ dist: trusty
 # Select language C.
 language: c
 
-# Compile once for Linux and OS X.
+# Compile once for Linux and once for OS X.
 os:
     - linux
     - osx

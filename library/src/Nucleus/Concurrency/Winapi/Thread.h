@@ -1,4 +1,4 @@
-// Copyright (c) Michael Heilmann 2018
+// Copyright (c) 2018 Michael Heilmann
 // TODO: An n:r 1:w-lock is more efficient than a mutex. Ironically we implement the mutex using such a n:r 1:w-lock.
 #pragma once
 

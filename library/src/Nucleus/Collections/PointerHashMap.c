@@ -1,4 +1,4 @@
-// Copyright (c) Michael Heilmann 2018
+// Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Collections/PointerHashMap-private.c.i"
 
 Nucleus_NonNull() Nucleus_Status
