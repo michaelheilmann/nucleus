@@ -1,4 +1,4 @@
-// Copyright (c) Michael Heilmann 2018
+// Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Hash/combineHashValues.h"
 
 Nucleus_NonNull() Nucleus_Status

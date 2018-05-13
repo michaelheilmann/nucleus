@@ -1,4 +1,4 @@
-// Copyright (c) Michael Heilmann 2018
+// Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/getPageSizeLinux.h"
 
 #if defined(Nucleus_Platform_Linux)
