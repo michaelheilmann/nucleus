@@ -1,7 +1,7 @@
 /// @file Nucleus/FloatingPoint.h
 /// @brief Support for single, double, and quad precision floating-point numbers.
 /// @author Michael Heilmann
-/// @copyright Copyright (c) Michael Heilmann 2017
+/// @copyright Copyright (c) 2017, 2018 Michael Heilmann
 #include "Nucleus/FloatingPoint.h"
 
 

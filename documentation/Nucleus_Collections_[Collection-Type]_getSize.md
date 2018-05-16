@@ -7,13 +7,13 @@ Nucleus_Status
 Nucleus_Collections_[Collection-Type]_getSize
     (
         Nucleus_Collections_[Collection-Type] *collection,
-        size_t *size
+        Nucleus_Size *size
     );
 ```
 
 ## Parameters
 - `collection` a pointer to an initialized `Nucleus_Collections_[Collection-Type]` object
-- `size` a pointer to a `size_t` variable
+- `size` a pointer to a `Nucleus_Size` variable
 
 ## Descriptions
 This function gets the size, in Bytes, of a `Nucleus_Collections_[Collection-Type]` object.

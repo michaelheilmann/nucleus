@@ -1,7 +1,7 @@
 /// @file Nucleus/FileSystem/FileAccessMode.h
 /// @brief An enumeration of file access modes to files.
 /// @author Michael Heilmann
-/// @copyright Copyright (c) Michael Heilmann 2017
+/// @copyright Copyright (c) 2017, 2018 Michael Heilmann
 
 #pragma once
 

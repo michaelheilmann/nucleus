@@ -7,13 +7,13 @@ Nucleus_Status
 Nucleus_Collections_[Array-Collection-Type]_getFreeCapacity
     (
         Nucleus_Collections_[Array-Collection-Type] *arrayCollection,
-        size_t *freeCapacity
+        Nucleus_Size *freeCapacity
     );
 ```
 
 ## Parameters
 - `arrayCollection` a pointer to an initialized `Nucleus_Collections_[Array-Collection-Type]` object
-- `freeCapacity` a pointer to a `size_t` variable
+- `freeCapacity` a pointer to a `Nucleus_Size` variable
 
 ## Description
 This function gets the free capacity, in Bytes, of a `Nucleus_Collections_[Array-Collection-Type]` object.
