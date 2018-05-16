@@ -1,32 +1,34 @@
-# `Nucleus_Collections_[Array-Collection-Type]_append`
-*Append an element to the list of elements in a `Nucleus_Collections_[Array-Collection-Type]` object.*
+# `Nucleus_Collections_[Array-Collection-Type]_at`
+*Get the element at an index in the list of elements in a `Nucleus_Collections_[Array-Collection-Type]` object.*
 
 ## C Signature
 ```
 Nucleus_Status
-Nucleus_Collections_ByteArray_append
+Nucleus_Collections_ByteArray_at
     (
         Nucleus_Collections_[Array-Collection-Type] *arrayCollection,
-        [Element-Type] elementType
+        Nucleus_Size index,
+        [Element-Type] *element
     )
 ```
 
 ## Parameters
 - `arrayCollection` a pointer to an initialized `Nucleus_Collections_[Array-Collection-Type]` object
-- `element` the element value of type [Array-Collection-Element-Type] or a const-qualified variant thereof
+- `index` a zero-based index
+- `element` a pointer to a `[Element-Type]` variable
 
 ## Description 
-This function appends an element to the list of elements of a `Nucleus_Collections_[Array-Collection-Type]` object.
+This function gets the element at an index in the list of elements of a `Nucleus_Collections_[Array-Collection-Type]` object.
 
 If this function succeeds,
-- the `element` was appended to the list of elements of the `Nucleus_Collections_[Array-Collection-Type]` object pointed to
-  by `arrayCollection` and
+- the `*element` was assigned the element and
 - `Nucleus_Status_Success` was returned.
 
 If this function fails, one of the following non-zero status codes is returned
-- `Nucleus_Status_InvalidArgument` `arrayCollection` is a null pointer or and/or `element` is invalid for this
-  `Nucleus_Collections_[Array-Collection-Type]` type
-- `Nucleus_Status_Overflow` the maximum number of elements was exceeded
+- `Nucleus_Status_InvalidArgument` `arrayCollection` or `element` is a null pointer
+- `Nucleus_Status_IndexOutOfBounds` `index` is greater than or equal to than the size of the collection
+                                    ([Nucleus_Collections_[Array-Collection-Type]_getSize](Nucleus_Collections_[Array-Collection-Type]_getSize.md))
+  								    number of elements was exceeded
 - `Nucleus_Status_AllocationFailed` an allocation failed
 
 ## Requirements

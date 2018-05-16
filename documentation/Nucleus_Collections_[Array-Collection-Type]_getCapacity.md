@@ -7,13 +7,13 @@ Nucleus_Status
 Nucleus_Collections_[Array-Collection-Type]_getCapacity
     (
         Nucleus_Collections_[Array-Collection-Type] *arrayCollection,
-        size_t *capacity
+        Nucleus_Size *capacity
     );
 ```
 
 ## Parameters
 - `arrayCollection` a pointer to an initialized `Nucleus_Collections_[Array-Collection-Type]` object
-- `capacity` a pointer to a `size_t` variable
+- `capacity` a pointer to a `Nucleus_Size` variable
 
 ## Descriptions
 This function gets the capacity, in Bytes, of a `Nucleus_Collections_[Array-Collection-Type]` object.

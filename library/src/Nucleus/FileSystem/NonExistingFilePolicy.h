@@ -1,7 +1,7 @@
 /// @file Nucleus/FileSystem/NonExistingFilePolicy.h
 /// @brief An enumeration of policies for opening a file in case of that the file does not exist.
 /// @author Michael Heilmann
-/// @copyright Copyright (c) Michael Heilmann 2017
+/// @copyright Copyright (c) 2017, 2018 Michael Heilmann
 
 #pragma once
 

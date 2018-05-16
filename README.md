@@ -226,6 +226,10 @@ Its documentation can be found [here](documentation/Nucleus_Collections_ByteArra
 
 #### Reference
 
+- [Nucleus_Collections_ByteArray_at,
+   Nucleus_Collections_PointerArray_at,
+   Nucleus_Collections_PointerDeque_at](documentation/Nucleus_Collections_[Array-Collection-Type]_at.md).
+
 - [Nucleus_Collections_ByteArray_getSize,
    Nucleus_Collections_PointerArray_getSize,
    Nucleus_Collections_PointerDeque_getSize](documentation/Nucleus_Collections_[Collection-Type]_getSize.md).

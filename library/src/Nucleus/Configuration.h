@@ -1,7 +1,7 @@
 /// @file Nucleus/Configuration.h
 /// @brief The configuration file of Nucleus.
 /// @author Michael Heilmann
-/// @copyright Copyright (c) Michael Heilmann 2017
+/// @copyright Copyright (c) 2017, 2018 Michael Heilmann
 
 #pragma once
 

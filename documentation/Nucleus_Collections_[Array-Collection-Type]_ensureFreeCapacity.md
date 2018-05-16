@@ -7,7 +7,7 @@ Nucleus_Status
 Nucleus_Collections_[Array-Collection-Type]_ensureFreeCapacity
     (
         Nucleus_Collections_[Array-Collection-Type] *arrayCollection,
-        size_t requiredFreeCapacity
+        Nucleus_Size requiredFreeCapacity
     )
 ```
 
