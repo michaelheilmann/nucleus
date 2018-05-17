@@ -1,4 +1,4 @@
-# Copyright (c) Michael Heilmann 2017, 2018
+# Copyright (c) 2017, 2018 Michael Heilmann
 
 # Minimum required CMake version.
 cmake_minimum_required(VERSION 3.8)
@@ -6,14 +6,6 @@ cmake_minimum_required(VERSION 3.8)
 # Project.
 project (Nucleus.Test.DirectoryEnumerator C)
 message("building Nucleus.Test.DirectoryEnumerator")
-
-if (NUCLEUS_PATH)
-  include(${NUCLEUS_PATH}/buildsystem/detect_compiler_and_platform.cmake)
-  include(${NUCLEUS_PATH}/buildsystem/set_default_project_properties.cmake)
-else()
-  include(${CMAKE_SOURCE_DIR}/buildsystem/detect_compiler_and_platform.cmake)
-  include(${CMAKE_SOURCE_DIR}/buildsystem/set_default_project_properties.cmake)
-endif()
 
 # Find and configure source files.
 file(GLOB_RECURSE  SOURCE_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.c")
