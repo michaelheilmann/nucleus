@@ -1,4 +1,5 @@
 include(${CMAKE_CURRENT_LIST_FILE}/../detect_compiler_and_platform.cmake)
+include(${CMAKE_CURRENT_LIST_FILE}/../languages.cmake)
 
 # == Doxygen ==================================================================================== #
 
@@ -12,51 +13,64 @@ ENDIF()
 # == Default project settings =================================================================== #
 
 # Macro adjusting (mostly compiler-specific) properties of a project.
-macro(set_project_default_properties targetName)
+macro(set_project_default_properties module target)
+	# If with optimizations is not specified ...
+	#if (NOT DEFINED ${target}-With-Optimizations)
+	  # ... use module-wide specification.
+	#  set(${target}-With-Optimizations ${module}-With-Optimizations)
+	#endif()
+	# If with debug information is not specified ...
+	#if (NOT DEFINED ${target}-With-Debug-Information)
+	  # ... use module-wide specification.
+	#  set(${target}-With-Debug-Information ${module}-With-Debug-Information)
+	#endif()
+
   if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
     #message("case of MSVC C or C++: add_definitions(-DUNICODE -D_UNICODE)")
-    target_compile_options(${targetName} PRIVATE -DUNICODE -D_UNICODE)
+    target_compile_options(${target} PRIVATE -DUNICODE -D_UNICODE)
   endif()
 
   # Set the C++ standard to C++ 17.
-  if (NOT (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC}))
-    #message("case of neither MSVC C nor MSVC C++: set(CMAKE_CXX_STANDARD 17)")
-    set(CMAKE_CXX_STANDARD 17)
+  if (${${target}_LANGUAGE} EQUAL ${NUCLEUS_LANGUAGE_ID_CPP})
+    if (NOT (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC}))
+      #message("case of neither MSVC C nor MSVC C++: set(CMAKE_CXX_STANDARD 17)")
+      set(CMAKE_CXX_STANDARD 17)
+    endif()
   endif()
 
   # GNU GCC (C/C++) settings
   if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
     #message("case of GCC (C/C++)")
     # Set standard to C++ 17, enable -Wall and -Wextra
-    target_compile_options(${targetName} PRIVATE -Wall -Wextra -D_GNU_SOURCE)
-    target_compile_options(${targetName} PRIVATE -Werror=implicit-function-declaration)
-    target_compile_options(${targetName} PRIVATE -Werror=incompatible-pointer-types)
-    target_compile_options(${targetName} PRIVATE -Werror=unused-function)
-    target_compile_options(${targetName} PRIVATE -Werror=format-extra-args)
-    target_compile_options(${targetName} PRIVATE -Werror=int-conversion)
-    target_compile_options(${targetName} PRIVATE -Werror=return-type)
-    target_compile_options(${targetName} PRIVATE -Werror=discarded-qualifiers)
+    target_compile_options(${target} PRIVATE -Wall -Wextra -D_GNU_SOURCE)
+    target_compile_options(${target} PRIVATE -Werror=implicit-function-declaration)
+    target_compile_options(${target} PRIVATE -Werror=incompatible-pointer-types)
+    target_compile_options(${target} PRIVATE -Werror=unused-function)
+    target_compile_options(${target} PRIVATE -Werror=format-extra-args)
+    target_compile_options(${target} PRIVATE -Werror=int-conversion)
+    target_compile_options(${target} PRIVATE -Werror=return-type)
+    target_compile_options(${target} PRIVATE -Werror=discarded-qualifiers)
   endif()
 
   # GNU GCC (C/C++) settings
   if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
     #message("case of GCC (C/C++)")
-    if (With-Optimizations AND With-Debug-Information)
+    if (${target}-With-Optimizations AND ${target}-With-Debug-Information)
         message("  - enabling optimizations and debug information")
         # Enable optimizations that do not interfere with debug experience.
-        target_compile_options(${targetName} PRIVATE -Og)
+        target_compile_options(${target} PRIVATE -Og)
         # Enable extra debug information.
-        target_compile_options(${targetName} PRIVATE -ggdb3)
-    elseif (NOT With-Optimizations AND With-Debug-Information)
+        target_compile_options(${target} PRIVATE -ggdb3)
+    elseif (NOT ${target}-With-Optimizations AND ${target}-With-Debug-Information)
         message("  - enabling debug information")
         # Disable optimizations.
-        target_compile_options(${targetName} PRIVATE -O0)
+        target_compile_options(${target} PRIVATE -O0)
         # Enable extra debug information.
-        target_compile_options(${targetName} PRIVATE -ggdb3)
-    elseif(With-Optimizations AND NOT With-Debug-Information)
+        target_compile_options(${target} PRIVATE -ggdb3)
+    elseif(${target}-With-Optimizations AND NOT ${target}-With-Debug-Information)
         message("  - enabling optimizations")
         # Enable optimizations.
-        target_compile_options(${targetName} PRIVATE -O3)
+        target_compile_options(${target} PRIVATE -O3)
     else()
         message(WARNING "  - unspecified optimization and debug information settings")
     endif()
@@ -65,16 +79,21 @@ macro(set_project_default_properties targetName)
   # GNU GCC (C++) specific settings
   if (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
     #message("case of GCC (C++)")
-    # Set standard to C++ 17, enable -Wall and -Wextra
-    target_compile_options(${targetName} PRIVATE -std=gnu++17)
-    # Disable some warnings
-    # TODO: IdLib can have these warnings enabled.
-    target_compile_options(${targetName} PRIVATE -Wno-reorder -Wno-sign-compare -Wno-missing-braces -Wno-unused-parameter)
+    # If language is C++, then the GNU C++ 17 shall be used.
+	if (${${target}_LANGUAGE} EQUAL ${NUCLEUS_LANGUAGE_ID_CPP})
+      target_compile_options(${target} PRIVATE -std=gnu++17)
+	endif()
+    # If language is C++, then disable some warnings.
+    # TODO: Idlib can have these warnings enabled.
+    if (${${target}_LANGUAGE} EQUAL ${NUCLEUS_LANGUAGE_ID_CPP})
+      target_compile_options(${target} PRIVATE -Wno-reorder)
+	endif()
+    target_compile_options(${target} PRIVATE -Wno-sign-compare -Wno-missing-braces -Wno-unused-parameter)
   endif()
 
   # (2) MSVC C++ settings
   # TODO: Raise an error if the MSVC version is too low.
-  if (${NUCLEUS_CXX_COMPILER_ID} EQUAL ${NUCLEUS_CXX_COMPILER_ID_MSVC})
+  if (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
     #message("case of MSVC (C++)")
     if (MSVC_VERSION GREATER_EQUAL "1900")
       include(CheckCXXCompilerFlag)
