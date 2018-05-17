@@ -7,14 +7,6 @@ cmake_minimum_required(VERSION 3.8)
 project (Nucleus.Test.booleanToString C)
 message("building Nucleus.Test.booleanToString")
 
-if (NUCLEUS_PATH)
-  include(${NUCLEUS_PATH}/buildsystem/detect_compiler_and_platform.cmake)
-  include(${NUCLEUS_PATH}/buildsystem/set_default_project_properties.cmake)
-else()
-  include(${CMAKE_SOURCE_DIR}/buildsystem/detect_compiler_and_platform.cmake)
-  include(${CMAKE_SOURCE_DIR}/buildsystem/set_default_project_properties.cmake)
-endif()
-
 # Find and configure source files.
 file(GLOB_RECURSE  SOURCE_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "src/*.c")
 # Find and configure header files.

@@ -49,6 +49,14 @@ option(Nucleus-With-Tests
         Initial value is ON."
        ON)
 
+if (NUCLEUS_PATH)
+  include(${NUCLEUS_PATH}/buildsystem/detect_compiler_and_platform.cmake)
+  include(${NUCLEUS_PATH}/buildsystem/set_default_project_properties.cmake)
+else()
+  include(${CMAKE_SOURCE_DIR}/buildsystem/detect_compiler_and_platform.cmake)
+  include(${CMAKE_SOURCE_DIR}/buildsystem/set_default_project_properties.cmake)
+endif()
+
 # The output directories.
 # TODO: Change to "products".
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
