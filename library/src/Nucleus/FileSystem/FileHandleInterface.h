@@ -12,6 +12,7 @@
 #include "Nucleus/FileSystem/FileAccessMode.h"
 
 // For size_t.
+// TODO: Remove this. Use Nucleus_Size.
 #include <stdlib.h>
 
 /// @ingroup filesystem

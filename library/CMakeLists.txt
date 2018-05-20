@@ -9,6 +9,8 @@ if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_C_C
 endif()
 list(APPEND libraries ${CMAKE_THREAD_LIBS_INIT})
 define_static_library(Nucleus Nucleus.Library "${libraries}" ${NUCLEUS_LANGUAGE_ID_C})
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/buildsystem/Configuration.h.i
+               ${CMAKE_CURRENT_SOURCE_DIR}/src/Nucleus/Configuration.h.i)
 
 # Link library with the platform's threading libraries.
 if (CMAKE_USE_PTHREADS_INIT)

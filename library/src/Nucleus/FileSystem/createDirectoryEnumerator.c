@@ -2,12 +2,14 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
-	#include "Nucleus/FileSystem/DirectoryEnumeratorLinux.h"
-#elif defined(Nucleus_Platform_Windows)
-	#include "Nucleus/FileSystem/DirectoryEnumeratorWindows.h"
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  ||\
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) ||\
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)
+    #include "Nucleus/FileSystem/DirectoryEnumeratorLinux.h"
+#elif (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
+    #include "Nucleus/FileSystem/DirectoryEnumeratorWindows.h"
 #else
-	#error("platform not supported")
+    #error("operating system not supported")
 #endif
 
 Nucleus_NonNull() Nucleus_Status
@@ -16,11 +18,13 @@ Nucleus_createDirectoryEnumerator
         Nucleus_DirectoryEnumerator **directoryEnumerator
     )
 {
-#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)
     return Nucleus_DirectoryEnumeratorLinux_create((Nucleus_DirectoryEnumeratorLinux **)directoryEnumerator);
-#elif defined(Nucleus_Platform_Windows)
+#elif (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
     return Nucleus_DirectoryEnumeratorWindows_create((Nucleus_DirectoryEnumeratorWindows **)directoryEnumerator);
 #else
-	#error("platform not supported")
+    #error("operating system not supported")
 #endif
 }

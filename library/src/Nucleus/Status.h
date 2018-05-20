@@ -66,18 +66,27 @@ typedef enum Nucleus_Status_Category
 
 /// @brief Status code indicating a failure because something exists.
 #define Nucleus_Status_Exists (Nucleus_Status_Category_General | 7)
-
 /// @brief Status code indicating that something not exists.
 #define Nucleus_Status_NotExists (Nucleus_Status_Category_General | 8)
 
+/// @brief Status code indicating that something is found.
+#define Nucleus_Status_Found (Nucleus_Status_Category_General | 9)
+/// @brief Status code indicating that something is not found.
+#define Nucleus_Status_NotFound (Nucleus_Status_Category_General | 10)
+
+/// @brief Status code indicating that something is open.
+#define Nucleus_Status_Open (Nucleus_Status_Category_General | 11)
+/// @brief Status code indicating that something is not open.
+#define Nucleus_Status_NotOpen (Nucleus_Status_Category_General | 12)
+
 /// @brief Status code indicating a failure because a length was too long.
-#define Nucleus_Status_TooLong (Nucleus_Status_Category_General | 9)
+#define Nucleus_Status_TooLong (Nucleus_Status_Category_General | 13)
 
 /// @brief Status code indicating a failure because an operation of the environment failed.
-#define Nucleus_Status_EnvironmentFailed (Nucleus_Status_Category_General | 10)
+#define Nucleus_Status_EnvironmentFailed (Nucleus_Status_Category_General | 14)
 
 /// @brief Status code indicating a failure because a functionality is not currently/yet available.
-#define Nucleus_Status_NotAvailable (Nucleus_Status_Category_General | 11)
+#define Nucleus_Status_NotAvailable (Nucleus_Status_Category_General | 15)
 
 
 

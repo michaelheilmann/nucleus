@@ -6,10 +6,10 @@
 
 #include "Nucleus/Configuration.h"
 #include "Nucleus/SafeArithmeticOperations.h"
-#if defined(Nucleus_Platform_Osx)
-#include <stdlib.h>
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)
+    #include <stdlib.h>
 #else
-#include <malloc.h>
+    #include <malloc.h>
 #endif
 #include <memory.h>
 

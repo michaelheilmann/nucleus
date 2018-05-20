@@ -20,8 +20,9 @@ Nucleus_cloneMemory
 ## Description
 This function clones a memory block.
 
-A memory block with the same size and the same contents as the specified memory block `(q,n)` is allocated, its address
-is assigned to `*p` and `Nucleus_Status_Success` is returned. This function fails if and only if
+A memory block with the same size and the same contents as the specified memory block `(q,n)` is
+allocated, its address is assigned to `*p` and `Nucleus_Status_Success` is returned. This function
+fails if and only if
 - `p` or `q` are null pointers, or
 - the allocation of the memory block failed.
 

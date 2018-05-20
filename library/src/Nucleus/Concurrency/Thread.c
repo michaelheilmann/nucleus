@@ -3,12 +3,16 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)  || \
+    defined(Nucleus_Threads_Pthreads)
     #include "Nucleus/Concurrency/Pthreads/Thread.h"
-#elif defined(Nucleus_Platform_Windows) && !defined(Nucleus_Threads_Pthreads)
+#elif (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS) && \
+      !defined(Nucleus_Threads_Pthreads)
     #include "Nucleus/Concurrency/Winapi/Thread.h"
 #else
-    #error("platform not supported")
+    #error("operating system not supported")
 #endif
 
 Nucleus_NonNull() Nucleus_Status

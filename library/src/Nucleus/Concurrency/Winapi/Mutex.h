@@ -3,7 +3,8 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Windows) && !defined(Nucleus_Threads_Pthreads)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS) && \
+    !defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Concurrency/Mutex.h"
 #include "Nucleus/IncludesWindows.h"

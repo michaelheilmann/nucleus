@@ -3,7 +3,10 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)  || \
+    defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Concurrency/Condition.h"
 #include "Nucleus/Concurrency/Mutex.h"

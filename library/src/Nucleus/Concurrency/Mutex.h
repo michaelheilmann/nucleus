@@ -3,6 +3,7 @@
 
 #include "Nucleus/Annotations.h"
 #include "Nucleus/Status.h"
+#include "Nucleus/Types/Boolean.h"
 
 // Forward declaration.
 typedef struct Nucleus_Concurrency_MutexImpl Nucleus_Concurrency_MutexImpl;

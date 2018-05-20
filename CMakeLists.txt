@@ -11,16 +11,26 @@ if (NUCLEUS_PATH)
 endif()
 
 # Define module.
-define_module("Nucleus")
+define_module(Nucleus)
+detect_operating_system(Nucleus)
+
+message("Nucleus-With-Pthreads := ${Nucleus-With-Pthreads}")
 
 # Link library with the platform's threading libraries.
-if (MSVC OR MINGW)
-  # If under Windows and pthreads is required, then the path to pthreads directory must be specified.
-  if (${PROJECT_NAME}-With-Pthreads)
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/pthreads-win32)
-    set(CMAKE_THREAD_LIBS_INIT pthreadsVC2)
-    set(CMAKE_USE_PTHREADS_INIT TRUE)
-  endif()
+# We allow for overriding the platform's threading libraries with pthreads for some platforms:
+# If
+# - the operating system is without built-in pthreads support and
+# - the use of pthreads is requested,
+# use the packaged implementation.
+if (NOT DEFINED Nucleus-With-Pthreads)
+  set(Nucleus-With-Pthreads OFF)
+endif()
+if (((${Nucleus_OPERATING_SYSTEM_ID} EQUAL ${NUCLEUS_OPERATING_SYSTEM_ID_WINDOWS}) OR
+     (${Nucleus_OPERATING_SYSTEM_ID} EQUAL ${NUCLEUS_OPERATING_SYSTEM_ID_MINGW})) AND
+     ${Nucleus-With-Pthreads})
+  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/dependencies/pthreads-win32)
+  set(CMAKE_THREAD_LIBS_INIT pthreadsVC2)
+  set(CMAKE_USE_PTHREADS_INIT TRUE)
 else()
   find_package (Threads)
 endif()

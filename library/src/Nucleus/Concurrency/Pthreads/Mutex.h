@@ -3,8 +3,12 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)  || \
+    defined(Nucleus_Threads_Pthreads)
 
+#include "Nucleus/Types/Boolean.h"
 #include "Nucleus/Concurrency/Mutex.h"
 #include <pthread.h>
 
@@ -19,7 +23,8 @@ struct Nucleus_Concurrency_MutexImpl
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Concurrency_MutexImpl_create
     (
-        Nucleus_Concurrency_MutexImpl **mutex
+        Nucleus_Concurrency_MutexImpl **mutex,
+        Nucleus_Boolean recursive
     );
 
 Nucleus_NonNull() void

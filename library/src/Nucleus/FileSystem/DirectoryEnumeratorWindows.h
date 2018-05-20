@@ -3,9 +3,9 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Windows)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
 
-#include "Nucleus/FileSystem/directoryEnumerator.h"
+#include "Nucleus/FileSystem/DirectoryEnumerator.h"
 
 typedef struct Nucleus_DirectoryEnumeratorWindows Nucleus_DirectoryEnumeratorWindows;
 
