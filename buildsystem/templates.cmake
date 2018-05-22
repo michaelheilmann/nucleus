@@ -74,7 +74,6 @@ macro(define_module module_name)
   # Enable testing.
   include(CTest)
   enable_testing()
-  set(CTEST_OUTPUT_ON_FAILURE ON)
 
   # If with optimizations is not specified ...
   if (NOT DEFINED ${module_name}-With-Optimizations)
@@ -194,4 +193,5 @@ macro(define_dynamic_library parent_project_name project_name libraries language
                           LIBRARY_OUTPUT_DIRECTORY
 						  ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
   endif()
+  set_target_properties(${project_name} PROPERTIES PREFIX "")
 endmacro()
