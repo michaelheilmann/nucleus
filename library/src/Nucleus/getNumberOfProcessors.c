@@ -1,12 +1,14 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/getNumberOfProcessors.h"
 
-#if defined(Nucleus_Platform_Windows)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
     #include "Nucleus/getNumberOfProcessorsWindows.h"
-#elif defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
+#elif (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+      (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+      (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)
     #include "Nucleus/getNumberOfProcessorsLinux.h"
 #else
-    #error("platform not supported")
+    #error("operating system not supported")
 #endif
 
 Nucleus_NonNull() Nucleus_Status
@@ -15,11 +17,13 @@ Nucleus_getNumberOfProcessors
         Nucleus_Size *numberOfProcessors
     )
 {
-#if defined(Nucleus_Platform_Windows)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
     return Nucleus_getNumberOfProcessorsWindows(numberOfProcessors);
-#elif defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
+#elif (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+      (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+      (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)
     return Nucleus_getNumberOfProcessorsLinux(numberOfProcessors);
 #else
-    #error("platform not supported")
+    #error("operating system not supported")
 #endif
 }

@@ -5,7 +5,9 @@
 
 #include "Nucleus/FileSystem/setFileContentsLinux.h"
 
-#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)
 
 #include "Nucleus/FileSystem/FileHandleLinux.h"
 
@@ -82,7 +84,7 @@ Nucleus_setFileContents
     }
     // Copy the contents into the mappping and write them to disk.
     memcpy(mapping, bytes, numberOfBytes);
-    if (-1 == msync(mapping, numberOfBytes, MS_SYNC) == -1)
+    if (-1 == msync(mapping, numberOfBytes, MS_SYNC))
     {
         // Close the mapping.
         munmap(mapping, numberOfBytes);

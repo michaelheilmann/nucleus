@@ -35,36 +35,89 @@
 # If multi target detection succeeds, define NUCLEUS_IS_MULTI_TARGET_GENERATOR to YES.
 # Define NUCLEUS_IS_MULTI_TARGET_GENERATOR to NO otherwise.
 # Define macro idlib_report_is_multi_target_generator to report the value of NUCLEUS_IS_MULTI_TARGET_GENERATOR.
+include(${CMAKE_CURRENT_LIST_FILE}/../languages.cmake)
 
 # Compiler detection (C).
 
+set(NUCLEUS_C_COMPILER_STRING_UNKNOWN "<unknown>")
 set(NUCLEUS_C_COMPILER_ID_UNKNOWN 0)
+
+set(NUCLEUS_C_COMPILER_STRING_CLANG "CLANG")
 set(NUCLEUS_C_COMPILER_ID_CLANG 1)
+
+set(NUCLEUS_C_COMPILER_STRING_MSVC "MSVC")
 set(NUCLEUS_C_COMPILER_ID_MSVC 2)
+
+set(NUCLEUS_C_COMPILER_STRING_GCC "GCC")
 set(NUCLEUS_C_COMPILER_ID_GCC 3)
-set(NUCLEUS_C_COMPILER_ID_MINGW 4)
+
+set(NUCLEUS_CPP_COMPILER_STRING_UNKNOWN "<unknown>")
+set(NUCLEUS_CPP_COMPILER_ID_UNKNOWN 0)
+
+set(NUCLEUS_CPP_COMPILER_STRING_CLANG "CLANG")
+set(NUCLEUS_CPP_COMPILER_ID_CLANG 1)
+
+set(NUCLEUS_CPP_COMPILER_STRING_MSVC "MSVC")
+set(NUCLEUS_CPP_COMPILER_ID_MSVC 2)
+
+set(NUCLEUS_CPP_COMPILER_STRING_GCC "GCC")
+set(NUCLEUS_CPP_COMPILER_ID_GCC 3)
 
 set(NUCLEUS_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_UNKNOWN})
 
+macro(detect_compiler parent_target_name target_name language)
+  if (${language} EQUAL ${NUCLEUS_LANGUAGE_ID_C})
+    set(${target_name}_C_COMPILER_STRING ${NUCLEUS_C_COMPILER_STRING_UNKNOWN})
+    set(${target_name}_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_UNKNOWN})
+    if (CMAKE_C_COMPILER_ID)
+      if (CMAKE_C_COMPILER MATCHES ".*clang")
+        set(${target_name}_C_COMPILER_STRING ${NUCLEUS_C_COMPILER_STRING_CLANG})
+        set(${target_name}_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_CLANG})
+      endif()
+      if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
+        set(${target_name}_C_COMPILER_STRING ${NUCLEUS_C_COMPILER_STRING_GCC})
+        set(${target_name}_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_GCC})
+      endif()
+      if (CMAKE_C_COMPILER_ID STREQUAL "MSVC")
+        set(${target_name}_C_COMPILER_STRING ${NUCLEUS_C_COMPILER_STRING_MSVC})
+        set(${target_name}_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_MSVC})
+      endif()
+    endif()
+  elseif (${language} EQUAL ${NUCLEUS_LANGUAGE_ID_CPP})
+    set(${target_name}_CPP_COMPILER_STRING ${NUCLEUS_C_COMPILER_STRING_UNKNOWN})
+    set(${target_name}_CPP_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_UNKNOWN})
+    if (CMAKE_CPP_COMPILER_ID)
+      if (CMAKE_CPP_COMPILER MATCHES ".*clang")
+        set(${target_name}_CPP_COMPILER_STRING ${NUCLEUS_C_COMPILER_STRING_CLANG})
+        set(${target_name}_CPP_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_CLANG})
+      endif()
+      if (CMAKE_CPP_COMPILER_ID STREQUAL "GNU")
+        set(${target_name}_CPP_COMPILER_STRING ${NUCLEUS_C_COMPILER_STRING_GCC})
+        set(${target_name}_CPP_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_GCC})
+      endif()
+      if (CMAKE_CPP_COMPILER_ID STREQUAL "MSVC")
+        set(${target_name}_CPP_COMPILER_STRING ${NUCLEUS_C_COMPILER_STRING_MSVC})
+        set(${target_name}_CPP_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_MSVC})
+      endif()
+    endif()
+  endif()
+  message("${${target_name}_C_COMPILER_STRING} C compiler detected for target ${target_name}")
+endmacro()
+
 if (CMAKE_C_COMPILER_ID)
     if (CMAKE_C_COMPILER MATCHES ".*clang")
-      #message("compiler `CLANG` detected")
+      message("compiler CLANG detected")
       set(NUCLEUS_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_CLANG})
     endif()
 
     if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
-      #message("compiler `GCC` detected")
+      message("compiler GCC detected")
       set(NUCLEUS_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_GCC})
     endif()
 
     if (CMAKE_C_COMPILER_ID STREQUAL "MSVC")
-      #message("compiler `MSVC` detected")
+      message("compiler MSVC detected")
       set(NUCLEUS_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_MSVC})
-    endif()
-
-    if (MINGW)
-      #message("compiler `MINGW` detected")
-      set(NUCLEUS_C_COMPILER_ID ${NUCLEUS_C_COMPILER_ID_MINGW})
     endif()
 endif()
 
@@ -75,8 +128,6 @@ macro(nucleus_report_c_compiler_id)
     message("  - Nucleus C Compiler Id: GCC")
   elseif (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC})
     message("  - Nucleus C Compiler Id: MSVC")
-  elseif (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MINGW})
-    message("  - Nucleus C Compiler Id: MINGW")
   elseif (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_UNKNOWN})
     message("  - Nucleus C Compiler Id: Unknown")
   else()
@@ -86,33 +137,23 @@ endmacro()
 
 # Compiler detection (C++).
 
-set(NUCLEUS_CPP_COMPILER_ID_UNKNOWN 0)
-set(NUCLEUS_CPP_COMPILER_ID_CLANG 1)
-set(NUCLEUS_CPP_COMPILER_ID_MSVC 2)
-set(NUCLEUS_CPP_COMPILER_ID_GCC 3)
-set(NUCLEUS_CPP_COMPILER_ID_MINGW 4)
 
 set(NUCLEUS_CPP_COMPILER_ID ${NUCLEUS_CPP_COMPILER_ID_UNKNOWN})
 
 if (CMAKE_CXX_COMPILER_ID)
     if (CMAKE_CXX_COMPILER MATCHES ".*clang")
-      #message("compiler `CLANG` detected")
+      message("compiler CLANG detected")
       set(NUCLEUS_CPP_COMPILER_ID ${NUCLEUS_CPP_COMPILER_ID_CLANG})
     endif()
 
     if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-      #message("compiler `GCC` detected")
+      message("compiler GCC detected")
       set(NUCLEUS_CPP_COMPILER_ID ${NUCLEUS_CPP_COMPILER_ID_GCC})
     endif()
 
     if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-      #message("compiler `MSVC` detected")
+      message("compiler MSVC detected")
       set(NUCLEUS_CPP_COMPILER_ID ${NUCLEUS_CPP_COMPILER_ID_MSVC})
-    endif()
-
-    if (MINGW)
-      #message("compiler `MINGW` detected")
-      set(NUCLEUS_CPP_COMPILER_ID ${NUCLEUS_CPP_COMPILER_ID_MINGW})
     endif()
 endif()
 
@@ -123,8 +164,6 @@ macro(nucleus_report_cpp_compiler_id)
     message("  - Nucleus C++ Compiler Id: GCC")
   elseif (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
     message("  - Nucleus C++ Compiler Id: MSVC")
-  elseif (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MINGW})
-    message("  - Nucleus C++ Compiler Id: MINGW")
   elseif (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_UNKNOWN})
     message("  - Nucleus C++ Compiler Id: Unknown")
   else()

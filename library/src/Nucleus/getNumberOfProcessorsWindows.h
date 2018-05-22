@@ -3,7 +3,7 @@
 
 #include "Nucleus/Configuration.h"
 
-#if defined(Nucleus_Platform_Windows)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
 
 #include "Nucleus/Annotations.h"
 #include "Nucleus/Status.h"

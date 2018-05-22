@@ -5,41 +5,21 @@
 
 #pragma once
 
-#if defined(__clang__)
-    /// @brief If defined, the compiler compiling this program is "Clang".
-    #define Nucleus_Compiler_Clang
-#endif
+#include "Nucleus/Configuration.h.i"
 
-#if defined(__GNUC__)
-    /// @brief If defined, then compiler compiling this program is "GCC".
-    #define Nucleus_Compiler_GCC
-#endif
-
-#if defined(_MSC_VER)
-    /// @brief If defined, then the compiler compiling this program is "Visual C++".
-    #define Nucleus_Compiler_MSVC
-#endif
-
-#if defined(WIN32) || defined(_WIN32) || defined (__WIN32) || defined(__WIN32__) || defined(__WIN64__) || defined(WIN64) || defined(_WIN64) || defined(__WIN64)
-    /// @brief If defined, then the target platform is "Windows".
-    #define Nucleus_Platform_Windows
-#endif
-
-#if defined(__CYGWIN__) || defined(__linux__) || defined(__linux) || defined(linux) || defined(__gnu_linux)
-    /// @brief If defined, then the target platform is "Linux".
-    #define Nucleus_Platform_Linux
-#endif
-
-#if defined(__APPLE__) && defined (__MACH__)
+// The only reliable way to detect which Apple operating system is running, is to include the
+// "TargetConditionals.h" header and analyze the symbolic constants defined in it. Either we
+// find a way to handle this from within CMake or some CMake plugin needs to be written to
+// distinguish between the various Appl operating system.
+#if Nucleus_OperatingSystem == Nucleus_Operating_System_MACOS
 	#include <TargetConditionals.h>
 	#if TARGET_IPHONE_SIMULATOR == 1
-		#define Nucleus_Platform_IosSimulator
-		#error iOS in Xcode simulator not yet supported
+		#define Nucleus_OperatingSystem Nucleus_OperatingSystem_IOSSIMULATOR
+		#error("IOSSIMULATOR not yet supported")
 	#elif TARGET_OS_IPHONE == 1
-		#define Nucleus_Platform_Ios
-		#error iOS on iPhone, iPad, etc. not yet supported
+		#define Nucleus_OperatingSystem Nucleus_OperatingSystem_IOS
+		#error("IOS not yet supported")
 	#elif TARGET_OS_MAC == 1
-		#define Nucleus_Platform_Osx
+		#define Nucleus_OperatingSystem Nucleus_OperatingSystem_MACOS /* Nothing changed. */
 	#endif
 #endif
-

@@ -4,7 +4,7 @@
 
 #include "Nucleus/FileSystem/getFileContentsWindows.h"
 
-#if defined(Nucleus_Platform_Windows)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
 
 #include "Nucleus/IncludesWindows.h"
 #include "Nucleus/FileSystem/FileHandleWindows.h"

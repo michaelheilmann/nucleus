@@ -1,7 +1,10 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Concurrency/Pthreads/Thread.h"
 
-#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)  || \
+    defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Memory.h"
 
@@ -18,9 +21,9 @@ callback
     )
 {
     Nucleus_Concurrency_ThreadImpl *impl = (Nucleus_Concurrency_ThreadImpl *)p;
-    Nucleus_Status status;
 
     Nucleus_Concurrency_Mutex_lock(&impl->mutex);
+
     // Block execution as long as the state is neither started not terminated.
     while (impl->state != Nucleus_Concurrency_ThreadState_Started &&
            impl->state != Nucleus_Concurrency_ThreadState_Terminated)
@@ -101,7 +104,7 @@ Nucleus_Concurrency_ThreadImpl_destroy
 {
     Nucleus_Concurrency_ThreadImpl *threadImpl = thread;
     Nucleus_Concurrency_Mutex_lock(&thread->mutex);
-    if (!threadImpl->state < Nucleus_Concurrency_ThreadState_Terminated)
+    if (threadImpl->state < Nucleus_Concurrency_ThreadState_Terminated)
     {
         threadImpl->state = Nucleus_Concurrency_ThreadState_Terminated;
         Nucleus_Concurrency_Condition_signalAll(&threadImpl->condition);

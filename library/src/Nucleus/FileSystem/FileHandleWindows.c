@@ -2,15 +2,15 @@
 /// @brief A file handle (Windows).
 /// @author Michael Heilmann
 /// @copyright Copyright (c) 2017, 2018 Michael Heilmann
-
-#if defined (_WIN32)
-
 #include "Nucleus/FileSystem/FileHandleWindows.h"
+
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
 
 #include <stdio.h>
 #include <malloc.h>
 
 // For SIZE_MAX.
+// TODO: Remove this. Use Nucleus_Size_Greatest.
 #include <stdint.h>
 
 Nucleus_NonNull(1, 2) Nucleus_Status

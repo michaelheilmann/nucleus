@@ -2,10 +2,11 @@
 /// @brief A file handle (Windows).
 /// @author Michael Heilmann
 /// @copyright Copyright (c) 2017, 2018 Michael Heilmann
-
-#if defined (_WIN32)
-
 #pragma once
+
+#include "Nucleus/Configuration.h"
+
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
 
 #include "Nucleus/IncludesWindows.h"
 #include "Nucleus/FileSystem/FileHandleInterface.h"

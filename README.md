@@ -51,8 +51,8 @@ For example, to enable dynamic linking with the runtime enter
 cmake -DWith-Static-Runtime=OFF CMakeLists.txt
 ```
 
-#### `With-Pthreads`
-For Visual Studio builds, the option `With-Pthreads=(ON|OFF)` is supported.
+#### `Nucleus-With-Pthreads`
+For Visual Studio builds, the option `Nucleus-With-Pthreads=(ON|OFF)` is supported.
 `ON` determines that the threading module uses _pthreads-win32_ backend instead of the _Winapi_ backend.
 The default value is `OFF`.
 

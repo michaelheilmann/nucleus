@@ -4,13 +4,15 @@
 /// @copyright Copyright (c) 2017, 2018 Michael Heilmann
 #include "Nucleus/FileSystem/FileHandleLinux.h"
 
-#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)
 
 // For fprintf.
 #include <stdio.h>
 
 // For malloc.
-#if defined(Nucleus_Platform_Osx)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)
 	#include <stdlib.h>
 #else
 	#include <malloc.h>

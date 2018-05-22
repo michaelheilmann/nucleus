@@ -1,7 +1,10 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Concurrency/Pthreads/Condition.h"
 
-#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Threads_Pthreads)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)  || \
+    defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Concurrency/Pthreads/Mutex.h"
 #include "Nucleus/Memory.h"

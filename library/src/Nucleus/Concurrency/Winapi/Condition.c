@@ -1,7 +1,8 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Concurrency/Winapi/Condition.h"
 
-#if defined(Nucleus_Platform_Windows) && !defined(Nucleus_Threads_Pthreads)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS) && \
+    !defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Concurrency/Winapi/Mutex.h"
 #include "Nucleus/Memory.h"

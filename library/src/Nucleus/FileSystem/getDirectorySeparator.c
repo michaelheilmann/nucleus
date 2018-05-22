@@ -1,7 +1,7 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/FileSystem/getDirectorySeparator.h"
 
-#if defined(Nucleus_Platform_Windows)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
     static const char directorySeparatorBytes[] = { '\\', '\0' };
 #else
     static const char directorySeparatorBytes[] = { '/', '\0' };

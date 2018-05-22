@@ -1,11 +1,13 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/FileSystem/DirectoryEnumeratorLinux.h"
 
-#if defined(Nucleus_Platform_Linux) || defined(Nucleus_Platform_Osx)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_LINUX)  || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_CYGWIN) || \
+    (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)
 
 #include "Nucleus/Memory.h"
 #include <errno.h>
-#if defined(Nucleus_Platform_Osx)
+#if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_MACOS)
 	#include <sys/types.h>
 	#include <sys/dir.h>
 #else

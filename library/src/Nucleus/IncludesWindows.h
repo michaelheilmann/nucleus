@@ -28,8 +28,9 @@
 #define NOGDI
 #define NOKERNEL
 #define NOUSER
-#define NONLS
-#define NOMB
+// Neither NONLS mor NONMB must be defined if WideCharToMultiByte is required.
+//#define NONLS
+//#define NOMB
 #define NOMEMMGR
 #define NOMETAFILE
 #define NOMINMAX
