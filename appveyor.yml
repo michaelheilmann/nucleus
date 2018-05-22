@@ -38,7 +38,7 @@ build:
     project: nucleus.sln            # path to Visual Studio solution or project
 
 test_script:
-    - ctest -VV -C "%CONFIGURATION%" 
+    - ctest --output-on-failure --extra-verbose --build-config "%CONFIGURATION%" 
 
 # if one matrix entry fails, all entries fails
 # https://www.appveyor.com/docs/build-configuration#failing-strategy
