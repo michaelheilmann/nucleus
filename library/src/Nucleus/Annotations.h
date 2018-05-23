@@ -12,7 +12,7 @@
 #define Nucleus_NoError()
 
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_NonNull.md
-#if defined(Nucleus_Compiler_GCC)
+#if (Nucleus_C_Compiler == Nucleus_C_Compiler_GCC)
     #define Nucleus_NonNull(...) __attribute__ ((nonnull(__VA_ARGS__))) /**< @hideinitializer */
 #else
     #define Nucleus_NonNull(...)
@@ -27,7 +27,7 @@
 #endif
 
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_NoReturn.md
-#if defined(Nucleus_Compiler_GCC) && !defined(DOXYGEN)
+#if (Nucleus_C_Compiler == Nucleus_C_Compiler_GCC) && !defined(DOXYGEN)
     #define Nucleus_NoReturn() __attribute__ ((noreturn)) /**< @hideinitializer */
 #elif defined(Nucleus_Compiler_MSVC) && !defined(DOXYGEN)
     #define Nucleus_NoReturn() __declspec(noreturn) /**< @hideinitializer */
@@ -80,21 +80,21 @@
 #define Nucleus_OutputInputParameter(parameter) parameter /**< @hideinitializer */
 
 // https://github.com/primordialmachine/blob/master/documentation/Nucleus_Likely.md
-#if defined(Nucleus_Compiler_GCC)
+#if (Nucleus_C_Compiler == Nucleus_C_Compler_GCC)
     #define Nucleus_Likely(expression) (__builtin_expect((expression) ? 1 : 0, 1)) /**< @hideinitializer */
 #else
     #define Nucleus_Likely(expression) (expression) /**< @hideinitializer */
 #endif
 
-// ttps://github.com/primordialmachine/blob/master/documentation/Nucleus_Unlikely.md
-#if defined(Nucleus_Compiler_GCC)
+// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Unlikely.md
+#if (Nucleus_C_Compiler == Nucleus_C_Compiler_GCC)
     #define Nucleus_Unlikely(expression) (__builtin_expect((expression) ? 1 : 0, 0)) /**< @hideinitializer */
 #else
     #define Nucleus_Unlikely(expression) (expression) /**< @hideinitializer */
 #endif
 
 /// @todo Add Nucleus_Restrict.md
-#if defined(Nucleus_Compiler_GCC)
+#if (Nucleus_C_Compiler == Nucleus_C_Compiler_GCC)
     #define Nucleus_Restrict() restrict
 #else
     #define Nucleus_Restrict()
