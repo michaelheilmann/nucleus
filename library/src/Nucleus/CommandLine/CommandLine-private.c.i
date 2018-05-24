@@ -3,7 +3,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#if defined(Nucleus_Compiler_MSVC)
+#if (Nucleus_C_Compiler == Nucleus_C_Compiler_MSVC)
 static char *
 strndup
     (
@@ -16,8 +16,8 @@ strndup
 
     if (n < len)
         len = n;
-	if (Nucleus_allocateMemory((void **)&result, len + 1))
-	{ return NULL; }
+    if (Nucleus_allocateMemory((void **)&result, len + 1))
+    { return NULL; }
 
     result[len] = '\0';
     return (char *)memcpy(result, s, len);
@@ -220,10 +220,10 @@ createOption
     )
 {
     if (!option || !optionName) return Nucleus_Status_InvalidArgument;
-	Nucleus_Status status;
+    Nucleus_Status status;
     Nucleus_CommandLine_Option *self = NULL;
-	status = Nucleus_allocateMemory((void **)&self, sizeof(Nucleus_CommandLine_Option));
-	if (status) return status;
+    status = Nucleus_allocateMemory((void **)&self, sizeof(Nucleus_CommandLine_Option));
+    if (status) return status;
     status = ParameterList_initialize(&self->parameterList);
     if (status) { Nucleus_deallocateMemory(self); return status; }
     self->name = _strdup(optionName);
@@ -262,9 +262,9 @@ createParameter
     )
 {
     if (!parameter || !parameterValue) return Nucleus_Status_InvalidArgument;
-	Nucleus_Status status;
+    Nucleus_Status status;
     Nucleus_CommandLine_Parameter *self = NULL;
-	status = Nucleus_allocateMemory((void **)&self, sizeof(Nucleus_CommandLine_Parameter));
+    status = Nucleus_allocateMemory((void **)&self, sizeof(Nucleus_CommandLine_Parameter));
     if (status) return status;
     self->value = _strdup(parameterValue);
     if (!self->value)
@@ -341,9 +341,9 @@ createCommand
     )
 {
     if (!command) return Nucleus_Status_InvalidArgument;
-	Nucleus_Status status;
+    Nucleus_Status status;
     Nucleus_CommandLine_Command *o = NULL;
-	status = Nucleus_allocateMemory((void **)&o, sizeof(Nucleus_CommandLine_Command));
+    status = Nucleus_allocateMemory((void **)&o, sizeof(Nucleus_CommandLine_Command));
     if (status) return status;
     status = initializeCommand(o);
     if (status)

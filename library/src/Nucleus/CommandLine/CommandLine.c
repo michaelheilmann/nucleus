@@ -93,10 +93,10 @@ Nucleus_CommandLine_Command_addParameter
     )
 {
     if (!command || !parameterValue) return Nucleus_Status_InvalidArgument;
-	Nucleus_Status status;
+    Nucleus_Status status;
     Nucleus_CommandLine_Parameter *parameter = NULL;
-	status = Nucleus_allocateMemory((void **)&parameter, sizeof(Nucleus_CommandLine_Parameter));
-	if (status) return status;
+    status = Nucleus_allocateMemory((void **)&parameter, sizeof(Nucleus_CommandLine_Parameter));
+    if (status) return status;
     parameter->value = _strdup(parameterValue);
     if (!parameter->value)
     {
