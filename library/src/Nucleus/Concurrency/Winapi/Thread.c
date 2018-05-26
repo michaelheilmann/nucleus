@@ -1,60 +1,10 @@
 // Copyright (c) 2018 Michael Heilmann
-#include "Nucleus/Concurrency/Winapi/Thread.h"
+#include "Nucleus/Concurrency/Winapi/Thread-private.c.in"
 
 #if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS) && \
     !defined(Nucleus_Threads_Pthreads)
 
 #include "Nucleus/Memory.h"
-
-static DWORD WINAPI
-callback
-    (
-        void *thread
-    );
-
-static void lock(Nucleus_Concurrency_ThreadImpl *impl);
-
-static void unlock(Nucleus_Concurrency_ThreadImpl *impl);
-
-static int GetState(Nucleus_Concurrency_ThreadImpl *impl);
-
-static void SetState(Nucleus_Concurrency_ThreadImpl *impl, int state);
-
-
-static void lock(Nucleus_Concurrency_ThreadImpl *impl)
-{ Nucleus_Concurrency_Mutex_lock(&impl->mutex); }
-
-static void unlock(Nucleus_Concurrency_ThreadImpl *impl)
-{ Nucleus_Concurrency_Mutex_unlock(&impl->mutex); }
-
-
-static DWORD WINAPI
-callback
-    (
-        void *p
-    )
-{
-    Nucleus_Concurrency_ThreadImpl *impl = (Nucleus_Concurrency_ThreadImpl *)p;
-    SetState(impl, Nucleus_Concurrency_ThreadState_Started);
-    impl->status = impl->callbackFunction(impl->callbackContext);
-    SetState(impl, Nucleus_Concurrency_ThreadState_Terminated);
-    return impl;
-}
-
-static int GetState(Nucleus_Concurrency_ThreadImpl *impl)
-{
-    lock(impl);
-    int state = impl->state;
-    unlock(impl);
-    return state;
-}
-
-static void SetState(Nucleus_Concurrency_ThreadImpl *impl, int state)
-{
-    lock(impl);
-    impl->state = state;
-    unlock(impl);
-}
 
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Concurrency_ThreadImpl_create

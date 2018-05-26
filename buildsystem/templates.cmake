@@ -9,9 +9,9 @@
 #
 # The macros will define several variables:
 # 1) PROJECT_NAME contains the project name.
-# 2) ${PROJECT_NAME}_SOURCE_FILES contains the source files.
-# 3) ${PROJECT_NAME}_HEADER_FILES contains the header files.
-# 4) ${PROJECT_NAME}_LIBRARIES contains the libraries.
+# 2) ${PROJECT_NAME}_LANGUAGE contains the language.
+# 3) ${PROJECT_NAME}_SOURCE_FILES contains the source files.
+# 4) ${PROJECT_NAME}_HEADER_FILES contains the header files.
 # 5) ${PROJECT_NAME}_INLAY_FILES contains the inlay files.
 #
 # You can add additional source, header, and inlay files by prepopulating the lists
@@ -23,7 +23,6 @@ include(${CMAKE_CURRENT_LIST_FILE}/../detect_compiler_and_platform.cmake)
 macro(define_target_base parent_project_name project_name language)
   # (1) ${project_name}_OPERATING_SYSTEM is defined.
   detect_operating_system(${project_name})
-  detect_compiler(${parent_project_name} ${project_name} ${language})
   if (${language} EQUAL ${NUCLEUS_LANGUAGE_ID_C})
     project (${project_name} C)
 	message("building C ${project_name}")
@@ -34,6 +33,7 @@ macro(define_target_base parent_project_name project_name language)
     message(FATAL "unknown language")
   endif()
   set(${project_name}_LANGUAGE ${language})
+  detect_compiler(${parent_project_name} ${project_name} ${language})
 
   if (NOT DEFINED ${project_name}-With-Debug-Information)
     set(${project_name}-With-Debug-Information ${${parent_project_name}-With-Debug-Information})
@@ -93,17 +93,12 @@ macro(define_module module_name)
 endmacro()
 
 # Defines the CMake project of a "test".
-macro(define_test parent_project_name project_name libraries language)
+macro(define_test parent_project_name project_name language)
   define_target_base(${parent_project_name} ${project_name} ${language})
 
   add_executable(${project_name} ${${PROJECT_NAME}_SOURCE_FILES}
                                  ${${PROJECT_NAME}_HEADER_FILES}
                                  ${${PROJECT_NAME}_INLAY_FILES})
-
-  set(${project_name}_LIBRARIES ${libraries})
-  foreach(library ${${PROJECT_NAME}_LIBRARIES})
-    target_link_libraries(${project_name} ${library})
-  endforeach()
 
   target_include_directories(${project_name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
@@ -114,25 +109,17 @@ macro(define_test parent_project_name project_name libraries language)
 endmacro()
 
 # Defines the CMake project of a "static library".
-macro(define_static_library parent_project_name project_name libraries language)
+macro(define_static_library parent_project_name project_name language)
   define_target_base(${parent_project_name} ${project_name} ${language})
 
   add_library(${project_name} STATIC ${${project_name}_SOURCE_FILES}
                                      ${${project_name}_HEADER_FILES}
 									 ${${project_name}_INLAY_FILES})
 
-
-  set(${project_name}_LIBRARIES ${libraries})
-  foreach(library ${${project_name}_LIBRARIES})
-    target_link_libraries(${project_name} ${library})
-  endforeach()
-
   target_include_directories(${project_name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
   target_include_directories(${project_name} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
-
   set_project_default_properties(${parent_project_name} ${project_name})
-
 
   IF(DOXYGEN_FOUND)
     ADD_CUSTOM_TARGET(${project_name}.Documentation ${DOXYGEN_EXECUTABLE} COMMENT "Building documentation")
@@ -142,18 +129,12 @@ macro(define_static_library parent_project_name project_name libraries language)
 endmacro()
 
 # Defines the CMake project of an "executable".
-macro(define_executable parent_project_name project_name libraries language)
+macro(define_executable parent_project_name project_name language)
   define_target_base(${parent_project_name} ${project_name} ${language})
 
   add_executable(${project_name} ${${project_name}_SOURCE_FILES}
                                  ${${project_name}_HEADER_FILES}
 								 ${${project_name}_INLAY_FILES})
-
-
-  set(${project_name}_LIBRARIES ${libraries})
-  foreach(library ${${project_name}_LIBRARIES})
-    target_link_libraries(${project_name} ${library})
-  endforeach()
 
   target_include_directories(${project_name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
@@ -163,18 +144,12 @@ endmacro()
 # Defines the CMake project of a "dynamic library".
 # A "dynamic library" can exclusively used with dlopen/GetModuleHandle/....
 # Unlike other libraries, they are put in the "bin" folder and not in the "lib" folder.
-macro(define_dynamic_library parent_project_name project_name libraries language)
+macro(define_dynamic_library parent_project_name project_name language)
   define_target_base(${parent_project_name} ${project_name} ${language})
 
   add_library(${project_name} MODULE ${${project_name}_SOURCE_FILES}
                                      ${${project_name}_HEADER_FILES}
 			                         ${${project_name}_INLAY_FILES})
-
-
-  set(${project_name}_LIBRARIES ${libraries})
-  foreach(library ${${project_name}_LIBRARIES})
-    target_link_libraries(${project_name} ${library})
-  endforeach()
 
   target_include_directories(${project_name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
