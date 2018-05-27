@@ -2,13 +2,8 @@
 # Assert minimum CMake version.
 cmake_minimum_required(VERSION 3.8)
 # Define the static library.
-set(libraries)
-# GCC: Link library with the platform's math libraries.
-if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_CLANG})
-  list(APPEND libraries m)
-endif()
-list(APPEND libraries ${CMAKE_THREAD_LIBS_INIT})
-define_static_library(Nucleus Nucleus.Library "${libraries}" ${NUCLEUS_LANGUAGE_ID_C})
+define_static_library(Nucleus Nucleus.Library ${NUCLEUS_LANGUAGE_ID_C})
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/buildsystem/Configuration.h.i
                ${CMAKE_CURRENT_SOURCE_DIR}/src/Nucleus/Configuration.h.i)
 
@@ -22,3 +17,11 @@ endif()
 if (CMAKE_USE_WIN32_THREADS_INIT)
     target_compile_options(Nucleus.Library PRIVATE -DNucleus_Threads_Winapi=1)
 endif()
+
+# GCC or Clang: Link library with the platform's math libraries (-lm).
+if (${Nucleus.Library_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${Nucleus.Library_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_CLANG})
+  target_link_libraries(Nucleus.Library PRIVATE m)
+endif()
+
+# Link to the selected threading libraries.
+target_link_libraries(Nucleus.Library PRIVATE ${CMAKE_THREAD_LIBS_INIT})

@@ -71,7 +71,7 @@ Nucleus_Concurrency_MutexImpl_lock
     )
 {
     int error = pthread_mutex_lock(&(mutex->mutex));
-    if (error) fprintf(stderr, "%s:%d: warning: pthread_mutex_lock failed\n");
+    if (error) fprintf(stderr, "%s:%d: warning: pthread_mutex_lock failed\n", __FILE__, __LINE__);
     return Nucleus_Status_Success;
 }
 
@@ -82,7 +82,7 @@ Nucleus_Concurrency_MutexImpl_unlock
     )
 {
     int error = pthread_mutex_unlock(&(mutex->mutex));
-    if (error) fprintf(stderr, "%s:%d: warning: pthread_mutex_unllock failed\n");
+    if (error) fprintf(stderr, "%s:%d: warning: pthread_mutex_unlock failed\n", __FILE__, __LINE__);
     return Nucleus_Status_Success;
 }
 

@@ -1,95 +1,21 @@
 # Nucleus
 
-Nucleus is a C cross-platform utility library for Windows, Linux, and OS X.
+Nucleus is a C cross-platform utility library for Windows 10, Cygwin, Linux, and macOS.
 Nucleus is made available publicly under the
-[MIT license](https://github.com/primordialmachine/nucleus/blob/master/LICENSE.md)
+[MIT license](LICENSE.md)
 on
 [Github](https://github.com/primordialmachine/nucleus).
 
-## Building under Visual Studio 2017/Windows
-Visual Studio is currently *still* supported.
+## Build instructions
 
-Open the console.
+Download or checkout the source code from [https://github.com/primordialmachine/nucleus](https://github.com/primordialmachine/nucleus).
+See below for build instructions for some of the individual environments.
 
-Change the directory to the directory of this file.
-
-Enter
-```
-cmake -G "Visual Studio 15 2017" CMakeLists.txt
-```
-to generate the project files for Win32.
-
-Enter
-```
-cmake -G "Visual Studio 15 2017 Win64" CMakeLists.txt
-```
-to generate the project files for x64.
-
-Open the files using Visual Studio 2017 and build all configurations.
-
-To execute the unit tests for a particular configuration, enter
-```
-ctest -C <configuration>
-```
-
-```configuration``` is one of `Debug`, `Release`, `MinSizeRel`, `RelWithDebInfo`.
-
-You can find the build products under `products/<configuration>/<platform>/(bin|lib)`
-where `<configuration>` is one of `debug`, `release`, `minsizerel`, `relwithdebinfo`
-and
-where `<platform>` is one of `x86` or `x64`.
-
-### Compilation options (Visual Studio)
-
-#### `With-Static-Runtime`
-For Visual Studio builds, the option `With-Static-Runtime=(ON|OFF)` is supported.
-`ON` enables static linking with the C runtime, `OFF` enables dynamic linking with the runtime.
-The default value is `ON`.
-
-For example, to enable dynamic linking with the runtime enter
-```
-cmake -DWith-Static-Runtime=OFF CMakeLists.txt
-```
-
-#### `Nucleus-With-Pthreads`
-For Visual Studio builds, the option `Nucleus-With-Pthreads=(ON|OFF)` is supported.
-`ON` determines that the threading module uses _pthreads-win32_ backend instead of the _Winapi_ backend.
-The default value is `OFF`.
-
-## Building under GCC/Linux and GCC/Cygwin
-Open the console.
-
-Change the directory to the directory of this file.
-
-Enter
-```
-cmake CMakeLists.txt
-```
-to generate the project files.
-
-Enter
-```
-make all
-```
-to build.
-
-To execute the unit tests, enter
-```
-ctest
-```
-
-You can find the build products under `products/<platform>/(bin|lib)`
-where `<platform>` is one of `x86` or `x64`.
-
-### Compilation options (GCC/Linux and GCC/Cygwin)
-For Linux and Cygwin builds, certain CMake options are supported.
-The currently supported options are `With-Debug-Information=(ON|OFF)`
-and `With-Optimizations=(ON|OFF)`.
-
-For example, to enable both optimizations and debug information enter
-```
-cmake -DWith-Optimizations=ON -DWith-Debug-Information=ON CMakeLists.txt
-```
+* [Windows 10/Visual Studio Community 2017](documentation/building-under-windows-10-visual-studio-community-2017.md)
+* [Windows 10/Cygwin/GCC](documentation/building-under-windows-10-cygwin-gcc.md)
+* [Linux/GCC](documentation/building-under-linux-gcc.md)
+* [Linux/Clang](documentation/building-under-linux-clang.md)
+* [macOS/Clang](documentation/building-under-macos-clang.md)
 
 ## Out of source builds
 The above build instruction for
@@ -207,6 +133,15 @@ and Byte array values as well hash value combinators.
 - [Nucleus_hashMemory](documentation/Nucleus_hashMemory.md)
 - [Nucleus_hashArrayMemory](documentation/Nucleus_hashArrayMemory.md)
 - [Nucleus_combineHashValues](documentation/Nucleus_combineHashValues.md)
+
+### Nucleus Atomic Module
+The Nucleus Atomic Module provides atomic operations.
+
+### Reference
+
+- [Nucleus_Atomic_incrementInteger](documentation/Nucleus_Atomic_incrementInteger.md)
+- [Nucleus_Atomic_decrementInteger](documentation/Nucleus_Atomic_decrementInteger.md)
+- [Nucleus_Atomic_decrementAndTestInteger](documentation/Nucleus_Atomic_decrementAndTestInteger.md)
 
 ### Nucleus File System Module
 The Nucleus File System Module provides functionality related to the filesystem.

@@ -14,8 +14,6 @@ endif()
 define_module(Nucleus)
 detect_operating_system(Nucleus)
 
-message("Nucleus-With-Pthreads := ${Nucleus-With-Pthreads}")
-
 # Link library with the platform's threading libraries.
 # We allow for overriding the platform's threading libraries with pthreads for some platforms:
 # If

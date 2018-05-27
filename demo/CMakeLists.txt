@@ -2,5 +2,5 @@
 # Assert minimum CMake version.
 cmake_minimum_required(VERSION 3.8)
 # Define the demo.
-set(libraries Nucleus.Library)
-define_executable(Nucleus Nucleus.Demo ${libraries} ${NUCLEUS_LANGUAGE_ID_C})
+define_executable(Nucleus Nucleus.Demo ${NUCLEUS_LANGUAGE_ID_C})
+target_link_libraries(Nucleus.Demo PRIVATE Nucleus.Library)
