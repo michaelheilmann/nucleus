@@ -120,6 +120,13 @@ macro(define_static_library parent_project_name project_name language)
   target_include_directories(${project_name} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
   set_project_default_properties(${parent_project_name} ${project_name})
+  
+  # Add the -fPIC flag to static libraries under Linux.
+  # This allows for linking dynamically loadable libraries to these static libraries.
+  # This hurts performance.
+  if (${${project_name}_OPERATING_SYSTEM_ID} EQUAL ${NUCLEUS_OPERATING_SYSTEM_ID_LINUX})
+    set_target_properties(${project_name} PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+  endif()
 
   IF(DOXYGEN_FOUND)
     ADD_CUSTOM_TARGET(${project_name}.Documentation ${DOXYGEN_EXECUTABLE} COMMENT "Building documentation")
