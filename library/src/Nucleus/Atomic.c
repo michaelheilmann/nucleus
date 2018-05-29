@@ -1,3 +1,4 @@
+// Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Atomic.h"
 
 #if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
