@@ -7,17 +7,13 @@
     static const char directorySeparatorBytes[] = { '/', '\0' };
 #endif
 
-static const Nucleus_Size directorySeparatorNumberOfBytes = sizeof(directorySeparatorBytes);
-
 Nucleus_NonNull() Nucleus_Status
 Nucleus_getDirectorySeparator
     (
-        const char **bytes,
-        Nucleus_Size *numberOfBytes
+        const char **directorySeparator
     )
 {
-    if (Nucleus_Unlikely(!bytes || !numberOfBytes)) return Nucleus_Status_InvalidArgument;
-    *bytes = directorySeparatorBytes;
-    *numberOfBytes = directorySeparatorNumberOfBytes;
+    if (Nucleus_Unlikely(!directorySeparator)) return Nucleus_Status_InvalidArgument;
+    *directorySeparator = directorySeparatorBytes;
     return Nucleus_Status_Success;
 }

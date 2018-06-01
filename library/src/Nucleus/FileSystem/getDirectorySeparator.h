@@ -9,6 +9,5 @@
 Nucleus_NonNull() Nucleus_Status
 Nucleus_getDirectorySeparator
     (
-        const char **bytes,
-        Nucleus_Size *numberOfBytes
+        const char **directorySeparator
     );
