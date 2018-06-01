@@ -11,6 +11,11 @@ on
 Download or checkout the source code from [https://github.com/primordialmachine/nucleus](https://github.com/primordialmachine/nucleus).
 See below for build instructions for some of the individual environments.
 
+**The following build instructions and build options pertain to all products from the Nucleus series.
+  All products accept the build options described here.
+  The description of additional build options specific to a product are described in its documentation.
+  The name of this product in the build system is `Nucleus`.*
+
 * [Windows 10/Visual Studio Community 2017](documentation/building-under-windows-10-visual-studio-community-2017.md)
 * [Windows 10/Cygwin/GCC](documentation/building-under-windows-10-cygwin-gcc.md)
 * [Linux/GCC](documentation/building-under-linux-gcc.md)
