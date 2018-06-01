@@ -42,6 +42,14 @@ macro(define_target_base parent_project_name project_name language)
   if (NOT DEFINED ${project_name}-With-Optimizations)
     set(${project_name}-With-Optimizations ${${parent_project_name}-With-Optimizations})
   endif()
+
+  if (NOT DEFINED ${project_name}-With-Static-Runtime)
+    set(${project_name}-With-Static-Runtime ${${parent_project_name}-With-Static-Runtime})
+  endif()
+
+  if (NOT DEFINED ${project_name}-With-Pthreads)
+    set(${project_name}-With-Pthreads ${${parent_project_name}-With-Pthreads})
+  endif()
   
   set(temporary)
 
@@ -75,17 +83,29 @@ macro(define_module module_name)
   include(CTest)
   enable_testing()
 
-  # If with optimizations is not specified ...
+  # If with option is not specified ...
+  if (NOT DEFINED ${module_name}-With-Static-Runtime)
+    # ... use defaults.
+	message("${module_name}-With-Static-Runtime not defined - defaulting to OFF")
+    set(${module_name}-With-Static-Runtime OFF)
+  endif()
+  # If option is not specified ...
   if (NOT DEFINED ${module_name}-With-Optimizations)
     # ... use defaults.
 	message("${module_name}-With-Optimizations not defined - defaulting to ON")
 	set(${module_name}-With-Optimizations ON)
   endif()
-  # If with debug information is not specified ...
+  # If option is not specified ...
   if (NOT DEFINED ${module_name}-With-Debug-Information)
     # ... use defaults.
 	message("${module_name}-With-Debug-Information not defined - defaulting to OFF")
     set(${module_name}-With-Debug-Information OFF)
+  endif()
+  # If option is not specified ...
+  if (NOT DEFINED ${module_name}-With-Pthreads)
+    # ... use defaults.
+	message("${module_name}-With-Pthreads not defined - defaulting to OFF")
+    set(${module_name}-With-Pthreads OFF)
   endif()
   
   # Set default module properties.

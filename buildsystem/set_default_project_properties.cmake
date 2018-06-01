@@ -14,17 +14,6 @@ ENDIF()
 
 # Macro adjusting (mostly compiler-specific) properties of a project.
 macro(set_project_default_properties module target)
-	# If with optimizations is not specified ...
-	#if (NOT DEFINED ${target}-With-Optimizations)
-	  # ... use module-wide specification.
-	#  set(${target}-With-Optimizations ${module}-With-Optimizations)
-	#endif()
-	# If with debug information is not specified ...
-	#if (NOT DEFINED ${target}-With-Debug-Information)
-	  # ... use module-wide specification.
-	#  set(${target}-With-Debug-Information ${module}-With-Debug-Information)
-	#endif()
-
   if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
     #message("case of MSVC C or C++: add_definitions(-DUNICODE -D_UNICODE)")
     target_compile_options(${target} PRIVATE -DUNICODE -D_UNICODE)
@@ -108,29 +97,43 @@ macro(set_project_default_properties module target)
   if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
     #message("case of MSVC (C/C++)")
     set(variables
-      CMAKE_C_FLAGS_DEBUG
-      CMAKE_C_FLAGS_MINSIZEREL
-      CMAKE_C_FLAGS_RELEASE
-      CMAKE_C_FLAGS_RELWITHDEBINFO
-      CMAKE_CXX_FLAGS_DEBUG
-      CMAKE_CXX_FLAGS_MINSIZEREL
-      CMAKE_CXX_FLAGS_RELEASE
-      CMAKE_CXX_FLAGS_RELWITHDEBINFO)
-    if (With-Static-Runtime)
+        CMAKE_C_FLAGS_DEBUG
+        CMAKE_C_FLAGS_MINSIZEREL
+        CMAKE_C_FLAGS_RELEASE
+        CMAKE_C_FLAGS_RELWITHDEBINFO
+        CMAKE_CXX_FLAGS_DEBUG
+        CMAKE_CXX_FLAGS_MINSIZEREL
+        CMAKE_CXX_FLAGS_RELEASE
+        CMAKE_CXX_FLAGS_RELWITHDEBINFO)
+    foreach(variable ${variables})
+      string(REGEX REPLACE "/MTd" "" ${variable} "${${variable}}")
+      string(REGEX REPLACE "/MT" "" ${variable} "${${variable}}")
+      string(REGEX REPLACE "/MDd" "" ${variable} "${${variable}}")
+      string(REGEX REPLACE "/MD" "" ${variable} "${${variable}}")
+    endforeach()
+    if (${${target}-With-Static-Runtime})
       # Enable static runtime.
-      foreach(variable ${variables})
-        if(${variable} MATCHES "/MD")
-          string(REGEX REPLACE "/MD" "/MT" ${variable} "${${variable}}")
-        endif()
-      endforeach()
+      message("  - enabling static runtime")
+      target_compile_options(${target} PRIVATE $<$<AND:$<C_COMPILER_ID:MSVC>,$<CONFIG:DEBUG>>:/MTd>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<C_COMPILER_ID:MSVC>,$<CONFIG:RELWITHDEBINFO>>:/MTd>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<C_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:/MT>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<C_COMPILER_ID:MSVC>,$<CONFIG:MINSIZEREL>>:/MT>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:DEBUG>>:/MTd>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELWITHDEBINFO>>:/MTd>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:/MT>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MINSIZEREL>>:/MT>)
       set(MSVC_RUNTIME "static")
     else()
       # Enable dynamic runtime.
-      foreach(variable ${variables})
-        if(${variable} MATCHES "/MT")
-          string(REGEX REPLACE "/MT" "/MD" ${variable} "${${variable}}")
-        endif()
-      endforeach()
+      message("  - enabling dynamic runtime")
+      target_compile_options(${target} PRIVATE $<$<AND:$<C_COMPILER_ID:MSVC>,$<CONFIG:DEBUG>>:/MDd>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<C_COMPILER_ID:MSVC>,$<CONFIG:RELWITHDEBINFO>>:/MDd>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<C_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:/MD>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<C_COMPILER_ID:MSVC>,$<CONFIG:MINSIZEREL>>:/MD>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:DEBUG>>:/MDd>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELWITHDEBINFO>>:/MDd>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:RELEASE>>:/MD>)
+      target_compile_options(${target} PRIVATE $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:MINSIZEREL>>:/MD>)
       set(MSVC_RUNTIME "dynamic")
     endif()
   endif()
