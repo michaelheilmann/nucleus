@@ -11,7 +11,7 @@
 /// @brief A function annotation indicating that the function never raises an error.
 #define Nucleus_NoError()
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_NonNull.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_NonNull.md
 #if ((Nucleus_C_Compiler == Nucleus_C_Compiler_GCC) || (Nucleus_C_Compiler == Nucleus_C_Compiler_Clang)) \
     && !defined(DOXYGEN)
     #define Nucleus_NonNull(...) __attribute__ ((nonnull(__VA_ARGS__))) /**< @hideinitializer */
@@ -27,7 +27,7 @@
     #define Nucleus_ReturnNonNull()
 #endif
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_NoReturn.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_NoReturn.md
 #if ((Nucleus_C_Compiler == Nucleus_C_Compiler_GCC) || (Nucleus_C_Compiler == Nucleus_C_Compiler_Clang)) \
     && !defined(DOXYGEN)
     #define Nucleus_NoReturn() __attribute__ ((noreturn)) /**< @hideinitializer */
@@ -81,7 +81,13 @@
 /// @param parameter the parameter declaration
 #define Nucleus_OutputInputParameter(parameter) parameter /**< @hideinitializer */
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Likely.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_AlwaysSucceed.md
+#define Nucleus_AlwaysSucceed()
+
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_AlwaysFail.md
+#define Nucleus_AlwaysFail()
+
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Likely.md
 #if ((Nucleus_C_Compiler == Nucleus_C_Compler_GCC) || (Nucleus_C_Compiler == Nucleus_C_Compiler_Clang)) \
     && !defined(DOXYGEN)
     #define Nucleus_Likely(expression) (__builtin_expect((expression) ? 1 : 0, 1)) /**< @hideinitializer */
@@ -89,7 +95,7 @@
     #define Nucleus_Likely(expression) (expression) /**< @hideinitializer */
 #endif
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_Unlikely.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Unlikely.md
 #if ((Nucleus_C_Compiler == Nucleus_C_Compiler_GCC) || (Nucleus_C_Compiler == Nucleus_C_Compiler_Clang)) \
     && !defined(DOXYGEN)
     #define Nucleus_Unlikely(expression) (__builtin_expect((expression) ? 1 : 0, 0)) /**< @hideinitializer */

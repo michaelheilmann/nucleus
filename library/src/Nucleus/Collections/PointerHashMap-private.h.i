@@ -3,20 +3,21 @@
 
 #include "Nucleus/Collections/PointerHashMap.h"
 #include "Nucleus/Memory.h"
+#include "Nucleus/Types/HashValue.h"
 
 struct Nucleus_Collections_PointerHashMap_Node
 {
     Nucleus_Collections_PointerHashMap_Node *next;
     void *key;
-    size_t hashValue;
+    Nucleus_HashValue hashValue;
     void *value;
 }; // struct Nucleus_Collections_PointerHashMap_Node
 
 typedef struct Position
 {
     Nucleus_Collections_PointerHashMap_Node *node; // Pointer to the colliding node or a null pointer.
-    unsigned int hashValue; // The hash value.
-    unsigned int hashIndex; // The hash index.
+    Nucleus_HashValue hashValue; // The hash value.
+    Nucleus_Size hashIndex; // The hash index.
 } Position;
 
 Nucleus_NonNull() static Nucleus_Status 

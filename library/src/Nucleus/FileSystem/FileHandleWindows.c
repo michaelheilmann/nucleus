@@ -77,7 +77,7 @@ Nucleus_FileHandle_create
           0 },
         };
     const PolicyMapping *policyMapping = NULL;
-    for (size_t i = 0, n = sizeof(policyMappings) / sizeof(PolicyMapping); i < n; ++i)
+    for (Nucleus_Size i = 0, n = sizeof(policyMappings) / sizeof(PolicyMapping); i < n; ++i)
     {
         policyMapping = policyMappings + i;
         if (policyMapping->existingFilePolicy == existingFilePolicy &&

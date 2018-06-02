@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "Nucleus/Annotations.h"
 #include "Nucleus/Status.h"
+#include "Nucleus/Types/Size.h"
 
 /// @ingroup filesystem
 /// @brief The type of a callback invoked by Nucleus_getFileContentsExtended function.
@@ -22,14 +23,14 @@ Nucleus_getFileContentsExtendedCallbackFunction
     (
         Nucleus_InputOutputParameter(void *object),
         Nucleus_InputParameter(const char *bytes),
-        Nucleus_InputParameter(size_t numberOfBytes)
+        Nucleus_InputParameter(Nucleus_Size numberOfBytes)
     );
 
 /// @ingroup filesystem
 /// @brief Get the contents of a file.
 /// @param pathname a pointer to the pathname of the file
 /// @param bytes a pointer to a @a (char *) variable
-/// @param numberOfBytes a pointer to a @a (size_t) variable
+/// @param numberOfBytes a pointer to a @a (Nucleus_Size) variable
 /// @defaultReturn
 /// @success @a *numberOfBytes was assigned the size of the file which may be @a 0.
 ///          @a *bytes was assigned a pointer to an array of at least @a *numberOfBytes Bytes such that the first @a *numberOfBytes
@@ -41,7 +42,7 @@ Nucleus_getFileContents
     (
         Nucleus_InputParameter(const char *pathname),
         Nucleus_OutputParameter(char **bytes),
-        Nucleus_OutputParameter(size_t *numberOfBytes)
+        Nucleus_OutputParameter(Nucleus_Size *numberOfBytes)
     );
 
 /// @ingroup filesystem

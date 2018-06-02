@@ -1,8 +1,13 @@
 // Copyright (c) 2018 Michael Heilmann
 #pragma once
 
+
+
+
 #include "Nucleus/Status.h"
-#include <stdbool.h> // For bool, true, false.
+#include "Nucleus/Types/Boolean.h"
+#include "Nucleus/Types/HashValue.h"
+#include "Nucleus/Types/Size.h"
 
 
 
@@ -14,7 +19,8 @@
 /// @brief A "lock" callback.
 /// @param object a pointer to an opaque object, the object to be locked
 /// @remark The caller must ensure that @a is passed a proper value.
-typedef void Nucleus_LockFunction(void *object);
+/// @return A "lock" callback always returns #Nucleus_Status_Success.
+typedef Nucleus_Status Nucleus_LockFunction(void *object);
 
 
 
@@ -26,7 +32,8 @@ typedef void Nucleus_LockFunction(void *object);
 /// @brief An "unlock" callback.
 /// @param object a pointer to an opaque object, the object to be unlocked
 /// @remark The caller must ensure that @a is passed a proper value.
-typedef void Nucleus_UnlockFunction(void *object);
+/// @return An "unlock" function always returns #Nucleus_Status_Success.
+typedef Nucleus_Status Nucleus_UnlockFunction(void *object);
 
 
 
@@ -37,7 +44,9 @@ typedef void Nucleus_UnlockFunction(void *object);
 
 /// @brief A "hash" callback.
 /// @param a pointer to the object to be hashed.
-typedef Nucleus_Status Nucleus_HashFunction(void *, unsigned int *);
+/// @param [out] hashValue a pointer to a @a (Nucleus_HashValue) variable 
+/// @return #Nucleus_Status_Success on success a non-zero status code on failure
+typedef Nucleus_Status Nucleus_HashFunction(void *object, Nucleus_HashValue *hashValue);
 
 
 
@@ -46,7 +55,8 @@ typedef Nucleus_Status Nucleus_HashFunction(void *, unsigned int *);
 /// @param pointer the pointer
 #define NUCLEUS_EQUALTOFUNCTION(pointer) ((Nucleus_EqualToFunction *)(pointer))
 
-/// @brief An "equalTo" callback.
+/// @brief An "equal to" callback.
 /// @param left, right pointers to the objects to be compared
-/// @param [out] equal a pointer to a @a bool variable
-typedef Nucleus_Status Nucleus_EqualToFunction(void *, void *, bool *);
+/// @param [out] equalTo a pointer to a @a (Nucleus_Boolean) variable
+/// @return #Nucleus_Status_Success on success a non-zero status code on failure
+typedef Nucleus_Status Nucleus_EqualToFunction(void *left, void *right, Nucleus_Boolean *equalTo);

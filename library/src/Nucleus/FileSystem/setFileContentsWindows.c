@@ -18,7 +18,7 @@ Nucleus_setFileContents
     (
         Nucleus_InputParameter(const char *pathname),
         Nucleus_InputParameter(const char *bytes),
-        Nucleus_InputParameter(size_t numberOfBytes)
+        Nucleus_InputParameter(Nucleus_Size numberOfBytes)
     )
 {
     if (!pathname || !bytes)

@@ -9,7 +9,7 @@ Nucleus_NonNull(1) Nucleus_Status
 Nucleus_Collections_PointerArray_initialize
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t initialCapacity,
+        Nucleus_Size initialCapacity,
         Nucleus_LockFunction *lockFunction,
         Nucleus_UnlockFunction *unlockFunction
     )
@@ -141,7 +141,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerArray_at
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t index,
+        Nucleus_Size index,
         void **pointer
     )
 {
@@ -155,7 +155,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerArray_getSize
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t *size
+        Nucleus_Size *size
     )
 {
     if (Nucleus_Unlikely(!dynamicPointerArray || !size)) return Nucleus_Status_InvalidArgument;
@@ -179,7 +179,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerArray_getFreeCapacity
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray,
-        size_t *freeCapacity
+        Nucleus_Size *freeCapacity
     )
 {
     if (Nucleus_Unlikely(!dynamicPointerArray || !freeCapacity)) return Nucleus_Status_InvalidArgument;

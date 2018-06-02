@@ -7,7 +7,7 @@
 #include "Nucleus/Types/HashValue.h"
 #include "Nucleus/Types/Size.h"
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_allocateMemory.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_allocateMemory.md
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_allocateMemory
     (
@@ -15,7 +15,7 @@ Nucleus_allocateMemory
         Nucleus_Size n
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_reallocateMemory.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_reallocateMemory.md
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_reallocateMemory
     (
@@ -32,7 +32,7 @@ Nucleus_allocateArrayMemory
         Nucleus_Size m
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_reallocateArrayMemory.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_reallocateArrayMemory.md
 Nucleus_NoError() Nucleus_NonNull(1) Nucleus_Status
 Nucleus_reallocateArrayMemory
     (

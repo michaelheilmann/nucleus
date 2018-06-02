@@ -16,13 +16,13 @@
 /// @internal
 /// @brief Get the size of a file.
 /// @param fileDescriptor a file descriptor
-/// @param fileSize a pointer to a @a (size_t) variable
+/// @param fileSize a pointer to a @a (Nucleus_Size) variable
 /// @defaultReturn
 static Nucleus_NonNull(1, 2) Nucleus_Status
 Nucleus_getFileSize
     (
         HANDLE hFile,
-        size_t *fileSize
+        Nucleus_Size *fileSize
     )
 {
     if (INVALID_HANDLE_VALUE == hFile)

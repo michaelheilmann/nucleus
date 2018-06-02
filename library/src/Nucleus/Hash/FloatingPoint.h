@@ -6,7 +6,7 @@
 #include "Nucleus/Types/HashValue.h"
 #include "Nucleus/Types/FloatingPoint.h"
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_hash[NumericType].md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_hash[NumericType].md
 Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_hashSingle
     (
@@ -14,7 +14,7 @@ Nucleus_hashSingle
         Nucleus_HashValue *hv
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_hash[NumericType].md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_hash[NumericType].md
 Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_hashDouble
     (
@@ -22,7 +22,7 @@ Nucleus_hashDouble
         Nucleus_HashValue *hv
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_hash[NumericType].md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_hash[NumericType].md
 Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_hashQuadruple
     (

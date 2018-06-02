@@ -6,7 +6,7 @@
 #include "Nucleus/Types/HashValue.h"
 #include "Nucleus/Types/Size.h"
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_hash[NumberType].md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_hash[NumberType].md
 Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_hashSize
     (

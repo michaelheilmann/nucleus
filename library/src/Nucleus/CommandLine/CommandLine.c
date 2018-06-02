@@ -44,7 +44,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_CommandLine_Command_getParameterCount
     (
         Nucleus_CommandLine_Command *command,
-        size_t *parameterCount
+        Nucleus_Size *parameterCount
     )
 {
     if (!command) return Nucleus_Status_InvalidArgument;
@@ -55,7 +55,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_CommandLine_Option_getParameterCount
     (
         Nucleus_CommandLine_Option *option,
-        size_t *parameterCount
+        Nucleus_Size *parameterCount
     )
 {
     if (!option) return Nucleus_Status_InvalidArgument;

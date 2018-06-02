@@ -2,20 +2,20 @@
 #include "Nucleus/Collections/PointerDeque.h"
 
 #include "Nucleus/Memory.h"
-#include <stdint.h> // For SIZE_MAX.
+#include "Nucleus/Types/Size.h"
 
-Nucleus_NoError() static size_t
+Nucleus_NoError() static Nucleus_Size
 MOD
     (
-        size_t index,
-        size_t capacity
+        Nucleus_Size index,
+        Nucleus_Size capacity
     );
 
-Nucleus_NonNull() static size_t
+Nucleus_NonNull() static Nucleus_Size
 MOD
     (
-        size_t index,
-        size_t capacity
+        Nucleus_Size index,
+        Nucleus_Size capacity
     )
 { return index % capacity; }
 
@@ -23,15 +23,12 @@ Nucleus_NonNull(1) Nucleus_Status
 Nucleus_Collections_PointerDeque_initialize
     (
         Nucleus_Collections_PointerDeque *dynamicPointerDeque,
-        size_t initialCapacity,
+        Nucleus_Size initialCapacity,
         Nucleus_LockFunction *lockFunction,
         Nucleus_UnlockFunction *unlockFunction
     )
 {
-    if (!dynamicPointerDeque)
-    {
-        return Nucleus_Status_InvalidArgument;
-    }
+    if (Nucleus_Unlikely(!dynamicPointerDeque)) return Nucleus_Status_InvalidArgument;
     initialCapacity = initialCapacity > 0 ? initialCapacity : 1;
     Nucleus_Status status = Nucleus_allocateArrayMemory((void **)&dynamicPointerDeque->elements,
                                                         initialCapacity,
@@ -61,13 +58,13 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerDeque_increaseCapacity
     (
         Nucleus_Collections_PointerDeque *dynamicPointerDeque,
-        size_t requiredAdditionalCapacity
+        Nucleus_Size requiredAdditionalCapacity
     )
 {
-    if (!dynamicPointerDeque) return Nucleus_Status_InvalidArgument;
-    if (!requiredAdditionalCapacity) return Nucleus_Status_Success;
+    if (Nucleus_Unlikely(!dynamicPointerDeque)) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!requiredAdditionalCapacity)) return Nucleus_Status_Success;
     // Compute the maximum additional capacity.
-    size_t maximumAdditionalCapacity = (SIZE_MAX - dynamicPointerDeque->capacity) / sizeof(void *);
+    Nucleus_Size maximumAdditionalCapacity = (Nucleus_Size_Greatest - dynamicPointerDeque->capacity) / sizeof(void *);
     // If the required additional capacity is greater than the maximum additional capacity ...
     if (maximumAdditionalCapacity < requiredAdditionalCapacity)
     {
@@ -76,25 +73,25 @@ Nucleus_Collections_PointerDeque_increaseCapacity
     }
     // Compute the desired additional capacity.
     // Note that if capacity * 2 overflows, then we have a wrap around. This does not cause any harm.
-    size_t desiredAdditionalCapacity = dynamicPointerDeque->capacity > 0 ? dynamicPointerDeque->capacity * 2 : 8;
+    Nucleus_Size desiredAdditionalCapacity = dynamicPointerDeque->capacity > 0 ? dynamicPointerDeque->capacity * 2 : 8;
     // The desired additional capacity might be smaller, equal, or greater than the required additional capacity.
     // Take the maximum of both.
 #pragma push_macro("MAX")
 #pragma push_macro("MIN")
 #define MAX(x,y) x > y ? x : y
 #define MIN(x,y) x < y ? x : y
-    size_t additionalCapacity = MAX(desiredAdditionalCapacity, requiredAdditionalCapacity);
+    Nucleus_Size additionalCapacity = MAX(desiredAdditionalCapacity, requiredAdditionalCapacity);
     // The additional capacity may not exceed the maximum additional capacity.
     additionalCapacity = MIN(maximumAdditionalCapacity, additionalCapacity);
 #pragma pop_macro("MIN")
 #pragma pop_macro("MAX")
     // Compute the new capacity.
-    size_t newCapacity = dynamicPointerDeque->capacity + additionalCapacity;
+    Nucleus_Size newCapacity = dynamicPointerDeque->capacity + additionalCapacity;
 
     void **newElements;
     Nucleus_Status status = Nucleus_allocateArrayMemory((void **)&newElements, newCapacity, sizeof(void *));
     if (status) return status;
-    for (size_t i = 0, n = dynamicPointerDeque->size; i < n; ++i)
+    for (Nucleus_Size i = 0, n = dynamicPointerDeque->size; i < n; ++i)
     {
         newElements[i] = dynamicPointerDeque->elements[(dynamicPointerDeque->read + i) % (dynamicPointerDeque->capacity)];
     }
@@ -109,16 +106,16 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerDeque_ensureFreeCapacity
     (
         Nucleus_Collections_PointerDeque *dynamicPointerDeque,
-        size_t requiredFreeCapacity
+        Nucleus_Size requiredFreeCapacity
     )
 {
-    if (!dynamicPointerDeque) return Nucleus_Status_InvalidArgument;
-    if (!requiredFreeCapacity) return Nucleus_Status_Success;
-    size_t actualFreeCapacity = dynamicPointerDeque->capacity - dynamicPointerDeque->size;
+    if (Nucleus_Unlikely(!dynamicPointerDeque)) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!requiredFreeCapacity)) return Nucleus_Status_Success;
+    Nucleus_Size actualFreeCapacity = dynamicPointerDeque->capacity - dynamicPointerDeque->size;
     if (actualFreeCapacity < requiredFreeCapacity)
     {
         return Nucleus_Collections_PointerDeque_increaseCapacity(dynamicPointerDeque,
-                                                            requiredFreeCapacity - actualFreeCapacity);
+                                                                 requiredFreeCapacity - actualFreeCapacity);
     }
     return Nucleus_Status_Success;
 }
@@ -127,7 +124,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerDeque_getSize
     (
         Nucleus_Collections_PointerDeque *dynamicPointerDeque,
-        size_t *size
+        Nucleus_Size *size
     )
 {
     if (Nucleus_Unlikely(!dynamicPointerDeque || !size)) return Nucleus_Status_InvalidArgument;
@@ -139,7 +136,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerDeque_getCapacity
     (
         Nucleus_Collections_PointerDeque *dynamicPointerDeque,
-        size_t *capacity
+        Nucleus_Size *capacity
     )
 {
     if (Nucleus_Unlikely(!dynamicPointerDeque || !capacity)) return Nucleus_Status_InvalidArgument;
@@ -151,7 +148,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerDeque_getFreeCapacity
     (
         Nucleus_Collections_PointerDeque *dynamicPointerDeque,
-        size_t *freeCapacity
+        Nucleus_Size *freeCapacity
     )
 {
     if (Nucleus_Unlikely(!dynamicPointerDeque || !freeCapacity)) return Nucleus_Status_InvalidArgument;
@@ -168,7 +165,7 @@ Nucleus_Collections_PointerDeque_clear
     if (dynamicPointerDeque->unlockFunction)
     {
         Nucleus_UnlockFunction *unlockFunction = dynamicPointerDeque->unlockFunction;
-        const size_t capacity = dynamicPointerDeque->capacity;
+        const Nucleus_Size capacity = dynamicPointerDeque->capacity;
         while (dynamicPointerDeque->size > 0)
         {
             void *element = dynamicPointerDeque->elements[MOD(dynamicPointerDeque->read +
@@ -213,21 +210,21 @@ Nucleus_Collections_PointerDeque_insert
     (
         Nucleus_Collections_PointerDeque *dynamicPointerDeque,
         void *pointer,
-        size_t index
+        Nucleus_Size index
     )
 {
     // The pointer to the deque must not be a null pointer.
-    if (!dynamicPointerDeque) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!dynamicPointerDeque)) return Nucleus_Status_InvalidArgument;
     // "index" must be smaller than or equal to the size of the deque.
     if (index > dynamicPointerDeque->size) return Nucleus_Status_InvalidArgument;
     // Ensure there is room for one more element.
     Nucleus_Status status;
     status = Nucleus_Collections_PointerDeque_ensureFreeCapacity(dynamicPointerDeque, 1);
-    if (status) return status;
+    if (Nucleus_Unlikely(status)) return status;
 
-    const size_t capacity = dynamicPointerDeque->capacity; // The capacity does not change anymore for the rest of this
-                                                           // function but is frequently referenced, hence it is cached
-                                                           // here.
+    const Nucleus_Size capacity = dynamicPointerDeque->capacity; // The capacity does not change anymore for the rest of this
+                                                                 // function but is frequently referenced, hence it is cached
+                                                                 // here.
 
     // The goal of the following algorithm is to minimize the number of shift operations when inserting into an index
     // smaller than size.
@@ -260,8 +257,8 @@ Nucleus_Collections_PointerDeque_insert
         // As read' = read - 1, one can also write
         // - a'[read'] = a[read' + 1], ..., a'[read + index] = a[read' + index + 1]
         // which is the form used here.
-        size_t offset = MOD(dynamicPointerDeque->read - 1, capacity);
-        for (size_t j = 0; j < index; ++j)
+        Nucleus_Size offset = MOD(dynamicPointerDeque->read - 1, capacity);
+        for (Nucleus_Size j = 0; j < index; ++j)
         {
             dynamicPointerDeque->elements[MOD(offset + j, capacity)] =
                 dynamicPointerDeque->elements[MOD(offset + j + 1, capacity)];
@@ -276,8 +273,8 @@ Nucleus_Collections_PointerDeque_insert
         // - a'[read + index] = newElement
         // - read' = read
         // - size' = size+1
-        size_t offset = dynamicPointerDeque->read;
-        for (size_t j = dynamicPointerDeque->size; j > index; --j)
+        Nucleus_Size offset = dynamicPointerDeque->read;
+        for (Nucleus_Size j = dynamicPointerDeque->size; j > index; --j)
         {
             dynamicPointerDeque->elements[MOD(offset + j, capacity)] =
                 dynamicPointerDeque->elements[MOD(offset + j - 1, capacity)];
@@ -293,11 +290,11 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerDeque_at
     (
         Nucleus_Collections_PointerDeque *dynamicPointerDeque,
-        size_t index,
+        Nucleus_Size index,
         void **element
     )
 {
-    if (!dynamicPointerDeque || !element) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!dynamicPointerDeque || !element)) return Nucleus_Status_InvalidArgument;
     *element = dynamicPointerDeque->elements[MOD(dynamicPointerDeque->read + index, dynamicPointerDeque->capacity)];
     return Nucleus_Status_Success;
 }
@@ -306,11 +303,11 @@ Nucleus_NonNull(1) Nucleus_Status
 Nucleus_Collections_PointerDeque_remove
     (
         Nucleus_Collections_PointerDeque *dynamicPointerDeque,
-        size_t index
+        Nucleus_Size index
     )
 {
     // The pointer to the dequeue must not be a null pointer.
-    if (!dynamicPointerDeque)
+    if (Nucleus_Unlikely(!dynamicPointerDeque))
     {
         return Nucleus_Status_InvalidArgument;
     }
@@ -319,14 +316,14 @@ Nucleus_Collections_PointerDeque_remove
     {
         return Nucleus_Status_InvalidArgument;
     }
-    const size_t capacity = dynamicPointerDeque->capacity;
+    const Nucleus_Size capacity = dynamicPointerDeque->capacity;
     if (index < dynamicPointerDeque->size / 2)
     {  
         // - a'[read] = a[read-1], ..., a'[read + index] = a[read + index - 1] 
         // - read' = read + 1
         // - size' = size - 1
-        size_t offset = dynamicPointerDeque->read;
-        for (size_t j = index; j > 0; --j)
+        Nucleus_Size offset = dynamicPointerDeque->read;
+        for (Nucleus_Size j = index; j > 0; --j)
         {
             dynamicPointerDeque->elements[MOD(offset + j, capacity)] =
                 dynamicPointerDeque->elements[MOD(offset + j - 1, capacity)];
@@ -339,7 +336,7 @@ Nucleus_Collections_PointerDeque_remove
         // - read' = read
         // - size' = size - 1
         // shift a[i+1],..,a[n-1] left one position
-        for (size_t j = index; j < dynamicPointerDeque->size - 1; ++j)
+        for (Nucleus_Size j = index; j < dynamicPointerDeque->size - 1; ++j)
         {
             dynamicPointerDeque->elements[MOD(dynamicPointerDeque->read + j, capacity)] =
                 dynamicPointerDeque->elements[MOD(dynamicPointerDeque->read + j + 1, capacity)];

@@ -11,7 +11,7 @@
 
 #include "Nucleus/Annotations.h"
 #include "Nucleus/Status.h"
-#include <stddef.h> // For size_t.
+#include "Nucleus/Types/Size.h"
 
 typedef struct Nucleus_CommandLine_Parameter Nucleus_CommandLine_Parameter;
 typedef struct Nucleus_CommandLine_Option Nucleus_CommandLine_Option;
@@ -61,7 +61,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_CommandLine_Command_getParameterCount
     (
         Nucleus_CommandLine_Command *command,
-        size_t *parameterCount
+        Nucleus_Size *parameterCount
     );
 
 /// @brief Get the number of parameters of a @a (Nucleus_CommandLine_Option) object.
@@ -72,7 +72,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_CommandLine_Option_getParameterCount
     (
         Nucleus_CommandLine_Option *option,
-        size_t *parameterCount
+        Nucleus_Size *parameterCount
     );
 
 // i-th parameter
@@ -80,7 +80,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_CommandLine_Command_getParameter
     (
         Nucleus_CommandLine_Command *command,
-        size_t index,
+        Nucleus_Size index,
         Nucleus_CommandLine_Parameter **parameter
     );
 
