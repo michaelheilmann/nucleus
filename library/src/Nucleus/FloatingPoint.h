@@ -7,9 +7,9 @@
 
 
 
-#include <stdbool.h>
 #include "Nucleus/Annotations.h"
 #include "Nucleus/Status.h"
+#include "Nucleus/Types/Boolean.h"
 
 
 
@@ -35,53 +35,53 @@ typedef long double Nucleus_Quadruple;
 
 
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[Floating-Point-Type]_isSubnormal.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_[Floating-Point-Type]_isSubnormal.md
 Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_Single_isSubnormal
     (
         Nucleus_Single x,
-        bool *r
+        Nucleus_Boolean *r
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[Floating-Point-Type]_isSubnormal.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_[Floating-Point-Type]_isSubnormal.md
 Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_Double_isSubnormal
     (
         Nucleus_Double x,
-        bool *r
+        Nucleus_Boolean *r
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[Floating-Point-Type]_isSubnormal.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_[Floating-Point-Type]_isSubnormal.md
 Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_Quadruple_isSubnormal
     (
         Nucleus_Quadruple x,
-        bool *r
+        Nucleus_Boolean *r
     );
 
 
 
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[Floating-Point-Type]_isNaN.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_[Floating-Point-Type]_isNaN.md
 Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_Single_isNaN
     (
         Nucleus_Single x,
-        bool *r
+        Nucleus_Boolean *r
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[Floating-Point-Type]_isNaN.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_[Floating-Point-Type]_isNaN.md
 Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_Double_isNaN
     (
         Nucleus_Double x,
-        bool *r
+        Nucleus_Boolean *r
     );
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_[Floating-Point-Type]_isNaN.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_[Floating-Point-Type]_isNaN.md
 Nucleus_NoError() Nucleus_NonNull() Nucleus_Status
 Nucleus_Quadruple_isNaN
     (
         Nucleus_Quadruple x,
-        bool *r
+        Nucleus_Boolean *r
     );

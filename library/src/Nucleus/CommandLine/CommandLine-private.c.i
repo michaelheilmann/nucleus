@@ -56,7 +56,7 @@ parseArgument
             return Nucleus_Status_InvalidArgument;
         }
         char *name = strndup(argument, p - argument);
-        if (!name) { fprintf(stderr, "<internal error>\n"); return Nucleus_Status_AllocationFailed; }
+        if (Nucleus_Unlikely(!name)) { fprintf(stderr, "<internal error>\n"); return Nucleus_Status_AllocationFailed; }
         Nucleus_CommandLine_Option *option;
         status = Nucleus_CommandLine_Command_getOption(command, name, &option);
         if (status && status != Nucleus_Status_NotExists)
@@ -74,7 +74,7 @@ parseArgument
             p++;
         }
         char *value = strndup(argument, p - argument);
-        if (!value) { fprintf(stderr, "<internal error>\n"); return Nucleus_Status_AllocationFailed; }
+        if (Nucleus_Unlikely(!value)) { fprintf(stderr, "<internal error>\n"); return Nucleus_Status_AllocationFailed; }
         status = Nucleus_CommandLine_Option_addParameter(option, value);
         if (status)
         { Nucleus_deallocateMemory(value); fprintf(stderr, "<internal error>\n"); return status; }
@@ -95,20 +95,23 @@ Nucleus_NonNull() static Nucleus_Status
 hashFunction
     (
         const char *p,
-        unsigned int *hv
+        Nucleus_HashValue *hashValue
     )
-{ return Nucleus_hashMemory(p, strlen(p), hv); }
+{ 
+    if (Nucleus_Unlikely(!p)) return Nucleus_Status_InvalidArgument;
+    return Nucleus_hashMemory(p, strlen(p), hashValue);
+}
 
 Nucleus_NonNull() static Nucleus_Status
 equalToFunction
     (
         const char *p,
         const char *q,
-        bool *r
+        Nucleus_Boolean *equalTo
     )
 {
-    if (!p || !q || !r) return Nucleus_Status_InvalidArgument;
-    *r = !strcmp(p, q);
+    if (Nucleus_Unlikely(!p || !q || !equalTo)) return Nucleus_Status_InvalidArgument;
+    *equalTo = !strcmp(p, q);
     return Nucleus_Status_Success;
 }
 
@@ -118,24 +121,22 @@ OptionSet_initialize
         OptionSet *optionSet
     )
 {
-    Nucleus_Status status = Nucleus_Collections_PointerHashMap_initialize(&optionSet->hashMap,
-                                                                     16,
-                                                                     NULL,
-                                                                     NULL,
-                                                                     NUCLEUS_HASHFUNCTION(&hashFunction),
-                                                                     NUCLEUS_EQUALTOFUNCTION(&equalToFunction),
-                                                                     NULL,
-                                                                     NUCLEUS_UNLOCKFUNCTION(&destroyOption));
-    if (status) return status;
-    return Nucleus_Status_Success;
+    return Nucleus_Collections_PointerHashMap_initialize(&optionSet->hashMap,
+                                                         16,
+                                                         NULL,
+                                                         NULL,
+                                                         NUCLEUS_HASHFUNCTION(&hashFunction),
+                                                         NUCLEUS_EQUALTOFUNCTION(&equalToFunction),
+                                                         NULL,
+                                                         NUCLEUS_UNLOCKFUNCTION(&destroyOption));
 }
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 OptionSet_uninitialize
     (
         OptionSet *optionSet
     )
-{ Nucleus_Collections_PointerHashMap_uninitialize(&optionSet->hashMap); }
+{ return Nucleus_Collections_PointerHashMap_uninitialize(&optionSet->hashMap); }
 
 Nucleus_NonNull() static Nucleus_Status
 OptionSet_add
@@ -144,7 +145,7 @@ OptionSet_add
         Nucleus_CommandLine_Option *option
     )
 {
-    if (!optionSet || !option) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!optionSet || !option)) return Nucleus_Status_InvalidArgument;
     Nucleus_Status status = Nucleus_Collections_PointerHashMap_set(&optionSet->hashMap, option->name, option, false);
     if (status == Nucleus_Status_Exists)
     { return status; }
@@ -161,7 +162,7 @@ OptionSet_find
         Nucleus_CommandLine_Option **option
     )
 {
-    if (!optionSet || !optionName || !option) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!optionSet || !optionName || !option)) return Nucleus_Status_InvalidArgument;
     Nucleus_Status status = Nucleus_Collections_PointerHashMap_get(&optionSet->hashMap, (void *)optionName, (void **)option);
     if (status == Nucleus_Status_NotExists)
     { return status; }
@@ -180,16 +181,16 @@ ParameterList_initialize
 {
     if (!parameterList) return Nucleus_Status_InvalidArgument;
     return Nucleus_Collections_PointerArray_initialize(&parameterList->array, 8,
-                                                  NULL,
-                                                  (void (*)(void *))&destroyParameter);
+                                                       NULL,
+                                                       NUCLEUS_UNLOCKFUNCTION(&destroyParameter));
 }
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 ParameterList_uninitialize
     (
         ParameterList *parameterList
     )
-{ Nucleus_Collections_PointerArray_uninitialize(&parameterList->array); }
+{ return Nucleus_Collections_PointerArray_uninitialize(&parameterList->array); }
 
 Nucleus_NonNull() static Nucleus_Status
 ParameterList_append
@@ -203,10 +204,10 @@ Nucleus_NonNull() static Nucleus_Status
 ParameterList_getSize
     (
         ParameterList *parameterList,
-        size_t *size
+        Nucleus_Size *size
     )
 {
-    if (!parameterList) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!parameterList)) return Nucleus_Status_InvalidArgument;
     return Nucleus_Collections_PointerArray_getSize(&parameterList->array, size);
 }
 
@@ -219,7 +220,7 @@ createOption
         const char *optionName
     )
 {
-    if (!option || !optionName) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!option || !optionName)) return Nucleus_Status_InvalidArgument;
     Nucleus_Status status;
     Nucleus_CommandLine_Option *self = NULL;
     status = Nucleus_allocateMemory((void **)&self, sizeof(Nucleus_CommandLine_Option));
@@ -237,7 +238,7 @@ createOption
     return Nucleus_Status_Success;
 }
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 destroyOption
     (
         Nucleus_CommandLine_Option *option
@@ -250,6 +251,7 @@ destroyOption
         option->name = NULL;
     }
     Nucleus_deallocateMemory(option);
+    return Nucleus_Status_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -276,7 +278,7 @@ createParameter
     return Nucleus_Status_Success;
 }
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 uninitializeParameter
     (
         Nucleus_CommandLine_Parameter *parameter
@@ -287,9 +289,10 @@ uninitializeParameter
         Nucleus_deallocateMemory(parameter->value);
         parameter->value = NULL;
     }
+    return Nucleus_Status_Success;
 }
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 destroyParameter
     (
         Nucleus_CommandLine_Parameter *parameter
@@ -297,6 +300,7 @@ destroyParameter
 {
     uninitializeParameter(parameter);
     Nucleus_deallocateMemory(parameter);
+    return Nucleus_Status_Success;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -324,7 +328,7 @@ initializeCommand
     return Nucleus_Status_Success;
 }
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 uninitializeCommand
     (
         Nucleus_CommandLine_Command *command
@@ -332,6 +336,7 @@ uninitializeCommand
 {
     ParameterList_uninitialize(&command->parameterList);
     OptionSet_uninitialize(&command->optionSet);
+    return Nucleus_Status_Success;
 }
 
 Nucleus_NonNull() static Nucleus_Status
@@ -355,7 +360,7 @@ createCommand
     return Nucleus_Status_Success;
 }
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 destroyCommand
     (
         Nucleus_CommandLine_Command *command
@@ -363,4 +368,5 @@ destroyCommand
 {
     uninitializeCommand(command);
     Nucleus_deallocateMemory(command);
+    return Nucleus_Status_Success;
 }

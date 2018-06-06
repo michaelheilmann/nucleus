@@ -4,7 +4,7 @@
 #include "Nucleus/Annotations.h"
 #include "Nucleus/Status.h"
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_getExecutableDirectoryPathname.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_getExecutableDirectoryPathname.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_getExecutableDirectoryPathname
     (

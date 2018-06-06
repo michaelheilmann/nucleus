@@ -86,7 +86,7 @@ Nucleus_FileHandle_create
           0 },
         };
     const PolicyMapping *policyMapping = NULL;
-    for (size_t i = 0, n = sizeof(policyMappings) / sizeof(PolicyMapping); i < n; ++i)
+    for (Nucleus_Size i = 0, n = sizeof(policyMappings) / sizeof(PolicyMapping); i < n; ++i)
     {
         policyMapping = policyMappings + i;
         if (policyMapping->existingFilePolicy == existingFilePolicy &&
@@ -145,10 +145,10 @@ Nucleus_NonNull(1,2) Nucleus_Status
 Nucleus_FileHandle_getFileSize
     (
         Nucleus_FileHandle *fileHandle,
-        size_t *fileSize
+        Nucleus_Size *fileSize
     )
 {
-    if (!fileHandle || !fileSize || fileHandle->fileDescriptor < 0)
+    if (Nucleus_Unlikely(!fileHandle || !fileSize || fileHandle->fileDescriptor < 0))
     {
         return Nucleus_Status_InvalidArgument;
     }
@@ -159,7 +159,7 @@ Nucleus_FileHandle_getFileSize
     {
         return Nucleus_Status_EnvironmentFailed;
     }
-    *fileSize = (size_t)stat_buf.st_size;
+    *fileSize = (Nucleus_Size)stat_buf.st_size;
     return Nucleus_Status_Success;
 }
 

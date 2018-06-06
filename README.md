@@ -59,6 +59,8 @@ The following annotations are currently available.
 - [Nucleus_NoReturn](documentation/Nucleus_NoReturn.md)
 - [Nucleus_Likely](documentation/Nucleus_Likely.md)
 - [Nucleus_Unlikely](documentation/Nucleus_Unlikely.md)
+- [Nucleus_AlwaysFail](documentation/Nucleus_AlwaysFail.md)
+- [Nucleus_AlwaysSucceed](documentation/Nucleus_AlwaysSucceed.md)
 
 ### Nucleus Memory Module
 The Nucleus Memory Module provides functionality to allocate and deallocate memory blocks, as well as valuation and manipulation of memory blocks and their contents.

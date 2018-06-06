@@ -5,9 +5,9 @@
 
 #pragma once
 
-#include <stddef.h>
 #include "Nucleus/Annotations.h"
 #include "Nucleus/Status.h"
+#include "Nucleus/Types/Size.h"
 
 
 /// @brief The opaque type of a "memory manager state".
@@ -34,7 +34,7 @@ Nucleus_MemoryManager_Allocate
         Nucleus_InputOutputParameter(Nucleus_MemoryManager_State *state),
         Nucleus_InputOutputParameter(Nucleus_MemoryManager_AllocationParameters *allocationParameters),
         Nucleus_OutputParameter(void **memoryBlock),
-        Nucleus_InputParameter(size_t numberOfBytes)
+        Nucleus_InputParameter(Nucleus_Size numberOfBytes)
     );
 
 /// @brief Type of a Nucleus "deallocate" function.

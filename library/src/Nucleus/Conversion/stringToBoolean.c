@@ -17,7 +17,7 @@ Nucleus_stringToBoolean
         case sizeof("true") - sizeof(char):
         {
             Nucleus_Status status;
-            bool equal;
+            Nucleus_Boolean equal;
             status = Nucleus_compareMemory(bytes, "true", sizeof("true") - sizeof(char), &equal);
             if (status) return status;
             *value = Nucleus_Boolean_True;

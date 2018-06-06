@@ -5,7 +5,7 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_initialize
     (
         Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
-        size_t initialCapacity,
+        Nucleus_Size initialCapacity,
         Nucleus_LockFunction *lockKeyFunction,
         Nucleus_UnlockFunction *unlockKeyFunction,
         Nucleus_HashFunction *hashKeyFunction,
@@ -22,7 +22,7 @@ Nucleus_Collections_PointerHashMap_initialize
                                                         initialCapacity,
                                                         sizeof(Nucleus_Collections_PointerHashMap_Node *));
     if (Nucleus_Unlikely(status)) return status;
-    for (size_t i = 0, n = initialCapacity; i < n; ++i)
+    for (Nucleus_Size i = 0, n = initialCapacity; i < n; ++i)
     {
         dynamicPointerHashMap->buckets[i] = NULL;
     }
@@ -42,7 +42,7 @@ Nucleus_Collections_PointerHashMap_initialize
     return Nucleus_Status_Success;
 }
 
-Nucleus_NonNull() void
+Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_uninitialize
     (
         Nucleus_Collections_PointerHashMap *dynamicPointerHashMap
@@ -60,6 +60,7 @@ Nucleus_Collections_PointerHashMap_uninitialize
         dynamicPointerHashMap->unused = node->next;
         Nucleus_deallocateMemory(node);
     }
+    return Nucleus_Status_Success;
 }
 
 Nucleus_NonNull(1) Nucleus_Status
@@ -68,7 +69,7 @@ Nucleus_Collections_PointerHashMap_set
         Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
         void *key,
         void *value,
-        bool replace
+        Nucleus_Boolean replace
     )
 {
     Position position;
@@ -142,4 +143,3 @@ Nucleus_Collections_PointerHashMap_clear
     clear(dynamicPointerHashMap);
     return Nucleus_Status_Success;
 }
-

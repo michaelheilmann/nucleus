@@ -23,7 +23,7 @@
 typedef struct Nucleus_FileMapping
 {
     char *bytes;
-    size_t numberOfBytes;
+    Nucleus_Size numberOfBytes;
     Nucleus_FileHandle *fileHandle;
 } Nucleus_FileMapping;
 
@@ -109,11 +109,11 @@ Nucleus_getFileContents
     (
         Nucleus_InputParameter(const char *pathname),
         Nucleus_OutputParameter(char **bytes),
-        Nucleus_OutputParameter(size_t *numberOfBytes)
+        Nucleus_OutputParameter(Nucleus_Size *numberOfBytes)
     )
 {
     // Validate arguments.
-    if (!bytes || !numberOfBytes)
+    if (Nucleus_Unlikely(!bytes || !numberOfBytes))
     {
         fprintf(stderr, "invalid arguments\n");
         return Nucleus_Status_InvalidArgument;

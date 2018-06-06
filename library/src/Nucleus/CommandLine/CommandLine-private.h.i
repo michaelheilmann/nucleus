@@ -38,7 +38,7 @@ ParameterList_initialize
         ParameterList *parameterList
     );
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 ParameterList_uninitialize
     (
         ParameterList *parameterList
@@ -55,7 +55,7 @@ Nucleus_NonNull() static Nucleus_Status
 ParameterList_getSize
     (
         ParameterList *parameterList,
-        size_t *size
+        Nucleus_Size *size
     );
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +67,7 @@ Nucleus_NonNull() static Nucleus_Status
 hashFunction
     (
         const char *p,
-        unsigned int *hv
+        Nucleus_HashValue *hashValue
     );
 
 Nucleus_NonNull() static Nucleus_Status
@@ -75,7 +75,7 @@ equalToFunction
     (
         const char *p,
         const char *q,
-        bool *r
+        Nucleus_Boolean *equalTo
     );
 
 Nucleus_NonNull() static Nucleus_Status
@@ -84,7 +84,7 @@ OptionSet_initialize
         OptionSet *optionSet
     );
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 OptionSet_uninitialize
     (
         OptionSet *optionSet
@@ -120,7 +120,7 @@ initializeCommand
         Nucleus_CommandLine_Command *command
     );
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 uninitializeCommand
     (
         Nucleus_CommandLine_Command *command
@@ -132,7 +132,7 @@ createCommand
         Nucleus_CommandLine_Command **command
     );
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 destroyCommand
     (
         Nucleus_CommandLine_Command *command
@@ -153,7 +153,7 @@ createOption
         const char *optionName
     );
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 destroyOption
     (
         Nucleus_CommandLine_Option *option
@@ -173,13 +173,13 @@ createParameter
         const char *parameterValue
     );
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 uninitializeParameter
     (
         Nucleus_CommandLine_Parameter *parameter
     );
 
-Nucleus_NonNull() static void
+Nucleus_NonNull() static Nucleus_Status
 destroyParameter
     (
         Nucleus_CommandLine_Parameter *parameter

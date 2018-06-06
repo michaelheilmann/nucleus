@@ -6,7 +6,7 @@
 #include "Nucleus/Types/HashValue.h"
 #include "Nucleus/Types/Boolean.h"
 
-// https://github.com/primordialmachine/blob/master/documentation/Nucleus_hashBoolean.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_hashBoolean.md
 Nucleus_NoError() Nucleus_Status
 Nucleus_hashBoolean
     (

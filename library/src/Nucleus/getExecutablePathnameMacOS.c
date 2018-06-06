@@ -43,7 +43,7 @@ Nucleus_getExecutablePathnameMacOS
         {
             break;
         }
-        status = Nucleus_reallocateMemory((void **)&buffer, (size_t)size);
+        status = Nucleus_reallocateMemory((void **)&buffer, (Nucleus_Size)size);
         if (Nucleus_Unlikely(status))
         {
             ERROR(stderr, "%s:%d: %s failed\n", __FILE__, __LINE__, "Nucleus_reallocateMemory");

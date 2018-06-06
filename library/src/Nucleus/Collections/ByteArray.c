@@ -105,7 +105,7 @@ Nucleus_Collections_ByteArray_prependMany
         
         Nucleus_Collections_ByteArray *dynamicByteArray,
         const char *bytes,
-        size_t numberOfBytes
+        Nucleus_Size numberOfBytes
     )
 {
     if (Nucleus_Unlikely(!dynamicByteArray)) return Nucleus_Status_InvalidArgument;
@@ -169,7 +169,7 @@ Nucleus_Collections_ByteArray_lock
     (
         Nucleus_Collections_ByteArray *byteArray,
         void **bytes,
-        size_t *numberOfBytes
+        Nucleus_Size *numberOfBytes
     )
 {
     *bytes = byteArray->array;
