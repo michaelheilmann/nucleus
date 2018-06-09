@@ -4,6 +4,7 @@
 #if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
 
 #include "Nucleus/IncludesWindows.h"
+#include "Nucleus/Memory.h"
 #include "Nucleus/Types/Size.h"
 #include "Nucleus/String.h"
 

@@ -5,17 +5,17 @@
 #include "Nucleus/Memory.h"
 #include "Nucleus/Types/HashValue.h"
 
-struct Nucleus_Collections_PointerHashMap_Node
+struct Node
 {
-    Nucleus_Collections_PointerHashMap_Node *next;
+    Node *next;
     void *key;
     Nucleus_HashValue hashValue;
     void *value;
-}; // struct Nucleus_Collections_PointerHashMap_Node
+}; // struct Node
 
 typedef struct Position
 {
-    Nucleus_Collections_PointerHashMap_Node *node; // Pointer to the colliding node or a null pointer.
+    Node *node; // Pointer to the colliding node or a null pointer.
     Nucleus_HashValue hashValue; // The hash value.
     Nucleus_Size hashIndex; // The hash index.
 } Position;
@@ -33,3 +33,5 @@ clear
     (
         Nucleus_Collections_PointerHashMap *dynamicPointerHashMap
     );
+    
+

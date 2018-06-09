@@ -20,7 +20,7 @@ Nucleus_Collections_PointerHashMap_initialize
     
     Nucleus_Status status = Nucleus_allocateArrayMemory((void **)&dynamicPointerHashMap->buckets,
                                                         initialCapacity,
-                                                        sizeof(Nucleus_Collections_PointerHashMap_Node *));
+                                                        sizeof(Node *));
     if (Nucleus_Unlikely(status)) return status;
     for (Nucleus_Size i = 0, n = initialCapacity; i < n; ++i)
     {
@@ -56,7 +56,7 @@ Nucleus_Collections_PointerHashMap_uninitialize
 
     while(dynamicPointerHashMap->unused)
     {
-        Nucleus_Collections_PointerHashMap_Node *node = dynamicPointerHashMap->unused;
+        Node *node = dynamicPointerHashMap->unused;
         dynamicPointerHashMap->unused = node->next;
         Nucleus_deallocateMemory(node);
     }
@@ -96,14 +96,14 @@ Nucleus_Collections_PointerHashMap_set
             return Nucleus_Status_Exists;
         }
     }
-    Nucleus_Collections_PointerHashMap_Node *node = NULL;
+    Node *node = NULL;
     if (dynamicPointerHashMap->unused)
     {
         node = dynamicPointerHashMap->unused; dynamicPointerHashMap->unused = node->next;
     }
     else
     {
-        status = Nucleus_allocateMemory((void **)&node, sizeof(Nucleus_Collections_PointerHashMap_Node));
+        status = Nucleus_allocateMemory((void **)&node, sizeof(Node));
         if (status) return status;
     }
     if (dynamicPointerHashMap->lockKeyFunction)
@@ -141,5 +141,99 @@ Nucleus_Collections_PointerHashMap_clear
     )
 {
     clear(dynamicPointerHashMap);
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_getSize
+    (
+        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Size *size
+    )
+ {
+    if (Nucleus_Unlikely(!dynamicPointerHashMap || !size)) return Nucleus_Status_InvalidArgument;
+    *size = dynamicPointerHashMap->size;
+    return Nucleus_Status_Success;
+ }
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_getCapacity
+    (
+        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Size *capacity
+    )
+{
+    if (Nucleus_Unlikely(!dynamicPointerHashMap || !capacity)) return Nucleus_Status_InvalidArgument;
+    *capacity = dynamicPointerHashMap->capacity;
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_initialize
+    (
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator,
+        Nucleus_Collections_PointerHashMap *source
+    )
+{
+    enumerator->source = source;
+    enumerator->bucketIndex = 0;
+    enumerator->node = source->buckets[0];
+    while (NULL == enumerator->node && enumerator->bucketIndex < enumerator->source->capacity - 1) // Secure as capacity is always positive.
+    {
+        enumerator->bucketIndex++;
+        enumerator->node = enumerator->source->buckets[enumerator->bucketIndex];
+    }
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_uninitialize
+    (
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator
+    )
+{ return Nucleus_Status_Success; }
+
+Nucleus_NonNull() Nucleus_Status 
+Nucleus_Collections_PointerHashMap_Enumerator_next
+    (
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator
+    )
+{
+    if (enumerator->node)
+    {
+        enumerator->node = enumerator->node->next;
+    }
+    while (NULL == enumerator->node && enumerator->bucketIndex < enumerator->source->capacity - 1) // Secure as capacity is always positive.
+    {
+        enumerator->bucketIndex++;
+        enumerator->node = enumerator->source->buckets[enumerator->bucketIndex];
+    }
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_hasValue
+    (
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator,
+        Nucleus_Boolean *hasValue
+    )
+{
+    if (Nucleus_Unlikely(!enumerator || !hasValue)) return Nucleus_Status_InvalidArgument;
+    *hasValue = NULL != enumerator->node;
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_getValue
+    (
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator,
+        void **key,
+        void **value
+    )
+{
+    if (Nucleus_Unlikely(!enumerator || !key || !value)) return Nucleus_Status_InvalidArgument;
+    if (!enumerator->node) return Nucleus_Status_InvalidArgument;
+    *key = enumerator->node->key;
+    *value = enumerator->node->value;
     return Nucleus_Status_Success;
 }

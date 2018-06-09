@@ -6,14 +6,14 @@
 #include "Nucleus/Types/Boolean.h"
 #include "Nucleus/Types/Size.h"
 
-typedef struct Nucleus_Collections_PointerHashMap_Node Nucleus_Collections_PointerHashMap_Node;
+typedef struct Node Node;
 
 typedef struct Nucleus_Collections_PointerHashMap Nucleus_Collections_PointerHashMap;
 struct Nucleus_Collections_PointerHashMap
 {
-    Nucleus_Collections_PointerHashMap_Node **buckets;
+    Node **buckets;
     Nucleus_Size size, capacity;
-    Nucleus_Collections_PointerHashMap_Node *unused;
+    Node *unused;
 
     Nucleus_LockFunction *lockKeyFunction;
     Nucleus_UnlockFunction *unlockKeyFunction;
@@ -67,4 +67,63 @@ Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_clear
     (
         Nucleus_Collections_PointerHashMap *dynamicPointerHashMap
+    );
+
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Collections_[Collection-Type]_getSize.md
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_getSize
+    (
+        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Size *size
+    );
+
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Collections_[Array-Collection-Type]_getCapacity.md
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_getCapacity
+    (
+        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Size *capacity
+    );
+
+typedef struct Nucleus_Collections_PointerHashMap_Enumerator Nucleus_Collections_PointerHashMap_Enumerator;
+
+struct Nucleus_Collections_PointerHashMap_Enumerator
+{
+    Nucleus_Collections_PointerHashMap *source;
+    Nucleus_Size bucketIndex;
+    Node *node;
+}; // struct Nucleus_Collections_PointerHashMap_Enumerator
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_initialize
+    (
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator,
+        Nucleus_Collections_PointerHashMap *source
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_uninitialize
+    (
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_next
+    (
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_hasValue
+    (
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator,
+        Nucleus_Boolean *hasValue
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_getValue
+    (
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator,
+        void **key,
+        void **value
     );
