@@ -12,6 +12,9 @@ typedef char Nucleus_UTF8;
 // Two Bytes in an UCS-16 string.
 typedef wchar_t Nucleus_UCS16;
 
+// ASCII string.
+typedef char Nucleus_ASCII;
+
 #if (Nucleus_OperatingSystem == Nucleus_OperatingSystem_WINDOWS)
 
 // Convert a zero-terminated UCS-16 string into a zero-terminated UTF-8 string.
@@ -31,3 +34,12 @@ Nucleus_UTF8_to_UCS16
     );
 
 #endif
+
+// Convert a zero-terminated UTF-8 string into a zero-terminated ASCII string.
+// This may fail if the characters of the string in the source encoding can not be represented by a string in the target encoding.
+Nucleus_NonNull() Nucleus_Status
+Nucleus_UTF8_to_ASCII
+    (
+        Nucleus_ASCII **target,
+        const Nucleus_UTF8 *source
+    );

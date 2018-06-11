@@ -22,28 +22,9 @@ See below for build instructions for some of the individual environments.
 * [Linux/Clang](documentation/building-under-linux-clang.md)
 * [macOS/Clang](documentation/building-under-macos-clang.md)
 
-## Out of source builds
-The above build instruction for
-Visual Studio 2017/Windows,
-GCC/Linux, and
-GCC/Cygwin
-use CMake to generate project files for in-source builds.
-However, it is recommended to use CMake to generate project files for out-of-source builds.
-
-To generate project files for an out-of-source build,
-simple enter some directory (which should be empty).
-This directory is called the build directory.
-In that directory enter the CMake command with options and generators to your liking as described above.
-However, instead of writing `CMakeLists.txt` in the end, enter the path to the CMakeLists.txt file of
-Nucleus - relative to your build directory.
-
-For example, if you are in the source directory and you want the project files for Visual Studio to be generated
-in `./build/visualstudio`, then simply enter `mkdir build; cd build; mkdir visualstudio`. Then tell CMake to
-generate the build files in there by invokin
-
-```
-cmake -G "Visual Studio 15 2017 Win64" . ./../../CMakeLists.txt
-```
+The above build instructions perform in-source builds. However, it is recommended to perform
+out-of-source builds instead. For more information on out-of-source builds can be found
+[here](documentation/out-of-source-builds.md).
 
 ## Documentation
 The documentation of Nucleus is in the process of being converted to Markdown for being directly available on Github.

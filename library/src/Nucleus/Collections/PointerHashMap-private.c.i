@@ -13,7 +13,7 @@ getPosition
     dynamicPointerHashMap->hashKeyFunction(key, &position->hashValue);
     position->hashIndex = position->hashValue % dynamicPointerHashMap->capacity;
     position->node = NULL;
-    for (Nucleus_Collections_PointerHashMap_Node *node = dynamicPointerHashMap->buckets[position->hashIndex];
+    for (Node *node = dynamicPointerHashMap->buckets[position->hashIndex];
          NULL != node; node = node->next)
     {
         Nucleus_Boolean equalTo;
@@ -35,10 +35,10 @@ clear
 {
     for (Nucleus_Size i = 0, n = dynamicPointerHashMap->capacity; i < n; ++i)
     {
-        Nucleus_Collections_PointerHashMap_Node **bucket = &(dynamicPointerHashMap->buckets[i]);
+        Node **bucket = &(dynamicPointerHashMap->buckets[i]);
         while (*bucket)
         {
-            Nucleus_Collections_PointerHashMap_Node *node = *bucket; *bucket = node->next;
+            Node *node = *bucket; *bucket = node->next;
             if (dynamicPointerHashMap->unlockKeyFunction)
                 dynamicPointerHashMap->unlockKeyFunction(node->key);
             if (dynamicPointerHashMap->unlockValueFunction)

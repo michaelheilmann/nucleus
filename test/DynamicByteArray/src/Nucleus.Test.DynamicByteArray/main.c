@@ -1,4 +1,6 @@
+// Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Collections/ByteArray.h"
+#include "Nucleus.Test.DynamicByteArray/testCollection.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -199,6 +201,6 @@ Exit:
 
 int main(int argc, char **argv)
 {
-    if (test1() || test2() || test3()) return EXIT_FAILURE;
+    if (testCollection() || test1() || test2() || test3()) return EXIT_FAILURE;
     return EXIT_SUCCESS;
 }
