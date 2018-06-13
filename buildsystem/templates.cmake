@@ -13,6 +13,7 @@
 # 3) ${PROJECT_NAME}_SOURCE_FILES contains the source files.
 # 4) ${PROJECT_NAME}_HEADER_FILES contains the header files.
 # 5) ${PROJECT_NAME}_INLAY_FILES contains the inlay files.
+# 6) ${PROJECT_NAME}_OPERATING_SYSTEM_ID contains the (target) operating system ID.
 #
 # You can add additional source, header, and inlay files by prepopulating the lists
 # ${PROJECT_NAME}_SOURCE_FILES, ${PROJECT_NAME}_HEADER_FILES, and ${PROJECT_NAME}_INLAY_FILES.
@@ -21,7 +22,6 @@ include(${CMAKE_CURRENT_LIST_FILE}/../detect_operating_system.cmake)
 include(${CMAKE_CURRENT_LIST_FILE}/../detect_compiler_and_platform.cmake)
 
 macro(define_target_base parent_project_name project_name language)
-  # (1) ${project_name}_OPERATING_SYSTEM is defined.
   detect_operating_system(${project_name})
   if (${language} EQUAL ${NUCLEUS_LANGUAGE_ID_C})
     project (${project_name} C)
@@ -128,6 +128,29 @@ macro(define_test parent_project_name project_name language)
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endmacro()
 
+# Defines the CMake project of a "shared library".
+macro(define_shared_library parent_project_name project_name language)
+  define_target_base(${parent_project_name} ${project_name} ${language})
+
+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+  
+  add_library(${project_name} SHARED ${${project_name}_SOURCE_FILES}
+                                     ${${project_name}_HEADER_FILES}
+									 ${${project_name}_INLAY_FILES})
+
+  target_include_directories(${project_name} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+  target_include_directories(${project_name} INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+
+  set_project_default_properties(${parent_project_name} ${project_name})
+  
+  # Add the -fPIC flag to static libraries under Linux.
+  # This allows for linking dynamically loadable libraries to these static libraries.
+  # This hurts performance.
+  if (${${project_name}_OPERATING_SYSTEM_ID} EQUAL ${NUCLEUS_OPERATING_SYSTEM_ID_LINUX})
+    set_target_properties(${project_name} PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
+  endif()
+endmacro()
+
 # Defines the CMake project of a "static library".
 macro(define_static_library parent_project_name project_name language)
   define_target_base(${parent_project_name} ${project_name} ${language})
@@ -147,12 +170,6 @@ macro(define_static_library parent_project_name project_name language)
   if (${${project_name}_OPERATING_SYSTEM_ID} EQUAL ${NUCLEUS_OPERATING_SYSTEM_ID_LINUX})
     set_target_properties(${project_name} PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
   endif()
-
-  IF(DOXYGEN_FOUND)
-    ADD_CUSTOM_TARGET(${project_name}.Documentation ${DOXYGEN_EXECUTABLE} COMMENT "Building documentation")
-  ELSE(DOXYGEN_FOUND)
-    MESSAGE(STATUS "Doxygen not found. You won't be able to build documentation.")
-  ENDIF(DOXYGEN_FOUND)
 endmacro()
 
 # Defines the CMake project of an "executable".
