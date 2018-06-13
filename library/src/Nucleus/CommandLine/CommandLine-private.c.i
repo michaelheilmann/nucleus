@@ -3,27 +3,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#if (Nucleus_C_Compiler == Nucleus_C_Compiler_MSVC)
-static char *
-strndup
-    (
-        const char *s,
-        size_t n
-    )
-{
-    char *result;
-    size_t len = strlen(s);
-
-    if (n < len)
-        len = n;
-    if (Nucleus_allocateMemory((void **)&result, len + 1))
-    { return NULL; }
-
-    result[len] = '\0';
-    return (char *)memcpy(result, s, len);
-}
-#endif
-
 Nucleus_NonNull() static Nucleus_Status
 parseArgument
     (
@@ -55,8 +34,12 @@ parseArgument
             fprintf(stderr, "invalid command-line argument, expeted name\n");
             return Nucleus_Status_InvalidArgument;
         }
-        char *name = strndup(argument, p - argument);
-        if (Nucleus_Unlikely(!name)) { fprintf(stderr, "<internal error>\n"); return Nucleus_Status_AllocationFailed; }
+        //
+        char *name;
+        status = Nucleus_subString(&name, argument, 0, p - argument);
+        if (status)
+        { fprintf(stderr, "<internal error>\n"); return status; }
+        //
         Nucleus_CommandLine_Option *option;
         status = Nucleus_CommandLine_Command_getOption(command, name, &option);
         if (status && status != Nucleus_Status_NotExists)
@@ -73,8 +56,11 @@ parseArgument
         {
             p++;
         }
-        char *value = strndup(argument, p - argument);
-        if (Nucleus_Unlikely(!value)) { fprintf(stderr, "<internal error>\n"); return Nucleus_Status_AllocationFailed; }
+        //
+        char *value;
+        status = Nucleus_subString(&value, argument, 0, p - argument);
+        if (Nucleus_Unlikely(status))
+        { fprintf(stderr, "<internal error>\n"); return status; }
         status = Nucleus_CommandLine_Option_addParameter(option, value);
         if (status)
         { Nucleus_deallocateMemory(value); fprintf(stderr, "<internal error>\n"); return status; }
@@ -227,8 +213,8 @@ createOption
     if (status) return status;
     status = ParameterList_initialize(&self->parameterList);
     if (status) { Nucleus_deallocateMemory(self); return status; }
-    self->name = _strdup(optionName);
-    if (!self->name)
+    status = Nucleus_cloneString(&self->name, optionName);
+    if (status)
     {
         ParameterList_uninitialize(&self->parameterList);
         Nucleus_deallocateMemory(self);
@@ -268,8 +254,8 @@ createParameter
     Nucleus_CommandLine_Parameter *self = NULL;
     status = Nucleus_allocateMemory((void **)&self, sizeof(Nucleus_CommandLine_Parameter));
     if (status) return status;
-    self->value = _strdup(parameterValue);
-    if (!self->value)
+    status = Nucleus_cloneString(&self->value, parameterValue);
+    if (status)
     {
         Nucleus_deallocateMemory(self);
         return Nucleus_Status_AllocationFailed;
