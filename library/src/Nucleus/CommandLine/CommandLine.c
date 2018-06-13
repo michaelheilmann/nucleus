@@ -97,8 +97,8 @@ Nucleus_CommandLine_Command_addParameter
     Nucleus_CommandLine_Parameter *parameter = NULL;
     status = Nucleus_allocateMemory((void **)&parameter, sizeof(Nucleus_CommandLine_Parameter));
     if (status) return status;
-    parameter->value = _strdup(parameterValue);
-    if (!parameter->value)
+    status = Nucleus_cloneString(&parameter->value, parameterValue);
+    if (status)
     {
         Nucleus_deallocateMemory(parameter);
         return Nucleus_Status_AllocationFailed;

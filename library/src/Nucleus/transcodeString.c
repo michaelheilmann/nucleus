@@ -1,5 +1,5 @@
 // Copyright (c) 2018 Michael Heilmann
-#include "Nucleus/String.h"
+#include "Nucleus/transcodeString.h"
 
 #include "Nucleus/Memory.h"
 

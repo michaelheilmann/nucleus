@@ -6,7 +6,7 @@
 #include "Nucleus/IncludesWindows.h"
 #include "Nucleus/Memory.h"
 #include "Nucleus/Types/Size.h"
-#include "Nucleus/String.h"
+#include "Nucleus/transcodeString.h"
 
 // If defined to (1), print diagnostics on errors.
 #define Diagnostics (1)

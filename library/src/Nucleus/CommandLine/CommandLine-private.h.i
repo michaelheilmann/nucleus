@@ -6,19 +6,10 @@
 #include "Nucleus/Hash/Memory.h"
 #include "Nucleus/Collections/PointerArray.h"
 #include "Nucleus/Collections/PointerHashMap.h"
+#include "Nucleus/subString.h"
+#include "Nucleus/cloneString.h"
 #include <string.h> // For strcmp() and strdup().
 #include <stdio.h>  // For fprintf().
-
-#if defined(Nucleus_Compiler_MSVC)
-static char *
-strndup
-    (
-        const char *s,
-        size_t n
-    );
-#else
-#define _strdup strdup
-#endif
 
 Nucleus_NonNull() static Nucleus_Status
 parseArgument
