@@ -3,9 +3,12 @@
 # Assert minimum CMake version.
 cmake_minimum_required(VERSION 3.8)
 
+# The path to "Nucleus".
 if (NOT NUCLEUS_PATH)
   set(NUCLEUS_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
+
+# Include the "Nucleus" build system.
 if (NUCLEUS_PATH)
   include(${NUCLEUS_PATH}/buildsystem/buildsystem.cmake)
 endif()
