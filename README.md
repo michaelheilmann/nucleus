@@ -1,6 +1,9 @@
 # Nucleus
 
-Nucleus is a C cross-platform utility library for Windows 10, Cygwin, Linux, and macOS.
+Nucleus is a cross-platform C library for Windows 10, Cygwin, Linux, and macOS protecting      from
+compiler and operating system idiosyncracies. It provides aggregate, annotation,  atomic operation,
+concurrency, command-line, file system, memory management, and Unicode functionality,     and more.
+
 Nucleus is made available publicly under the
 [MIT license](LICENSE.md)
 on
@@ -187,7 +190,7 @@ Its documentation can be found [here](documentation/Nucleus_Collections_ByteArra
 
 ## Continuous Integrations Status Maxtrix
 
-|              | master                                                                                                                                                                          | develop |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| **Travis**   | [![Build Status](https://travis-ci.org/primordialmachine/nucleus.svg?branch=master)](https://travis-ci.org/primordialmachine/nucleus)                                           |    -    |
-| **AppVeyor** | [![Build status](https://ci.appveyor.com/api/projects/status/c6ualudcnt8h9pco/branch/master?svg=true)](https://ci.appveyor.com/project/primordialmachine/nucleus/branch/master) |    -    |
+|              | master                                                                                                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Travis**   | [![Build Status](https://travis-ci.org/primordialmachine/nucleus.svg?branch=master)](https://travis-ci.org/primordialmachine/nucleus)                                           |
+| **AppVeyor** | [![Build status](https://ci.appveyor.com/api/projects/status/c6ualudcnt8h9pco/branch/master?svg=true)](https://ci.appveyor.com/project/primordialmachine/nucleus/branch/master) |
