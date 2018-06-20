@@ -213,3 +213,60 @@ Nucleus_Collections_PointerArray_clear
     }
     return Nucleus_Status_Success;
 }
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_Enumerator_initialize
+    (
+        Nucleus_Collections_PointerArray_Enumerator *enumerator,
+        Nucleus_Collections_PointerArray *source
+    )
+{
+    enumerator->source = source;
+    enumerator->index = 0;
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_Enumerator_uninitialize
+    (
+        Nucleus_Collections_PointerArray_Enumerator *enumerator
+    )
+{ return Nucleus_Status_Success; }
+
+Nucleus_NonNull() Nucleus_Status 
+Nucleus_Collections_PointerArray_Enumerator_nextValue
+    (
+        Nucleus_Collections_PointerArray_Enumerator *enumerator
+    )
+{
+    if (enumerator->index == enumerator->source->size)
+    {
+        return Nucleus_Status_Success;
+    }
+    enumerator->index++;
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_Enumerator_hasValue
+    (
+        Nucleus_Collections_PointerArray_Enumerator *enumerator,
+        Nucleus_Boolean *hasValue
+    )
+{
+    if (Nucleus_Unlikely(!enumerator || !hasValue)) return Nucleus_Status_InvalidArgument;
+    *hasValue = enumerator->index < enumerator->source->size;
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_Enumerator_getValue
+    (
+        Nucleus_Collections_PointerArray_Enumerator *enumerator,
+        void **value
+    )
+{
+    if (Nucleus_Unlikely(!enumerator || !value)) return Nucleus_Status_InvalidArgument;
+    *value = enumerator->source->elements[enumerator->index];
+    return Nucleus_Status_Success;
+}

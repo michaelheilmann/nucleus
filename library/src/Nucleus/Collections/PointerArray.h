@@ -119,3 +119,44 @@ Nucleus_Collections_PointerArray_clear
     (
         Nucleus_Collections_PointerArray *dynamicPointerArray
     );
+
+typedef struct Nucleus_Collections_PointerArray_Enumerator Nucleus_Collections_PointerArray_Enumerator;
+
+struct Nucleus_Collections_PointerArray_Enumerator
+{
+    Nucleus_Collections_PointerArray *source;
+    Nucleus_Size index;
+}; // struct Nucleus_Collections_PointerArray_Enumerator
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_Enumerator_initialize
+    (
+        Nucleus_Collections_PointerArray_Enumerator *enumerator,
+        Nucleus_Collections_PointerArray *source
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_Enumerator_uninitialize
+    (
+        Nucleus_Collections_PointerArray_Enumerator *enumerator
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_Enumerator_nextValue
+    (
+        Nucleus_Collections_PointerArray_Enumerator *enumerator
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_Enumerator_hasValue
+    (
+        Nucleus_Collections_PointerArray_Enumerator *enumerator,
+        Nucleus_Boolean *hasValue
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerArray_Enumerator_getValue
+    (
+        Nucleus_Collections_PointerArray_Enumerator *enumerator,
+        void **value
+    );
