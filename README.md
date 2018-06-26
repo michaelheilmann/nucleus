@@ -154,7 +154,7 @@ Its documentation can be found [here](documentation/Nucleus_Collections_ByteArra
 
 - [Nucleus_Collections_ByteArray_at,
    Nucleus_Collections_PointerArray_at,
-   Nucleus_Collections_PointerDeque_at](documentation/Nucleus_Collections_[Array-Collection-Type]_at.md).
+   Nucleus_Collections_PointerDeque_at](documentation/Nucleus_Collections_[ArrayCollection]_at.md).
 
 - [Nucleus_Collections_ByteArray_getSize,
    Nucleus_Collections_PointerArray_getSize,
@@ -162,15 +162,15 @@ Its documentation can be found [here](documentation/Nucleus_Collections_ByteArra
 
 - [Nucleus_Collections_ByteArray_getCapacity,
    Nucleus_Collections_PointerArray_getCapacity,
-   Nucleus_Collections_PointerDeque_getCapacity](documentation/Nucleus_Collections_[Array-Collection-Type]_getCapacity.md).
+   Nucleus_Collections_PointerDeque_getCapacity](documentation/Nucleus_Collections_[ArrayCollection]_getCapacity.md).
 
 - [Nucleus_Collections_ByteArray_getFreeCapacity,
    Nucleus_Collections_PointerArray_getFreeCapacity,
-   Nucleus_Collections_PointerDeque_getFreeCapacity](documentation/Nucleus_Collections_[Array-Collection-Type]_getFreeCapacity.md).
+   Nucleus_Collections_PointerDeque_getFreeCapacity](documentation/Nucleus_Collections_[ArrayCollection]_getFreeCapacity.md).
 
 - [Nucleus_Collections_ByteArray_ensureFreeCapacity,
    Nucleus_Collections_PointerArray_ensureFreeCapacity,
-   Nucleus_Collections_PointerDeque_ensureFreeCapacity](documentation/Nucleus_Collections_[Array-Collection-Type]_ensureFreeCapacity.md)
+   Nucleus_Collections_PointerDeque_ensureFreeCapacity](documentation/Nucleus_Collections_[ArrayCollection]_ensureFreeCapacity.md)
 
 - [Nucleus_Collections_ByteArray_clear,
    Nucleus_Collections_PointerArray_clear,
@@ -178,15 +178,15 @@ Its documentation can be found [here](documentation/Nucleus_Collections_ByteArra
 
 - [Nucleus_Collections_ByteArray_insert,
    Nucleus_Collections_PointerArray_insert,
-   Nucleus_Collections_PointerDeque_insert](documentation/Nucleus_Collections_[Array-Collection-Type]_insert.md).
+   Nucleus_Collections_PointerDeque_insert](documentation/Nucleus_Collections_[ArrayCollection]_insert.md).
 
 - [Nucleus_Collections_ByteArray_append,
    Nucleus_Collections_PointerArray_append,
-   Nucleus_Collections_PointerDeque_append](documentation/Nucleus_Collections_[Array-Collection-Type]_append.md).
+   Nucleus_Collections_PointerDeque_append](documentation/Nucleus_Collections_[ArrayCollection]_append.md).
 
 - [Nucleus_Collections_ByteArray_prepend,
    Nucleus_Collections_PointerArray_prepend,
-   Nucleus_Collections_PointerDeque_prepend](documentation/Nucleus_Collections_[Array-Collection-Type]_prepend.md).
+   Nucleus_Collections_PointerDeque_prepend](documentation/Nucleus_Collections_[ArrayCollection]_prepend.md).
 
 ## Continuous Integrations Status Maxtrix
 

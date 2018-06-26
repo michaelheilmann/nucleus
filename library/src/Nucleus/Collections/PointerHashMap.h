@@ -26,7 +26,7 @@ struct Nucleus_Collections_PointerHashMap
 }; // struct Nucleus_Collections_PointerHashMap
 
 // https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Collections_PointerHashMap_initialize.md
-Nucleus_NonNull() Nucleus_Status
+Nucleus_NonNull(1) Nucleus_Status
 Nucleus_Collections_PointerHashMap_initialize
     (
         Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
@@ -43,13 +43,13 @@ Nucleus_Collections_PointerHashMap_initialize
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_uninitialize
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap
+        Nucleus_Collections_PointerHashMap *pointerHashMap
     );
 
 Nucleus_NonNull(1) Nucleus_Status
 Nucleus_Collections_PointerHashMap_set
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
         void *key,
         void *value,
         Nucleus_Boolean replace
@@ -58,7 +58,7 @@ Nucleus_Collections_PointerHashMap_set
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_get
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
         void *key,
         void **value
     );
@@ -66,23 +66,35 @@ Nucleus_Collections_PointerHashMap_get
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_clear
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap
+        Nucleus_Collections_PointerHashMap *pointerHashMap
     );
 
-// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Collections_[Collection-Type]_getSize.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Collections_[Collection]_getSize.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_getSize
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
         Nucleus_Size *size
     );
 
-// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Collections_[Array-Collection-Type]_getCapacity.md
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Collections_[ArrayCollection]_getCapacity.md
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_getCapacity
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
         Nucleus_Size *capacity
+    );
+
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Collections_[MapCollection]_removeExtended.md
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_removeExtended
+    (
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
+        void *key,
+		void **storedKey,
+		void **storedValue,
+		Nucleus_Boolean invokeUnlockKey,
+		Nucleus_Boolean invokeUnlockValue
     );
 
 typedef struct Nucleus_Collections_PointerHashMap_Enumerator Nucleus_Collections_PointerHashMap_Enumerator;
