@@ -1,10 +1,10 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Collections/PointerHashMap-private.c.i"
 
-Nucleus_NonNull() Nucleus_Status
+Nucleus_NonNull(1) Nucleus_Status
 Nucleus_Collections_PointerHashMap_initialize
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
         Nucleus_Size initialCapacity,
         Nucleus_LockFunction *lockKeyFunction,
         Nucleus_UnlockFunction *unlockKeyFunction,
@@ -14,30 +14,30 @@ Nucleus_Collections_PointerHashMap_initialize
         Nucleus_UnlockFunction *unlockValueFunction
     )
 {
-    if (Nucleus_Unlikely(!dynamicPointerHashMap)) return Nucleus_Status_InvalidArgument;
+    if (Nucleus_Unlikely(!pointerHashMap)) return Nucleus_Status_InvalidArgument;
     
     initialCapacity = initialCapacity > 0 ? initialCapacity : 1;
     
-    Nucleus_Status status = Nucleus_allocateArrayMemory((void **)&dynamicPointerHashMap->buckets,
+    Nucleus_Status status = Nucleus_allocateArrayMemory((void **)&pointerHashMap->buckets,
                                                         initialCapacity,
                                                         sizeof(Node *));
     if (Nucleus_Unlikely(status)) return status;
     for (Nucleus_Size i = 0, n = initialCapacity; i < n; ++i)
     {
-        dynamicPointerHashMap->buckets[i] = NULL;
+        pointerHashMap->buckets[i] = NULL;
     }
 
-    dynamicPointerHashMap->size = 0;
-    dynamicPointerHashMap->capacity = initialCapacity;
+    pointerHashMap->size = 0;
+    pointerHashMap->capacity = initialCapacity;
 
-    dynamicPointerHashMap->unused = NULL;
+    pointerHashMap->unused = NULL;
 
-    dynamicPointerHashMap->lockKeyFunction = lockKeyFunction;
-    dynamicPointerHashMap->unlockKeyFunction = unlockKeyFunction;
-    dynamicPointerHashMap->hashKeyFunction = hashKeyFunction;
-    dynamicPointerHashMap->keyEqualToKeyFunction = keyEqualToKeyFunction;
-    dynamicPointerHashMap->lockValueFunction = lockValueFunction;
-    dynamicPointerHashMap->unlockValueFunction = unlockValueFunction;
+    pointerHashMap->lockKeyFunction = lockKeyFunction;
+    pointerHashMap->unlockKeyFunction = unlockKeyFunction;
+    pointerHashMap->hashKeyFunction = hashKeyFunction;
+    pointerHashMap->keyEqualToKeyFunction = keyEqualToKeyFunction;
+    pointerHashMap->lockValueFunction = lockValueFunction;
+    pointerHashMap->unlockValueFunction = unlockValueFunction;
     
     return Nucleus_Status_Success;
 }
@@ -45,19 +45,19 @@ Nucleus_Collections_PointerHashMap_initialize
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_uninitialize
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap
+        Nucleus_Collections_PointerHashMap *pointerHashMap
     )
 {
-    clear(dynamicPointerHashMap);
+    clear(pointerHashMap);
 
-    Nucleus_deallocateMemory(dynamicPointerHashMap->buckets);
-    dynamicPointerHashMap->buckets = NULL;
-    dynamicPointerHashMap->capacity = 0;
+    Nucleus_deallocateMemory(pointerHashMap->buckets);
+    pointerHashMap->buckets = NULL;
+    pointerHashMap->capacity = 0;
 
-    while(dynamicPointerHashMap->unused)
+    while(pointerHashMap->unused)
     {
-        Node *node = dynamicPointerHashMap->unused;
-        dynamicPointerHashMap->unused = node->next;
+        Node *node = pointerHashMap->unused;
+        pointerHashMap->unused = node->next;
         Nucleus_deallocateMemory(node);
     }
     return Nucleus_Status_Success;
@@ -66,29 +66,29 @@ Nucleus_Collections_PointerHashMap_uninitialize
 Nucleus_NonNull(1) Nucleus_Status
 Nucleus_Collections_PointerHashMap_set
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
         void *key,
         void *value,
         Nucleus_Boolean replace
     )
 {
     Position position;
-    Nucleus_Status status = getPosition(dynamicPointerHashMap, key, &position);
+    Nucleus_Status status = getPosition(pointerHashMap, key, &position);
     if (status) return status;
-    if (position.node)
+    if (position.current)
     {
         if (replace)
         {
-            if (dynamicPointerHashMap->lockKeyFunction)
-                dynamicPointerHashMap->lockKeyFunction(key);
-            if (dynamicPointerHashMap->lockValueFunction)
-                dynamicPointerHashMap->lockValueFunction(value);
-            if (dynamicPointerHashMap->unlockKeyFunction)
-                dynamicPointerHashMap->unlockKeyFunction(position.node->key);
-            if (dynamicPointerHashMap->unlockValueFunction)
-                dynamicPointerHashMap->unlockValueFunction(position.node->value);
-            position.node->key = key;
-            position.node->value = value;
+            if (pointerHashMap->lockKeyFunction)
+                pointerHashMap->lockKeyFunction(key);
+            if (pointerHashMap->lockValueFunction)
+                pointerHashMap->lockValueFunction(value);
+            if (pointerHashMap->unlockKeyFunction)
+                pointerHashMap->unlockKeyFunction(position.current->key);
+            if (pointerHashMap->unlockValueFunction)
+                pointerHashMap->unlockValueFunction(position.current->value);
+            position.current->key = key;
+            position.current->value = value;
             return Nucleus_Status_Success;
         }
         else
@@ -97,24 +97,24 @@ Nucleus_Collections_PointerHashMap_set
         }
     }
     Node *node = NULL;
-    if (dynamicPointerHashMap->unused)
+    if (pointerHashMap->unused)
     {
-        node = dynamicPointerHashMap->unused; dynamicPointerHashMap->unused = node->next;
+        node = pointerHashMap->unused; pointerHashMap->unused = node->next;
     }
     else
     {
         status = Nucleus_allocateMemory((void **)&node, sizeof(Node));
         if (status) return status;
     }
-    if (dynamicPointerHashMap->lockKeyFunction)
-        dynamicPointerHashMap->lockKeyFunction(key);
-    if (dynamicPointerHashMap->lockValueFunction)
-        dynamicPointerHashMap->lockValueFunction(value);
+    if (pointerHashMap->lockKeyFunction)
+        pointerHashMap->lockKeyFunction(key);
+    if (pointerHashMap->lockValueFunction)
+        pointerHashMap->lockValueFunction(value);
     node->key = key;
     node->value = value;
-    node->next = dynamicPointerHashMap->buckets[position.hashIndex];
-    dynamicPointerHashMap->buckets[position.hashIndex] = node;
-    dynamicPointerHashMap->size++;
+    node->next = pointerHashMap->buckets[position.hashIndex];
+    pointerHashMap->buckets[position.hashIndex] = node;
+    pointerHashMap->size++;
     /// TODO: Invoke Optimize which resizes the hash map. If resizing fails, there is no error.
     return Nucleus_Status_Success;
 }
@@ -122,50 +122,94 @@ Nucleus_Collections_PointerHashMap_set
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_get
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
         void *key,
         void **value
     )
 {
     Position position;
-    Nucleus_Status status = getPosition(dynamicPointerHashMap, key, &position);
+    Nucleus_Status status = getPosition(pointerHashMap, key, &position);
     if (status) return status;
-    if (position.node) { *value = position.node->value; return Nucleus_Status_Success; }
-    else return Nucleus_Status_NotExists;
+    if (position.current)
+    {
+        *value = position.current->value;
+        return Nucleus_Status_Success;
+    }
+    else
+    {
+        return Nucleus_Status_NotExists;
+    }
 }
 
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_clear
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap
+        Nucleus_Collections_PointerHashMap *pointerHashMap
     )
 {
-    clear(dynamicPointerHashMap);
+    clear(pointerHashMap);
     return Nucleus_Status_Success;
 }
 
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_getSize
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
         Nucleus_Size *size
     )
  {
-    if (Nucleus_Unlikely(!dynamicPointerHashMap || !size)) return Nucleus_Status_InvalidArgument;
-    *size = dynamicPointerHashMap->size;
+    if (Nucleus_Unlikely(!pointerHashMap || !size)) return Nucleus_Status_InvalidArgument;
+    *size = pointerHashMap->size;
     return Nucleus_Status_Success;
  }
 
 Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_getCapacity
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
         Nucleus_Size *capacity
     )
 {
-    if (Nucleus_Unlikely(!dynamicPointerHashMap || !capacity)) return Nucleus_Status_InvalidArgument;
-    *capacity = dynamicPointerHashMap->capacity;
+    if (Nucleus_Unlikely(!pointerHashMap || !capacity)) return Nucleus_Status_InvalidArgument;
+    *capacity = pointerHashMap->capacity;
     return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_removeExtended
+    (
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
+        void *key,
+        void **storedKey,
+        void **storedValue,
+        Nucleus_Boolean invokeUnlockKey,
+        Nucleus_Boolean invokeUnlockValue
+    )
+{
+    ExtendedPosition position;
+    Nucleus_Status status = getExtendedPosition(pointerHashMap, key, &position);
+    if (status) return status;
+    if (position.current)
+    {
+        *storedKey = position.current->key;
+        *storedValue = position.current->value;
+        if (invokeUnlockKey && pointerHashMap->unlockKeyFunction)
+        {
+            pointerHashMap->unlockKeyFunction(*storedKey);
+        }
+        if (invokeUnlockValue && pointerHashMap->unlockValueFunction)
+        {
+            pointerHashMap->unlockValueFunction(*storedValue);
+        }
+        *position.previous = position.current->next;
+        pointerHashMap->size--;
+        position.current->key = NULL;
+        position.current->value = NULL;
+        position.current->next = pointerHashMap->unused;
+        pointerHashMap->unused = position.current;
+        return Nucleus_Status_Success;
+    }
+    else return Nucleus_Status_NotExists;
 }
 
 Nucleus_NonNull() Nucleus_Status

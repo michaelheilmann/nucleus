@@ -1,26 +1,59 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Collections/PointerHashMap-private.h.i"
 
+Nucleus_NonNull() static Nucleus_Status
+getExtendedPosition
+	(
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
+        void *key,
+        ExtendedPosition *position
+	)
+{
+    pointerHashMap->hashKeyFunction(key, &position->hashValue);
+    position->hashIndex = position->hashValue % pointerHashMap->capacity;
+    position->current = NULL;
+	position->previous = NULL;
+	Node **previous = &pointerHashMap->buckets[position->hashIndex];
+	Node *current = *previous;
+    while (current)
+    {
+        Nucleus_Boolean equalTo;
+        pointerHashMap->keyEqualToKeyFunction(key, current->key, &equalTo);
+        if (equalTo)
+        {
+			position->previous = previous;
+            position->current = current;
+            break;
+        }
+		else
+		{
+			previous = &current->next;
+			current = current->next;
+		}
+    }
+    return Nucleus_Status_Success;
+}
+
 Nucleus_NonNull() static Nucleus_Status 
 getPosition
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap,
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
         void *key,
         Position *position
     )
 {
-    if (!dynamicPointerHashMap) return Nucleus_Status_InvalidArgument;
-    dynamicPointerHashMap->hashKeyFunction(key, &position->hashValue);
-    position->hashIndex = position->hashValue % dynamicPointerHashMap->capacity;
-    position->node = NULL;
-    for (Node *node = dynamicPointerHashMap->buckets[position->hashIndex];
+    if (!pointerHashMap) return Nucleus_Status_InvalidArgument;
+    pointerHashMap->hashKeyFunction(key, &position->hashValue);
+    position->hashIndex = position->hashValue % pointerHashMap->capacity;
+    position->current = NULL;
+    for (Node *node = pointerHashMap->buckets[position->hashIndex];
          NULL != node; node = node->next)
     {
         Nucleus_Boolean equalTo;
-        dynamicPointerHashMap->keyEqualToKeyFunction(key, node->key, &equalTo);
+        pointerHashMap->keyEqualToKeyFunction(key, node->key, &equalTo);
         if (equalTo)
         {
-            position->node = node;
+            position->current = node;
             break;
         }
     }
@@ -30,22 +63,22 @@ getPosition
 Nucleus_NonNull() static void
 clear
     (
-        Nucleus_Collections_PointerHashMap *dynamicPointerHashMap
+        Nucleus_Collections_PointerHashMap *pointerHashMap
     )
 {
-    for (Nucleus_Size i = 0, n = dynamicPointerHashMap->capacity; i < n; ++i)
+    for (Nucleus_Size i = 0, n = pointerHashMap->capacity; i < n; ++i)
     {
-        Node **bucket = &(dynamicPointerHashMap->buckets[i]);
+        Node **bucket = &(pointerHashMap->buckets[i]);
         while (*bucket)
         {
             Node *node = *bucket; *bucket = node->next;
-            if (dynamicPointerHashMap->unlockKeyFunction)
-                dynamicPointerHashMap->unlockKeyFunction(node->key);
-            if (dynamicPointerHashMap->unlockValueFunction)
-                dynamicPointerHashMap->unlockValueFunction(node->value);
-            dynamicPointerHashMap->size--;
-            node->next = dynamicPointerHashMap->unused;
-            dynamicPointerHashMap->unused = node;
+            if (pointerHashMap->unlockKeyFunction)
+                pointerHashMap->unlockKeyFunction(node->key);
+            if (pointerHashMap->unlockValueFunction)
+                pointerHashMap->unlockValueFunction(node->value);
+            pointerHashMap->size--;
+            node->next = pointerHashMap->unused;
+            pointerHashMap->unused = node;
         }
     }
 }
