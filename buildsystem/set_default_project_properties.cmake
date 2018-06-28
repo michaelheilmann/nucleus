@@ -12,25 +12,29 @@ ENDIF()
 
 # == Default project settings =================================================================== #
 
+# Macro adjusting (mostly compiler-specific) properties of a C++ project.
 # Macro adjusting (mostly compiler-specific) properties of a project.
 macro(set_project_default_properties module target)
-  if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
-    #message("case of MSVC C or C++: add_definitions(-DUNICODE -D_UNICODE)")
+  # For Microsoft Visual C++ (C and C++): Define UNICODE and _UNICODE.
+  if (${${target}_C_COMPILER_ID}   EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR
+      ${${target}_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
+    #message("case of Microsoft Visual C++ (C++): add_definitions(-DUNICODE -D_UNICODE)")
     target_compile_options(${target} PRIVATE -DUNICODE -D_UNICODE)
   endif()
 
-  # Set the C++ standard to C++ 17.
-  if (${${target}_LANGUAGE} EQUAL ${NUCLEUS_LANGUAGE_ID_CPP})
-    if (NOT (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC}))
-      #message("case of neither MSVC C nor MSVC C++: set(CMAKE_CXX_STANDARD 17)")
+  # For non-Microsoft Visual C++ (C or C++): Set the C++ standard to C++ 17.
+  # TODO: Superseed with an appropriate call to target_compile_options.
+  if (${${target}_LANGUAGE_ID} EQUAL ${NUCLEUS_LANGUAGE_ID_CPP})
+    if (NOT (${${target}_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC}))
+      #message("case of neither Microsoft Visual C++ (C) nor Microsoft Visual C++ (C++): set(CMAKE_CXX_STANDARD 17)")
       set(CMAKE_CXX_STANDARD 17)
     endif()
   endif()
-
+  
   # GNU GCC (C/C++) settings
-  if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
+  if (${${target}_C_COMPILER_ID}   EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR
+      ${${target}_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
     #message("case of GCC (C/C++)")
-    # Set standard to C++ 17, enable -Wall and -Wextra
     target_compile_options(${target} PRIVATE -Wall -Wextra -D_GNU_SOURCE)
     target_compile_options(${target} PRIVATE -Werror=implicit-function-declaration)
     target_compile_options(${target} PRIVATE -Werror=incompatible-pointer-types)
@@ -42,7 +46,8 @@ macro(set_project_default_properties module target)
   endif()
 
   # GNU GCC (C/C++) settings
-  if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
+  if (${${target}_C_COMPILER_ID}   EQUAL ${NUCLEUS_C_COMPILER_ID_GCC} OR
+      ${${target}_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
     #message("case of GCC (C/C++)")
     if (${target}-With-Optimizations AND ${target}-With-Debug-Information)
         message("  - enabling optimizations and debug information")
@@ -66,23 +71,23 @@ macro(set_project_default_properties module target)
   endif()
 
   # GNU GCC (C++) specific settings
-  if (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
+  if (${${target}_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_GCC})
     #message("case of GCC (C++)")
     # If language is C++, then the GNU C++ 17 shall be used.
-	if (${${target}_LANGUAGE} EQUAL ${NUCLEUS_LANGUAGE_ID_CPP})
+	if (${${target}_LANGUAGE_ID} EQUAL ${NUCLEUS_LANGUAGE_ID_CPP})
       target_compile_options(${target} PRIVATE -std=gnu++17)
 	endif()
     # If language is C++, then disable some warnings.
     # TODO: Idlib can have these warnings enabled.
-    if (${${target}_LANGUAGE} EQUAL ${NUCLEUS_LANGUAGE_ID_CPP})
+    if (${${target}_LANGUAGE_ID} EQUAL ${NUCLEUS_LANGUAGE_ID_CPP})
       target_compile_options(${target} PRIVATE -Wno-reorder)
 	endif()
     target_compile_options(${target} PRIVATE -Wno-sign-compare -Wno-missing-braces -Wno-unused-parameter)
   endif()
 
-  # (2) MSVC C++ settings
+  # (2) Microsoft Visual C++ (C++) settings
   # TODO: Raise an error if the MSVC version is too low.
-  if (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
+  if (${${target}_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
     #message("case of MSVC (C++)")
     if (MSVC_VERSION GREATER_EQUAL "1900")
       include(CheckCXXCompilerFlag)
@@ -93,8 +98,9 @@ macro(set_project_default_properties module target)
     endif()
   endif()
 
-  # (2) MSVC (C/C++) settings
-  if (${NUCLEUS_C_COMPILER_ID} EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR ${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
+  # (2) Microsoft Visual C++ (C and C++) settings
+  if (${${target}_C_COMPILER_ID}   EQUAL ${NUCLEUS_C_COMPILER_ID_MSVC} OR
+      ${${target}_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
     #message("case of MSVC (C/C++)")
     set(variables
         CMAKE_C_FLAGS_DEBUG
@@ -139,58 +145,63 @@ macro(set_project_default_properties module target)
   endif()
 
   # (3) MSVC C++ settings
-  if (${NUCLEUS_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
+  # TODO: Superseed with an appropriate call to target_compile_options.
+  if (${${target}_CPP_COMPILER_ID} EQUAL ${NUCLEUS_CPP_COMPILER_ID_MSVC})
     #message("case of MSVC (C++)")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
   endif()
-endmacro(set_project_default_properties)
-
-# For configuring the output paths, we distinguish between single- and multi-target generators.
-if (NUCLEUS_IS_MULTI_TARGET_GENERATOR)
-  #message("multi-target generator")
-  # For multi-target generators like MSVC, we specify disjoint output paths for targets.
-  foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
-    # Suffix for CMake's configuration type specific output path variables.
-    string( TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG )
-    # The name of the output configuration as used in the pathnames.
-    string( TOLOWER ${OUTPUTCONFIG} OUTPUTCONFIG_FOLDER_NAME)
-    # The name of the output platform as used in the pathnames.
-    if (${NUCLEUS_PLATFORM_ID} EQUAL ${NUCLEUS_PLATFORM_ID_X64})
-       set(OUTPUTPLATFORM_FOLDER_NAME "x64")
-    elseif (${NUCLEUS_PLATFORM_ID} EQUAL ${NUCLEUS_PLATFORM_ID_X86})
-       set(OUTPUTPLATFORM_FOLDER_NAME "x86")
-    else()
-        message(FATAL_ERROR "unhandled enumeration element")    
-    endif()
-    #message("  - Nucleus Platform Id: x86")
-    #message("  - path for CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} is")
-    #message("    ${CMAKE_BINARY_DIR}/products/${OUTPUTCONFIG_FOLDER_NAME}/${OUTPUTPLATFORM_FOLDER_NAME}/bin")
-    set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/products/${OUTPUTCONFIG_FOLDER_NAME}/${OUTPUTPLATFORM_FOLDER_NAME}/bin )
-    #message("  - path for CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} is")
-    #message("    ${CMAKE_BINARY_DIR}/products/${OUTPUTCONFIG_FOLDER_NAME}/${OUTPUTPLATFORM_FOLDER_NAME}/lib")
-    set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/products/${OUTPUTCONFIG_FOLDER_NAME}/${OUTPUTPLATFORM_FOLDER_NAME}/lib )
-    #message("  - path for CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} is")
-    #message("    ${CMAKE_BINARY_DIR}/products/${OUTPUTCONFIG_FOLDER_NAME}/${OUTPUTPLATFORM_FOLDER_NAME}/lib")
-    set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/products/${OUTPUTCONFIG_FOLDER_NAME}/${OUTPUTPLATFORM_FOLDER_NAME}/lib )
-  endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
-else()
-    #message("single-target generator")
   
-  # The name of the output platform as used in the pathnames.
-  if (${NUCLEUS_PLATFORM_ID} EQUAL ${NUCLEUS_PLATFORM_ID_X64})
-     set(OUTPUTPLATFORM_FOLDER_NAME "x64")
-  elseif (${NUCLEUS_PLATFORM_ID} EQUAL ${NUCLEUS_PLATFORM_ID_X86})
-     set(OUTPUTPLATFORM_FOLDER_NAME "x86")
+  # For configuring the output paths, we distinguish between single- and multi-target generators.
+  if (${target}_IS_MULTI_TARGET_GENERATOR)
+
+    # For multi-target generators like MSVC, we specify disjoint output paths for targets.
+    foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
+	  
+	  # Suffix for CMake's configuration type specific output path variables.
+	  string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
+	  
+	  # The name of the output configuration as used in the pathnames.
+	  string(TOLOWER ${OUTPUTCONFIG} OUTPUTCONFIG_FOLDER_NAME)
+	  
+	  # The name of the output platform as used in the pathnames.
+	  if (${${target}_ISA_ID} EQUAL ${NUCLEUS_ISA_ID_X64})
+	    set(OUTPUTPLATFORM_FOLDER_NAME "x64")
+	  elseif (${${target}_ISA_ID} EQUAL ${NUCLEUS_ISA_ID_X86})
+	    set(OUTPUTPLATFORM_FOLDER_NAME "x86")
+	  else()
+		message(FATAL_ERROR "unhandled enumeration element")    
+	  endif()
+	
+      #
+	  set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/products/${OUTPUTCONFIG_FOLDER_NAME}/${OUTPUTPLATFORM_FOLDER_NAME}/bin )
+	  
+	  #
+	  set_target_properties(${target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/products/${OUTPUTCONFIG_FOLDER_NAME}/${OUTPUTPLATFORM_FOLDER_NAME}/lib )
+	  
+	  #
+	  set_target_properties(${target} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/products/${OUTPUTCONFIG_FOLDER_NAME}/${OUTPUTPLATFORM_FOLDER_NAME}/lib )
+    
+	endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
+  
   else()
-    message(FATAL_ERROR "unhandled enumeration element")    
-  endif()
+	
+	# The name of the output ISA (Instruction Set Architecture) is used in the pathnames.
+    if (${${target}_ISA_ID} EQUAL ${NUCLEUS_ISA_ID_X64})
+	  set(OUTPUTPLATFORM_FOLDER_NAME "x64")
+    elseif (${${target}_ISA_ID} EQUAL ${NUCLEUS_ISA_ID_X86})
+	  set(OUTPUTPLATFORM_FOLDER_NAME "x86")
+    else()
+	  message(FATAL_ERROR "unhandled enumeration element")    
+    endif()
   
-  # Adjust the archive output directory.
-  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/products/${OUTPUTPLATFORM_FOLDER_NAME}/lib)
+    # Adjust the archive output directory.
+    set_target_properties(${target} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/products/${OUTPUTPLATFORM_FOLDER_NAME}/lib)
 
-  # Adjust the library output directory.
-  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/products/${OUTPUTPLATFORM_FOLDER_NAME}/lib)
+    # Adjust the library output directory.
+    set_target_properties(${target} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/products/${OUTPUTPLATFORM_FOLDER_NAME}/lib)
 
-  # Adjust the runtime output directory.
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/products/${OUTPUTPLATFORM_FOLDER_NAME}/bin)
-endif()
+    # Adjust the runtime output directory.
+    set_target_properties(${target} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/products/${OUTPUTPLATFORM_FOLDER_NAME}/bin)
+  endif()
+
+endmacro(set_project_default_properties)

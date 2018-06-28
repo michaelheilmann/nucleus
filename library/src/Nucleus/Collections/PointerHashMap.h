@@ -6,6 +6,9 @@
 #include "Nucleus/Types/Boolean.h"
 #include "Nucleus/Types/Size.h"
 
+#define Nucleus_Collections_PointerHashMap_WithConstantEnumerator (1)
+#define Nucleus_Collections_PointerHashMap_WithEnumerator (1)
+
 typedef struct Node Node;
 
 typedef struct Nucleus_Collections_PointerHashMap Nucleus_Collections_PointerHashMap;
@@ -97,13 +100,75 @@ Nucleus_Collections_PointerHashMap_removeExtended
 		Nucleus_Boolean invokeUnlockValue
     );
 
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_Collections_[MapCollection]_remove.md
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_remove
+    (
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
+        void *key
+    );
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#if defined (Nucleus_Collections_PointerHashMap_WithConstantEnumerator) && 1 == Nucleus_Collections_PointerHashMap_WithConstantEnumerator
+
+typedef struct Nucleus_Collections_PointerHashMap_ConstantEnumerator Nucleus_Collections_PointerHashMap_ConstantEnumerator;
+
+struct Nucleus_Collections_PointerHashMap_ConstantEnumerator
+{
+    Nucleus_Collections_PointerHashMap *source;
+    Nucleus_Size bucketIndex;
+    Node *current;
+}; // struct Nucleus_Collections_PointerHashMap_ConstantEnumerator
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_ConstantEnumerator_initialize
+    (
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator *enumerator,
+        Nucleus_Collections_PointerHashMap *source
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_ConstantEnumerator_uninitialize
+    (
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator *enumerator
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_ConstantEnumerator_next
+    (
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator *enumerator
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_ConstantEnumerator_hasValue
+    (
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator *enumerator,
+        Nucleus_Boolean *hasValue
+    );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_ConstantEnumerator_getValue
+    (
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator *enumerator,
+        void **key,
+        void **value
+    );
+	
+#endif
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#if defined (Nucleus_Collections_PointerHashMap_WithEnumerator) && 1 == Nucleus_Collections_PointerHashMap_WithEnumerator
+
 typedef struct Nucleus_Collections_PointerHashMap_Enumerator Nucleus_Collections_PointerHashMap_Enumerator;
 
 struct Nucleus_Collections_PointerHashMap_Enumerator
 {
     Nucleus_Collections_PointerHashMap *source;
     Nucleus_Size bucketIndex;
-    Node *node;
+	Node **previous;
+    Node *current;
 }; // struct Nucleus_Collections_PointerHashMap_Enumerator
 
 Nucleus_NonNull() Nucleus_Status
@@ -139,3 +204,11 @@ Nucleus_Collections_PointerHashMap_Enumerator_getValue
         void **key,
         void **value
     );
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_remove
+	(
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator
+	);
+
+#endif

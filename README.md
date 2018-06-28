@@ -40,6 +40,7 @@ The Nucleus Annotations module provides annotations for functions, parameters, a
 The following annotations are currently available.
 
 - [Nucleus_NonNull](documentation/Nucleus_NonNull.md)
+- [Nucleus_NoWarnUnused](documentation/Nucleus_NoWarnUnused.md)
 - [Nucleus_NoReturn](documentation/Nucleus_NoReturn.md)
 - [Nucleus_Likely](documentation/Nucleus_Likely.md)
 - [Nucleus_Unlikely](documentation/Nucleus_Unlikely.md)
@@ -88,28 +89,28 @@ The Nucleus Floating Point Module provides functionality to evaluate and generat
 
 - [Nucleus_Single,
    Nucleus_Double,
-   Nucleus_Quadruple](documentation/Nucleus_[FloatingPointType].md)
+   Nucleus_Quadruple](documentation/Nucleus_[FloatingPoint].md)
 - [Nucleus_Single_Least,
    Nucleus_Double_Least,
-   Nucleus_Quadruple_Least](documentation/Nucleus_[FloatingPointType].md)
+   Nucleus_Quadruple_Least](documentation/Nucleus_[FloatingPoint].md)
 - [Nucleus_Single_Greatest,
    Nucleus_Double_Greatest,
-   Nucleus_Quadruple_Greatest](documentation/Nucleus_[FloatingPointType].md)
+   Nucleus_Quadruple_Greatest](documentation/Nucleus_[FloatingPoint].md)
 - [Nucleus_Single_NegativeInfinity,
    Nucleus_Double_NegativeInfinity,
-   Nucleus_Quadruple_NegativeInfinity](documentation/Nucleus_[FloatingPointType].md)
+   Nucleus_Quadruple_NegativeInfinity](documentation/Nucleus_[FloatingPoint].md)
 - [Nucleus_Single_PositiveInfinity,
    Nucleus_Double_PositiveInfinity,
-   Nucleus_Quadruple_PositiveInfinity](documentation/Nucleus_[FloatingPointType].md)
+   Nucleus_Quadruple_PositiveInfinity](documentation/Nucleus_[FloatingPoint].md)
 - [Nucleus_Single_hash,
    Nucleus_Double_hash,
-   Nucleus_Quadruple_hash](documentation/Nucleus_[FloatingPointType]_hash.md)
+   Nucleus_Quadruple_hash](documentation/Nucleus_[FloatingPoint]_hash.md)
 - [Nucleus_Single_isNaN,
    Nucleus_Double_isNaN,
-   Nucleus_Quadruple_isNaN](documentation/Nucleus_[FloatingPointType]_isNaN.md)
+   Nucleus_Quadruple_isNaN](documentation/Nucleus_[FloatingPoint]_isNaN.md)
 - [Nucleus_Single_isSubnormal,
    Nucleus_Double_isSubnormal,
-   Nucleus_Quadruple_isSubnormal](documentation/Nucleus_[FloatingPointType]_isSubnormal.md)
+   Nucleus_Quadruple_isSubnormal](documentation/Nucleus_[FloatingPoint]_isSubnormal.md)
 
 ### Nucleus Hash Module
 The Nucleus Hash provides functionality to compute hash values from boolean values, numeric values, pointer values,

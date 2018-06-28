@@ -19,6 +19,14 @@
     #define Nucleus_NonNull(...)
 #endif
 
+// https://github.com/primordialmachine/nucleus/blob/master/documentation/Nucleus_NonWarnUnused.md
+#if ((Nucleus_C_Compiler == Nucleus_C_Compiler_GCC) || (Nucleus_C_Compiler == Nucleus_C_Compiler_Clang)) \
+    && !defined(DOXYGEN)
+	#define Nucleus_NoWarnUnused() __attribute__((unused)) /**< @hideinitializer */
+#else
+    #define Nucleus_NoWarnUnused()
+#endif
+
 /// @ingroup Annotations
 /// @brief A function annotation indicating that a function return value should be a non-null pointer.
 #if defined(Nucleus_Compiler_GCC) && !defined(DOXYGEN)

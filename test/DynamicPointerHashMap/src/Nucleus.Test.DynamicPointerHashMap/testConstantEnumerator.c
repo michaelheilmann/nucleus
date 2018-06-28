@@ -1,4 +1,4 @@
-#include "Nucleus.Test.DynamicPointerHashMap/testEnumerator.h"
+#include "Nucleus.Test.DynamicPointerHashMap/testConstantEnumerator.h"
 
 #include "Nucleus/Memory.h"
 #include "Nucleus/Hash/Memory.h"
@@ -88,16 +88,16 @@ test1
         }
     }
 
-    Nucleus_Collections_PointerHashMap_Enumerator enumerator;
-    status = Nucleus_Collections_PointerHashMap_Enumerator_initialize(&enumerator, collection);
+    Nucleus_Collections_PointerHashMap_ConstantEnumerator enumerator;
+    status = Nucleus_Collections_PointerHashMap_ConstantEnumerator_initialize(&enumerator, collection);
     if (Nucleus_Unlikely(status)) return status;
     while (true)
     {
         Nucleus_Boolean hasValue;
-        status = Nucleus_Collections_PointerHashMap_Enumerator_hasValue(&enumerator, &hasValue);
+        status = Nucleus_Collections_PointerHashMap_ConstantEnumerator_hasValue(&enumerator, &hasValue);
         if (Nucleus_Unlikely(status))
         {
-            Nucleus_Collections_PointerHashMap_Enumerator_uninitialize(&enumerator);
+            Nucleus_Collections_PointerHashMap_ConstantEnumerator_uninitialize(&enumerator);
             return status;
         }
         if (!hasValue)
@@ -105,10 +105,10 @@ test1
             break;
         }
         void *key, *value;
-        status = Nucleus_Collections_PointerHashMap_Enumerator_getValue(&enumerator, &key, &value);
+        status = Nucleus_Collections_PointerHashMap_ConstantEnumerator_getValue(&enumerator, &key, &value);
         if (Nucleus_Unlikely(status))
         {
-            Nucleus_Collections_PointerHashMap_Enumerator_uninitialize(&enumerator);
+            Nucleus_Collections_PointerHashMap_ConstantEnumerator_uninitialize(&enumerator);
             return status;
         }
         Nucleus_Boolean found = Nucleus_Boolean_False;
@@ -123,18 +123,18 @@ test1
         }
         if (!found)
         {
-            Nucleus_Collections_PointerHashMap_Enumerator_uninitialize(&enumerator);
+            Nucleus_Collections_PointerHashMap_ConstantEnumerator_uninitialize(&enumerator);
             status = Nucleus_Status_InternalError;
             return status;
         }
-        Nucleus_Collections_PointerHashMap_Enumerator_next(&enumerator);
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator_next(&enumerator);
         if (Nucleus_Unlikely(status))
         {
-            Nucleus_Collections_PointerHashMap_Enumerator_uninitialize(&enumerator);
+            Nucleus_Collections_PointerHashMap_ConstantEnumerator_uninitialize(&enumerator);
             return status;
         }
     }
-    Nucleus_Collections_PointerHashMap_Enumerator_uninitialize(&enumerator);
+    Nucleus_Collections_PointerHashMap_ConstantEnumerator_uninitialize(&enumerator);
     return Nucleus_Status_Success;
 }
 
@@ -199,7 +199,7 @@ test0
 }
 
 Nucleus_Status
-testEnumerator
+testConstantEnumerator
     (
     )
 {

@@ -4,6 +4,6 @@
 #include "Nucleus/Collections/PointerHashMap.h"
 
 Nucleus_Status
-testEnumerator
+testConstantEnumerator
     (
     );

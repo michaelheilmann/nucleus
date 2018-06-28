@@ -23,6 +23,7 @@
 
 
 
+
 // Symbolic constant defined to Nucleus_C_Compiler_*.
 #define Nucleus_C_Compiler @Nucleus.Library_C_COMPILER_ID@
 
@@ -60,7 +61,13 @@
 
 
 
-// Symbolic constant defined to Nucleus_Operating_System*.
+
+// Symbolic constant defined to the value of the Nucleus_OperatingSystem_* symbolic constant of the operating system.
 #define Nucleus_OperatingSystem @Nucleus.Library_OPERATING_SYSTEM_ID@
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+// Symbolic constant defined to the size, in Bytes, of a void pointer.
+#define Nucleus_SizeOfVoidPointer @Nucleus.Library_SIZEOF_VOID_POINTER@
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

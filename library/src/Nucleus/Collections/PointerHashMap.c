@@ -213,6 +213,119 @@ Nucleus_Collections_PointerHashMap_removeExtended
 }
 
 Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_remove
+    (
+        Nucleus_Collections_PointerHashMap *pointerHashMap,
+        void *key
+    )
+{
+    ExtendedPosition position;
+    Nucleus_Status status = getExtendedPosition(pointerHashMap, key, &position);
+    if (status) return status;
+    if (position.current)
+    {
+		void *storedKey = position.current->key,
+		     *storedValue = position.current->value;
+        if (pointerHashMap->unlockKeyFunction)
+        {
+            pointerHashMap->unlockKeyFunction(storedKey);
+        }
+        if (pointerHashMap->unlockValueFunction)
+        {
+            pointerHashMap->unlockValueFunction(storedValue);
+        }
+        *position.previous = position.current->next;
+        pointerHashMap->size--;
+        position.current->key = NULL;
+        position.current->value = NULL;
+        position.current->next = pointerHashMap->unused;
+        pointerHashMap->unused = position.current;
+        return Nucleus_Status_Success;
+    }
+    else return Nucleus_Status_NotExists;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#if defined (Nucleus_Collections_PointerHashMap_WithConstantEnumerator) && 1 == Nucleus_Collections_PointerHashMap_WithConstantEnumerator
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_ConstantEnumerator_initialize
+    (
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator *enumerator,
+        Nucleus_Collections_PointerHashMap *source
+    )
+{
+    enumerator->source = source;
+    enumerator->bucketIndex = 0;
+    enumerator->current = source->buckets[0];
+    while (NULL == enumerator->current && enumerator->bucketIndex < enumerator->source->capacity - 1) // Secure as capacity is always positive.
+    {
+        enumerator->bucketIndex++;
+        enumerator->current = enumerator->source->buckets[enumerator->bucketIndex];
+    }
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_ConstantEnumerator_uninitialize
+    (
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator *enumerator
+    )
+{ return Nucleus_Status_Success; }
+
+Nucleus_NonNull() Nucleus_Status 
+Nucleus_Collections_PointerHashMap_ConstantEnumerator_next
+    (
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator *enumerator
+    )
+{
+    if (enumerator->current)
+    {
+        enumerator->current = enumerator->current->next;
+    }
+    while (NULL == enumerator->current && enumerator->bucketIndex < enumerator->source->capacity - 1) // Secure as capacity is always positive.
+    {
+        enumerator->bucketIndex++;
+        enumerator->current = enumerator->source->buckets[enumerator->bucketIndex];
+    }
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_ConstantEnumerator_hasValue
+    (
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator *enumerator,
+        Nucleus_Boolean *hasValue
+    )
+{
+    if (Nucleus_Unlikely(!enumerator || !hasValue)) return Nucleus_Status_InvalidArgument;
+    *hasValue = NULL != enumerator->current;
+    return Nucleus_Status_Success;
+}
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_ConstantEnumerator_getValue
+    (
+        Nucleus_Collections_PointerHashMap_ConstantEnumerator *enumerator,
+        void **key,
+        void **value
+    )
+{
+    if (Nucleus_Unlikely(!enumerator || !key || !value)) return Nucleus_Status_InvalidArgument;
+    if (!enumerator->current) return Nucleus_Status_InvalidArgument;
+    *key = enumerator->current->key;
+    *value = enumerator->current->value;
+    return Nucleus_Status_Success;
+}
+
+#endif
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#if defined (Nucleus_Collections_PointerHashMap_WithEnumerator) && 1 == Nucleus_Collections_PointerHashMap_WithEnumerator
+
+Nucleus_NonNull() Nucleus_Status
 Nucleus_Collections_PointerHashMap_Enumerator_initialize
     (
         Nucleus_Collections_PointerHashMap_Enumerator *enumerator,
@@ -221,11 +334,13 @@ Nucleus_Collections_PointerHashMap_Enumerator_initialize
 {
     enumerator->source = source;
     enumerator->bucketIndex = 0;
-    enumerator->node = source->buckets[0];
-    while (NULL == enumerator->node && enumerator->bucketIndex < enumerator->source->capacity - 1) // Secure as capacity is always positive.
+	enumerator->previous = &source->buckets[0];
+    enumerator->current = source->buckets[0];
+    while (NULL == enumerator->current && enumerator->bucketIndex < enumerator->source->capacity - 1) // Secure as capacity is always positive.
     {
         enumerator->bucketIndex++;
-        enumerator->node = enumerator->source->buckets[enumerator->bucketIndex];
+		enumerator->previous = &(enumerator->source->buckets[enumerator->bucketIndex]);
+        enumerator->current = *(enumerator->previous);
     }
     return Nucleus_Status_Success;
 }
@@ -243,14 +358,16 @@ Nucleus_Collections_PointerHashMap_Enumerator_next
         Nucleus_Collections_PointerHashMap_Enumerator *enumerator
     )
 {
-    if (enumerator->node)
+    if (enumerator->current)
     {
-        enumerator->node = enumerator->node->next;
+		enumerator->previous = &enumerator->current->next;
+        enumerator->current = *(enumerator->previous);
     }
-    while (NULL == enumerator->node && enumerator->bucketIndex < enumerator->source->capacity - 1) // Secure as capacity is always positive.
+    while (NULL == enumerator->current && enumerator->bucketIndex < enumerator->source->capacity - 1) // Secure as capacity is always positive.
     {
         enumerator->bucketIndex++;
-        enumerator->node = enumerator->source->buckets[enumerator->bucketIndex];
+		enumerator->previous = &(enumerator->source->buckets[enumerator->bucketIndex]);
+        enumerator->current = *(enumerator->previous);
     }
     return Nucleus_Status_Success;
 }
@@ -263,7 +380,7 @@ Nucleus_Collections_PointerHashMap_Enumerator_hasValue
     )
 {
     if (Nucleus_Unlikely(!enumerator || !hasValue)) return Nucleus_Status_InvalidArgument;
-    *hasValue = NULL != enumerator->node;
+    *hasValue = NULL != enumerator->current;
     return Nucleus_Status_Success;
 }
 
@@ -276,8 +393,35 @@ Nucleus_Collections_PointerHashMap_Enumerator_getValue
     )
 {
     if (Nucleus_Unlikely(!enumerator || !key || !value)) return Nucleus_Status_InvalidArgument;
-    if (!enumerator->node) return Nucleus_Status_InvalidArgument;
-    *key = enumerator->node->key;
-    *value = enumerator->node->value;
+    if (!enumerator->current) return Nucleus_Status_InvalidArgument;
+    *key = enumerator->current->key;
+    *value = enumerator->current->value;
     return Nucleus_Status_Success;
 }
+
+Nucleus_NonNull() Nucleus_Status
+Nucleus_Collections_PointerHashMap_Enumerator_remove
+	(
+        Nucleus_Collections_PointerHashMap_Enumerator *enumerator
+	)
+{
+	Node **previous = enumerator->previous;
+	Node *current = enumerator->current;
+	// Predecessor points to successor.
+	*previous = current->next;
+	// Decrement size by 1.
+	enumerator->source->size--;
+	// Relinquish node.
+	current->key = NULL;
+    current->value = NULL;
+    current->next = enumerator->source->unused;
+    enumerator->source->unused = current;
+	// Advance iterator.
+	enumerator->previous = previous;
+	enumerator->current = *previous;
+	Nucleus_Collections_PointerHashMap_Enumerator_next(enumerator);
+	// Return success.
+	return Nucleus_Status_Success;
+}
+
+#endif
