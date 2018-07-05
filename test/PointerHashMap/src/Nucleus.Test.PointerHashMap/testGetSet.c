@@ -1,4 +1,4 @@
-#include "Nucleus.Test.DynamicPointerHashMap/testGetSet.h"
+#include "Nucleus.Test.PointerHashMap/testGetSet.h"
 
 #include "Nucleus/Memory.h"
 #include "Nucleus/Hash/Memory.h"

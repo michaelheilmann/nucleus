@@ -15,7 +15,7 @@ Nucleus_Collections_PointerArray_initialize
     )
 {
     if (Nucleus_Unlikely(!dynamicPointerArray)) return Nucleus_Status_InvalidArgument;
-    Nucleus_Status status = Nucleus_allocateArrayMemory((void **)&dynamicPointerArray->elements,
+    Nucleus_Status status = Nucleus_allocateArrayMemory((void **)&(dynamicPointerArray->elements),
                                                         initialCapacity,
                                                         sizeof(void *));
     if (Nucleus_Unlikely(status)) return status;
@@ -64,7 +64,7 @@ Nucleus_Collections_PointerArray_increaseCapacity
     Nucleus_Size oldCapacity = dynamicPointerArray->capacity;
     if (greatestCapacity - oldCapacity < requiredAdditionalCapacity) return Nucleus_Status_Overflow;
     Nucleus_Size newCapacity = oldCapacity + requiredAdditionalCapacity;
-    Nucleus_Status status = Nucleus_reallocateArrayMemory((void **)&dynamicPointerArray->elements,
+    Nucleus_Status status = Nucleus_reallocateArrayMemory((void **)&(dynamicPointerArray->elements),
                                                           newCapacity,
                                                           sizeof(void *));
     if (Nucleus_Unlikely(status)) return status;
@@ -129,9 +129,13 @@ Nucleus_Collections_PointerArray_insert
     {
         dynamicPointerArray->lockFunction(pointer);
     }
-    Nucleus_copyMemory(dynamicPointerArray->elements + index + 1, dynamicPointerArray->elements + index,
-                       sizeof(void *));
-
+    if (index != dynamicPointerArray->size)
+    {
+        Nucleus_copyArrayMemory(dynamicPointerArray->elements + index + 1,
+                                dynamicPointerArray->elements + index,
+                                dynamicPointerArray->size - index,
+                                sizeof(void *));
+    }
     dynamicPointerArray->elements[index] = pointer;
     dynamicPointerArray->size++;
     return Nucleus_Status_Success;

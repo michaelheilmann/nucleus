@@ -1,4 +1,4 @@
-#include "Nucleus.Test.DynamicPointerHashMap/testConstantEnumerator.h"
+#include "Nucleus.Test.PointerHashMap/testConstantEnumerator.h"
 
 #include "Nucleus/Memory.h"
 #include "Nucleus/Hash/Memory.h"

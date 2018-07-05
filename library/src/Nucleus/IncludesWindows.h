@@ -50,6 +50,49 @@
 #define NOMCX
 #define WIN32_LEAN_AND_MEAN
 
-#include <windows.h>
+#include <Windows.h>
+
+// To avoid conflicts with more exhaustive includes of <Windows.h>, undefine the symbols defined above.
+#undef NOGDICAPMASKS
+#undef NOVIRTUALKEYCODES
+#undef NOWINMESSAGES
+#undef NOWINSTYLES
+#undef NOSYSMETRICS
+#undef NOMENUS
+#undef NOICONS
+#undef NOKEYSTATES
+#undef NOSYSCOMMANDS
+#undef NORASTEROPS
+#undef NOSHOWWINDOW
+#undef OEMRESOURCE
+#undef NOATOM
+#undef NOCLIPBOARD
+#undef NOCOLOR
+#undef NOCTLMGR
+#undef NODRAWTEXT
+#undef NOGDI
+#undef NOKERNEL
+#undef NOUSER
+// Neither NONLS mor NONMB must be defined if WideCharToMultiByte is required.
+//#undef NONLS
+//#undef NOMB
+#undef NOMEMMGR
+#undef NOMETAFILE
+#undef NOMINMAX
+#undef NOMSG
+#undef NOOPENFILE
+#undef NOSCROLL
+#undef NOSERVICE
+#undef NOSOUND
+#undef NOTEXTMETRIC
+#undef NOWH
+#undef NOWINOFFSETS
+#undef NOCOMM
+#undef NOKANJI
+#undef NOHELP
+#undef NOPROFILER
+#undef NODEFERWINDOWPOS
+#undef NOMCX
+#undef WIN32_LEAN_AND_MEAN
 
 #endif

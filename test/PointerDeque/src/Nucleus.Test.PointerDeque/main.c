@@ -1,6 +1,6 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Collections/PointerDeque.h"
-#include "Nucleus.Test.DynamicPointerDeque/testCollection.h"
+#include "Nucleus.Test.PointerDeque/testCollection.h"
 #include <stdlib.h>
 
 static Nucleus_Status

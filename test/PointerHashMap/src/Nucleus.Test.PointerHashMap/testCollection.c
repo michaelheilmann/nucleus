@@ -1,5 +1,5 @@
 // Copyright (c) 2018 Michael Heilmann
-#include "Nucleus.Test.DynamicPointerHashMap/testCollection.h"
+#include "Nucleus.Test.PointerHashMap/testCollection.h"
 
 // Create a collection (1),
 // Assert the size is 0 (2).

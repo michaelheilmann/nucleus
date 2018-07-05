@@ -1,6 +1,6 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Collections/ByteArray.h"
-#include "Nucleus.Test.DynamicByteArray/testCollection.h"
+#include "Nucleus.Test.ByteArray/testCollection.h"
 #include <stdlib.h>
 #include <string.h>
 

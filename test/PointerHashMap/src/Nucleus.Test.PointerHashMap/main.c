@@ -1,8 +1,8 @@
 // Copyright (c) 2018 Michael Heilmann
 #include "Nucleus/Collections/PointerHashMap.h"
-#include "Nucleus.Test.DynamicPointerHashMap/testCollection.h"
-#include "Nucleus.Test.DynamicPointerHashMap/testGetSet.h"
-#include "Nucleus.Test.DynamicPointerHashMap/testConstantEnumerator.h"
+#include "Nucleus.Test.PointerHashMap/testCollection.h"
+#include "Nucleus.Test.PointerHashMap/testGetSet.h"
+#include "Nucleus.Test.PointerHashMap/testConstantEnumerator.h"
 #include <stdlib.h>
 
 int
