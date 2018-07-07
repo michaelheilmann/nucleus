@@ -2,7 +2,12 @@
 
 #include <string.h>
 
-char *strrstr(const char *haystack, const char *needle)
+char *
+C_strrstr
+    (
+        const char *haystack,
+        const char *needle
+    )
 {
 	char *r = NULL;
 	if (!needle[0]) // empty needle

@@ -5,6 +5,7 @@
 
 #include "Nucleus/IncludesWindows.h"
 #include "Nucleus/Memory.h"
+#include "Nucleus/C/strcpy.h"
 
 struct Nucleus_DirectoryEnumeratorWindows
 {
@@ -41,7 +42,7 @@ openImpl(Nucleus_DirectoryEnumeratorWindows *directoryEnumerator, const char *pa
     {
         Nucleus_Status status = Nucleus_allocateMemory((void **)&searchString, size + 3);
         if (status) return status;
-        strcpy(searchString, pathname);
+        C_strcpy(searchString, pathname);
         searchString[size + 0] = '/';
         searchString[size + 1] = '*';
         searchString[size + 2] = '\0';
@@ -50,7 +51,7 @@ openImpl(Nucleus_DirectoryEnumeratorWindows *directoryEnumerator, const char *pa
     {
         Nucleus_Status status = Nucleus_allocateMemory((void **)&searchString, size + 2);
         if (status) return status;
-        strcpy(searchString, pathname);
+        C_strcpy(searchString, pathname);
         searchString[size + 0] = '*';
         searchString[size + 1] = '\0';
     }
