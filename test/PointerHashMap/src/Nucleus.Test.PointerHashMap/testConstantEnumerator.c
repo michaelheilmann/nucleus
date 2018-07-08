@@ -1,5 +1,6 @@
 #include "Nucleus.Test.PointerHashMap/testConstantEnumerator.h"
 
+#include "Nucleus/C/strdup.h"
 #include "Nucleus/Memory.h"
 #include "Nucleus/Hash/Memory.h"
 #include <string.h>
@@ -68,8 +69,8 @@ test1
     Nucleus_Status status;
     for (Nucleus_Size i = 0, n = numberOfEntries; i < n; ++i)
     {
-        char *k = strdup(entries[i].key);
-        char *v = strdup(entries[i].value);
+        char *k = C_strdup(entries[i].key);
+        char *v = C_strdup(entries[i].value);
         if (!k || !v)
         {
             Nucleus_deallocateMemory(v);

@@ -32,7 +32,7 @@ Nucleus_getExecutableDirectoryPathname
         Nucleus_deallocateMemory(temporary);
         return status;
     }
-    char *p = strrstr(temporary, directorySeparator);
+    char *p = C_strrstr(temporary, directorySeparator);
     if (Nucleus_Unlikely(!p))
     {
         Nucleus_deallocateMemory(temporary);

@@ -1,4 +1,8 @@
 #pragma once
 
-char *strrstr(const char *haystack, const char *needle);
-  
+char *
+C_strrstr
+    (
+        const char *haystack,
+        const char *needle
+    );

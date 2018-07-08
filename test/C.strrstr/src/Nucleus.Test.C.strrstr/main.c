@@ -29,7 +29,7 @@ test
 
 	i = 0;
 	while (i < sizeof(test_array) / sizeof(test_array[0])) {
-		const char *r = strrstr(test_array[i].h, test_array[i].n);
+		const char *r = C_strrstr(test_array[i].h, test_array[i].n);
 		printf("'%s' vs. '%s': '%s' - ", test_array[i].h, test_array[i].n, r);
 		if (r == NULL)
 			r = test_array[i].h - 1;
