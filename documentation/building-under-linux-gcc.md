@@ -25,10 +25,12 @@ where `<platform>` is one of `x86` or `x64`.
 
 ## Compilation options
 For Linux builds, certain CMake options are supported.
-The currently supported options are `With-Debug-Information=(ON|OFF)`
-and `With-Optimizations=(ON|OFF)`.
+The currently supported options are `<product>-With-Debug-Information=(ON|OFF)`
+and `<product>-With-Optimizations=(ON|OFF)`. The former enables/disables debug
+information, the latter enables/disables optimizations. `<product>` is     the
+target name of the product the options pertain to.
 
-For example, to enable both optimizations and debug information enter
+For example, to enable both optimizations and debug information for the product `Nucleus.Interpreter`, enter
 ```
-cmake -DWith-Optimizations=ON -DWith-Debug-Information=ON CMakeLists.txt
+cmake -DNucleus.Interpreter-With-Optimizations=ON -DNucleus.Interpreter-With-Debug-Information=ON CMakeLists.txt
 ```
